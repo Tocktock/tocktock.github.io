@@ -21,7 +21,10 @@ title: Categories
         <a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a>
       </h4>
       <div class="category-description">
-        <span> {{ post.content | slice : 0, 100 }}</span>
+        <span>
+          {{ post.content | slice : 0, 100 | rstrip }} {% if post.content.size
+          >= 100 %} ... {% endif%}
+        </span>
       </div>
     </article>
     {% endfor %}
