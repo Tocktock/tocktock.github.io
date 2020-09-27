@@ -1,6 +1,6 @@
 ---
 layout: post
-title: front end categories
+title: front end + backend categories
 categories: [FrontEnd, BackEnd]
 ---
 

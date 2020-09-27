@@ -1,7 +1,7 @@
 ---
 layout: post
 title: backend end categories
-categories: BackEnd
+category: BackEnd
 ---
 
 backend Category

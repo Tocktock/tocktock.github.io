@@ -1,3 +1,28 @@
-.current {
-  color: green;
+ul.sidebar-categories {
+  padding-left: 3rem;
+}
+.sidebar-categories li {
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-categories-item a {
+  color: lightslategray;
+  font-weight: 600;
+}
+
+.category-head {
+  font-weight: 600;
+  border-top: 0.1rem solid gray;
+  padding-top: 1rem;
+}
+.category-description {
+  background-color: lightgray;
+  border-radius: 0.2rem;
+  margin-left: 2rem;
+  padding: 0.25rem;
+  font-size: 0.7rem;
+  color: gray;
+}
+.category-description p {
+  margin-bottom: 0.2rem;
 }
