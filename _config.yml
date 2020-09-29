@@ -11,6 +11,9 @@ author:
   name: Park Ji Young
   url: https://tocktock.github.io
   email: qnfmtm666@naver.com
+#github
+github:
+  repo: "https://github.com/Tocktock/tocktock.github.io"
 
 # Gems
 plugins:

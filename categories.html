@@ -7,11 +7,13 @@ title: Categories
 <div id="archives">
   {% for category in site.categories %}
   <div class="archive-group">
-    {% capture category_name %}{{ category | first }}{% endcapture %}
-    <div id="#{{ category_name | slugize }}"></div>
+    {% capture category_name %}{{ category | first }}{% endcapture %} {% capture
+    category_link %}categories/{{category_name|downcase}} {% endcapture %}
+    <a href="{{category_link|absolute_url}}"
+      ><h3 class="category-head">{{ category_name }}</h3></a
+    >
     <p></p>
 
-    <h3 class="category-head">{{ category_name }}</h3>
     {% assign postCount=0 %}
     <a name="{{ category_name | slugize }}"></a> {% for post in
     site.categories[category_name] %} {% assign postCount=postCount|plus:1 %} {%
@@ -20,12 +22,12 @@ title: Categories
       <h4>
         <a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a>
       </h4>
-      <div class="category-description">
+      <!-- <div class="category-description">
         <span>
           {{ post.content | slice : 0, 100 | rstrip }} {% if post.content.size
           >= 100 %} ... {% endif%}
         </span>
-      </div>
+      </div> -->
     </article>
     {% endfor %}
   </div>
