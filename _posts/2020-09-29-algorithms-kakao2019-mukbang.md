@@ -3,7 +3,6 @@ layout: post
 title: 프로그래머스 2019 kakao 무지의 먹방 라이브 문제 해설
 categories: Algorithms
 ---
-
 #[프로그래머스][2019 kakao] 무지의 먹방 라이브 문제 해설
 
 ---
