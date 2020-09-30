@@ -46,7 +46,7 @@ bool solution(int n, vector<vector<int>> path, vector<vector<int>> order);
 int main() {
     vector<vector<int>> path = { {0,1} ,{0,3},{0,7},{8,1},{3,6},{1,2},{4,7},{7,5} };
     vector<vector<int>> order = { {8, 5}, {6, 7}, {4, 1} };
-    vector<vector<int>> path2 = { {{8,1},{0,1},{1,2},{0,7},{4,7},{0,3},{7,5},{3,6} } };
+    vector<vector<int>> path2 = { {8,1},{0,1},{1,2},{0,7},{4,7},{0,3},{7,5},{3,6}  };
     vector<vector<int>> order2 = { {4, 1}, {5, 2} };
     vector<vector<int>> path3 = { {0, 1}, {0, 3}, {0, 7}, {8, 1}, {3, 6}, {1, 2}, {4, 7}, {7, 5} };
     vector<vector<int>> order3 = { {4, 1}, {8, 7}, {6, 5} };
