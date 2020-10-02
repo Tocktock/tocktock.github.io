@@ -24,7 +24,7 @@ categories: Algorithms
 
 **라고 생각 하면 됨**
 
-> 자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. [문제풀러가기](https://www.acmicpc.net/problem/16234)
+> 자세한 문제 설명과 제한 사항은 백준 홈페이지 참고. [문제풀러가기](https://www.acmicpc.net/problem/16234)
 
 ## 🔑 문제 풀이
 
