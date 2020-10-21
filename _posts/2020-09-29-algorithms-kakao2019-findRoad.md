@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 프로그래머스 2019 kakao 길 찾기 게임 문제 해설
-categories: algorithms
+categories: Algorithms
 ---
 
 #[프로그래머스][2019 kakao] 길 찾기 게임 문제 해설
