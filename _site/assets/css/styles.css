@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap");
+ul.sidebar-categories { padding-left: 3rem; }
+
+.sidebar-categories li { margin-bottom: 0.25rem; }
+
+.sidebar-categories-item a { color: lightslategray; font-weight: 600; }
+
+.category-head { font-weight: 600; border-top: 0.1rem solid gray; padding-top: 1rem; }
+
+.category-description { background-color: lightgray; border-radius: 0.2rem; margin-left: 2rem; padding: 0.25rem; font-size: 0.7rem; color: gray; }
+
+.category-description p { display: inline; }
+
+.masthead-title { font-family: "Sunflower", sans-serif; }
+
+html { font-family: "Sunflower", sans-serif; }
+
+.sidebar-item.description { color: bisque; font-size: 1.25rem; }
+
+.post-image-center { align-content: center; }
+
+/*# sourceMappingURL=styles.css.map */

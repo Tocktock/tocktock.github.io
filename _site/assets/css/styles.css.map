@@ -1,0 +1,14 @@
+{
+	"version": 3,
+	"file": "styles.css",
+	"sources": [
+		"styles.scss",
+		"_sass/main.scss"
+	],
+	"sourcesContent": [
+		"@import \"main\";\n",
+		"@import url(\"https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap\");\r\nul.sidebar-categories {\r\n  padding-left: 3rem;\r\n}\r\n.sidebar-categories li {\r\n  margin-bottom: 0.25rem;\r\n}\r\n\r\n.sidebar-categories-item a {\r\n  color: lightslategray;\r\n  font-weight: 600;\r\n}\r\n\r\n.category-head {\r\n  font-weight: 600;\r\n  border-top: 0.1rem solid gray;\r\n  padding-top: 1rem;\r\n}\r\n.category-description {\r\n  background-color: lightgray;\r\n  border-radius: 0.2rem;\r\n  margin-left: 2rem;\r\n  padding: 0.25rem;\r\n  font-size: 0.7rem;\r\n  color: gray;\r\n}\r\n.category-description p {\r\n  display: inline;\r\n}\r\n\r\n.masthead-title {\r\n  font-family: \"Sunflower\", sans-serif;\r\n}\r\n\r\nhtml {\r\n  font-family: \"Sunflower\", sans-serif;\r\n}\r\n.sidebar-item.description {\r\n  color: bisque;\r\n  font-size: 1.25rem;\r\n}\r\n\r\n.post-image-center {\r\n  align-content: center;\r\n}\r\n"
+	],
+	"names": [],
+	"mappings": "ACAA,OAAO,CAAC,uFAAI;AACZ,AAAA,EAAE,AAAA,mBAAmB,CAAC,EACpB,YAAY,EAAE,IAAI,GACnB;;AACD,AAAA,mBAAmB,CAAC,EAAE,CAAC,EACrB,aAAa,EAAE,OAAO,GACvB;;AAED,AAAA,wBAAwB,CAAC,CAAC,CAAC,EACzB,KAAK,EAAE,cAAc,EACrB,WAAW,EAAE,GAAG,GACjB;;AAED,AAAA,cAAc,CAAC,EACb,WAAW,EAAE,GAAG,EAChB,UAAU,EAAE,iBAAiB,EAC7B,WAAW,EAAE,IAAI,GAClB;;AACD,AAAA,qBAAqB,CAAC,EACpB,gBAAgB,EAAE,SAAS,EAC3B,aAAa,EAAE,MAAM,EACrB,WAAW,EAAE,IAAI,EACjB,OAAO,EAAE,OAAO,EAChB,SAAS,EAAE,MAAM,EACjB,KAAK,EAAE,IAAI,GACZ;;AACD,AAAA,qBAAqB,CAAC,CAAC,CAAC,EACtB,OAAO,EAAE,MAAM,GAChB;;AAED,AAAA,eAAe,CAAC,EACd,WAAW,EAAE,uBAAuB,GACrC;;AAED,AAAA,IAAI,CAAC,EACH,WAAW,EAAE,uBAAuB,GACrC;;AACD,AAAA,aAAa,AAAA,YAAY,CAAC,EACxB,KAAK,EAAE,MAAM,EACb,SAAS,EAAE,OAAO,GACnB;;AAED,AAAA,kBAAkB,CAAC,EACjB,aAAa,EAAE,MAAM,GACtB"
+}

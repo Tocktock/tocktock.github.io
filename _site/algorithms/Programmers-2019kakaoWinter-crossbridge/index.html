@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     프로그래머스 2019 KAKAO 겨울 인턴쉽 징검다리 건너기 해설 &middot; 만냥이의 하루 
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/algorithms/Programmers-2019kakaoWinter-crossbridge/" />
+  
+
+  <link rel="stylesheet" href="http://localhost:4000/public/css/poole.css" />
+  <link rel="stylesheet" href="http://localhost:4000/public/css/syntax.css" />
+  <link rel="stylesheet" href="http://localhost:4000/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="http://localhost:4000/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="http://localhost:4000/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="http://localhost:4000/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="http://localhost:4000/about/"
+        >About</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="http://localhost:4000/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="http://localhost:4000/categories/algorithms"
+            >Algorithms (13)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="http://localhost:4000/categories/testpost"
+            >testpost (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="http://localhost:4000/categories/howtomake"
+            >HowToMake (1)</a
+          >
+        </li>
+        
+      </ul>
+                                         
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2020. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">만냥이의 하루</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">프로그래머스 2019 KAKAO 겨울 인턴쉽 징검다리 건너기 해설</h1>
+  <span class="post-date">02 Oct 2020</span>
+  <p>#[프로그래머스✈][2019 kakao 겨울 인턴쉽] 징검다리 건너기 해설</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/64062">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p><strong>“우리 돌다리는 약해유..”</strong></p>
+
+<p>니니즈 친구들이 라이언 선생님과 함께 가을 소풍을 가는 중에 징검다리를 만났다. 이 징검다리의 돌은 매우 연약하여 여러번 밟으면 부서지고 더이상 사용할 수 없다. 돌마다 내구도가 주어질 때 건널 수 있는 니니즈들의 최대 인원 수를 구하여라.</p>
+
+<ul>
+  <li>우리 니니즈들은 <strong>반드시</strong> 뛸 수 있는 가장 가까운 돌로 뛰어야한다.</li>
+  <li>니니즈의 인원은 200,000,000 이상이다.</li>
+  <li>선생님은 건너지 않는다.</li>
+</ul>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/64062">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>우선순위 큐를 잊어버릴 꺼 같아서 사용한다.
+우선순위 큐에는 내구도가 가장 낮은 데이터를 top에 저장한다.</p>
+
+<blockquote>
+  <p>우선순위 큐에 대한 자세한 정보는 다음을 참고하라 <a href="https://chanhuiseok.github.io/posts/ds-4/">우선순위큐 설명</a></p>
+</blockquote>
+
+<p>top에 저장된 돌의 내구도 만큼 니니즈들이 건너갔다고 가정하고, 오른쪽과 왼쪽의 사용 가능한 돌의 거리를 계산하여 최대 건널 수 있는 거리를 넘어가면 더이상 건너지 못한다고 생각한다.</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<blockquote>
+  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
+</blockquote>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">STONE</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="k">struct</span> <span class="nc">COMP</span> <span class="p">{</span>
+    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="n">STONE</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="n">STONE</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">STONE</span><span class="p">,</span> <span class="n">deque</span><span class="o">&lt;</span><span class="n">STONE</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">COMP</span> <span class="o">&gt;</span><span class="n">myPQ</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">stones</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">stones</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">200000000</span> <span class="p">};</span>
+    <span class="n">solution</span><span class="p">(</span><span class="n">stones</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">stones</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">stones</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">myPQ</span><span class="p">.</span><span class="n">push</span><span class="p">({</span> <span class="n">i</span><span class="p">,</span> <span class="n">stones</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">});</span>
+
+    <span class="kt">int</span> <span class="n">jumpCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">donotJump</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">myPQ</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">donotJump</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">STONE</span> <span class="n">minStone</span> <span class="o">=</span> <span class="n">myPQ</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+        <span class="n">jumpCount</span> <span class="o">=</span> <span class="n">minStone</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">myPQ</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">count</span> <span class="o">==</span> <span class="n">jumpCount</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">STONE</span> <span class="n">tempStone</span> <span class="o">=</span> <span class="n">myPQ</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+            <span class="kt">int</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">tempStone</span><span class="p">.</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">lt</span> <span class="o">=</span> <span class="n">tempStone</span><span class="p">.</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">rt</span> <span class="o">&lt;</span> <span class="n">stones</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">stones</span><span class="p">[</span><span class="n">rt</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">jumpCount</span><span class="p">)</span> <span class="n">rt</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">lt</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">stones</span><span class="p">[</span><span class="n">lt</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">jumpCount</span><span class="p">)</span> <span class="n">lt</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">rt</span> <span class="o">-</span> <span class="n">lt</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">donotJump</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">myPQ</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">myPQ</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jumpCount</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>이제 C++의 STL 없이는 알고리즘 코딩을 할 수 없을 것 같다.</p>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/howtomake/HowTo-MakeYourBlog/">
+          지킬을 이용하여 깃허브 블로그 만들기
+          <small>03 Oct 2020</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/Programmers-2017kakaocord-forthjump/">
+          프로그래머스 2017 카카오코드 4단 고음 해설
+          <small>02 Oct 2020</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/BeakJoon-14501/">
+          백준 14501 퇴사 문제 해설
+          <small>02 Oct 2020</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+      <hr />
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>
