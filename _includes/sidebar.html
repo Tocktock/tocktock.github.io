@@ -29,7 +29,7 @@
         {% for category in site.categories%} {% capture category_name
         %}{{category | first}}{% endcapture %}
         <li class="sidebar-categories-item">
-          <a href="{{node.url|absolute_url}}{{category_name|downcase}}"
+          <a href="{{ node.url | absolute_url }}{{ category_name | downcase }}"
             >{{category_name}} ({{site.categories[category_name].size}})</a
           >
         </li>
