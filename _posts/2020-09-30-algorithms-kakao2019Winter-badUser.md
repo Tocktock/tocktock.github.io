@@ -1,30 +1,34 @@
 ---
 layout: post
-title: 프로그래머스 2019 kakao 후보키 문제 해설
+title: 프로그래머스 2019 kakao 겨울 인턴십 
 categories: Algorithms
 ---
 
-#[프로그래머스✈][2019 kakao] 후보키 문제 해설
+#[프로그래머스✈][2019 kakao 겨울 인턴십] 인턴십 호텔 방 배정 문제 해설
 
 ---
 
-- 정답률 : 16.09%
-- [문제풀러가기✈](https://programmers.co.kr/learn/courses/30/lessons/42890)
+- [문제풀러가기✈](https://programmers.co.kr/learn/courses/30/lessons/64063)
 
 ---
 
 ## 👓 문제 요약
 
-> 자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. [문제풀러가기](https://programmers.co.kr/learn/courses/30/lessons/42892)
+> 자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. [문제풀러가기](https://programmers.co.kr/learn/courses/30/lessons/64063)
 
 ## 🔑 문제 풀이
-
 ## 🥽 소스코드 및 소스해석
 
 > 프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.
 
 ```cpp
-
 ```
 
 ## 🔨 문제 후기
+
+설계를 얼마나 잘 할 수 있는지 물어보는 문제인 것 같다.
+얼마나 큰 호텔일까 10^12 개의 방을 보유하고 있다면
+
+방 하나를 2 평 이라고 생각만 해도
+2000000000000평 이고 대한민국 영토의 약 60배..
+그만하자.
