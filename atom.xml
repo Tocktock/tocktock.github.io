@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>행복보다 아픔 없는 삶</title>
+ <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-10-30T16:37:49+09:00</updated>
+ <updated>2020-11-03T05:03:08+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
    <email>qnfmtm666@naver.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Algorithms Programmers 3ntiling</title>
+   <link href="https://tocktock.github.io/algorithms-programmers-3NTiling/"/>
+   <updated>2020-11-01T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/algorithms-programmers-3NTiling</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>지킬을 이용하여 깃허브 블로그 만들기</title>

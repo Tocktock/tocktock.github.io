@@ -10,7 +10,7 @@
   />
 
   <title>
-     행복보다 아픔 없는 삶 &middot; 웹 개발과 일상
+     영원 &middot; 웹 개발과 일상
     
   </title>
 
@@ -121,7 +121,7 @@
         </li>
         
       </ul>
-                             
+                                 
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -140,13 +140,25 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <a href="/" title="Home">행복보다 아픔 없는 삶</a>
+            <a href="/" title="Home">영원</a>
             <small>웹 개발과 일상</small>
           </h3>
         </div>
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms-programmers-3NTiling/"> Algorithms Programmers 3ntiling </a>
+    </h1>
+
+    <span class="post-date">01 Nov 2020</span>
+
+    
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -675,131 +687,6 @@ Fork 버튼을 누르게 되면 로그인 된 내 계정의 Repository 로 해�
 
 <p>퇴사를 하기 전까지 열심히 일하는 백준이.
 백준이 상사는 훌륭한 부하가 나가기 때문에 매우 심기가 불편할 것 같다.</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2020Intern-explorecave/"> 프로그래머스 2020 kakao 동굴 탐험 </a>
-    </h1>
-
-    <span class="post-date">30 Sep 2020</span>
-
-    <p>#[프로그래머스✈][2020 kakao] 동굴 탐험</p>
-
-<hr />
-
-<ul>
-  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/67260">문제풀러가기✈</a></li>
-</ul>
-
-<hr />
-
-<h2 id="-문제-요약">👓 문제 요약</h2>
-
-<p>우리 프로도는 특정한 규칙을 세워서 동굴의 각 방들을 탐험 하려고 한다. 해당 규칙을 만족하게 계획을 세우고 모든 방을 탐험할 수 있는지 탐색하라!</p>
-
-<blockquote>
-  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/67260">문제풀러가기</a></p>
-</blockquote>
-
-<h2 id="-문제-풀이">🔑 문제 풀이</h2>
-
-<p>루트부터 각각의 방들을 탐색하며, 선행이 필요한 방은 이후에 다시 조사한다!</p>
-
-<p>선행이 되는 방을 방문한다면, 선행이 필요한 방은 방문 가능하다고 판단한다.</p>
-
-<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
-
-<blockquote>
-  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
-</blockquote>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;deque&gt;
-#include &lt;string.h&gt;
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="n">pre</span><span class="p">[</span><span class="mi">200000</span><span class="p">];</span>
-<span class="kt">int</span> <span class="n">post</span><span class="p">[</span><span class="mi">200000</span><span class="p">];</span>
-<span class="kt">int</span> <span class="n">hang</span><span class="p">[</span><span class="mi">200000</span><span class="p">];</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">myTree</span><span class="p">;</span>
-<span class="kt">bool</span> <span class="n">visit</span><span class="p">[</span><span class="mi">200000</span><span class="p">];</span>
-
-<span class="kt">bool</span> <span class="nf">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">path</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">order</span><span class="p">);</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">path</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">}</span> <span class="p">,{</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">},{</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">},{</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">},{</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">order</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span> <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">},</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">path2</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">},{</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">},{</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">},{</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">}</span>  <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">order2</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">path3</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">},</span> <span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">},</span> <span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">order3</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">},</span> <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
-    <span class="kt">bool</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">solution</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">order</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">bool</span> <span class="nf">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">path</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">order</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">myTree</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="mi">200000</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-    <span class="n">memset</span><span class="p">(</span><span class="n">post</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">post</span><span class="p">));</span>
-    <span class="n">memset</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pre</span><span class="p">));</span>
-    <span class="n">memset</span><span class="p">(</span><span class="n">hang</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">hang</span><span class="p">));</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">path</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="n">myTree</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
-        <span class="n">myTree</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">order</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="n">pre</span><span class="p">[</span><span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
-        <span class="n">post</span><span class="p">[</span><span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-    <span class="p">}</span>
-
-    <span class="n">deque</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">myStack</span><span class="p">;</span>
-    <span class="n">myStack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="n">visit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">myStack</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">node</span> <span class="o">=</span> <span class="n">myStack</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
-        <span class="n">myStack</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">myTree</span><span class="p">[</span><span class="n">node</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">target</span> <span class="o">=</span> <span class="n">myTree</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">visit</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">pre</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">hang</span><span class="p">[</span><span class="n">pre</span><span class="p">[</span><span class="n">target</span><span class="p">]]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">myStack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pre</span><span class="p">[</span><span class="n">target</span><span class="p">]);</span>
-                <span class="p">}</span>
-                <span class="n">myStack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">post</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">visit</span><span class="p">[</span><span class="n">post</span><span class="p">[</span><span class="n">target</span><span class="p">]])</span> <span class="p">{</span>
-                    <span class="n">myStack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
-                <span class="p">}</span>
-                <span class="k">else</span>
-                    <span class="n">hang</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">post</span><span class="p">[</span><span class="n">target</span><span class="p">];</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="p">{</span>
-                <span class="n">myStack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="n">visit</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">visit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">true</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="-문제-후기">🔨 문제 후기</h2>
-
-<p>매우 힘든 문제였다. 처음 풀었다가 효율성 마지막 번호만 통과하지 못하는 최악의 상황을 통과하지 못했다.</p>
-
-<p>단순하게 스택-큐 같이 넣어 버린다면 효율성 마지막 케이스에서 시간초과가 뜰 것이다.</p>
-
-<p>또한 이 미친 제출자는 0번 방을 들리기 전에 필요한 선행조건을 테스트 케이스로 만들어놨으니 주의.</p>
-
-<p>걍풀지마세요. 답보고 푸세요.😁😁😁🤣🤣🤣</p>
 
     <hr />
   </div>
