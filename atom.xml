@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-11-20T20:40:19+09:00</updated>
+ <updated>2020-11-20T20:46:20+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -381,9 +381,9 @@ ElasticSearch 에 흥미를 가지게 되었네요.&lt;/p&gt;
  
  <entry>
    <title>지킬을 이용하여 깃허브 블로그 만들기</title>
-   <link href="https://tocktock.github.io/howtomake/HowTo-MakeYourBlog/"/>
+   <link href="https://tocktock.github.io/jekyll/HowTo-MakeYourBlog/"/>
    <updated>2020-10-03T00:00:00+09:00</updated>
-   <id>https://tocktock.github.io/howtomake/HowTo-MakeYourBlog</id>
+   <id>https://tocktock.github.io/jekyll/HowTo-MakeYourBlog</id>
    <content type="html">&lt;p&gt;안녕하세요 만냥이의 하루 입니다.&lt;/p&gt;
 
 &lt;p&gt;저를 포함해서 많은 개발자 분들이 깃허브 블로그를 만드는데 지킬을 사용하고 계시는데 오늘은 그 방법에 대해서 글을 써보려고 합니다.&lt;/p&gt;
@@ -1186,9 +1186,9 @@ Fork 버튼을 누르게 되면 로그인 된 내 계정의 Repository 로 해�
  
  <entry>
    <title>백준 16234 인구이동 문제 해설</title>
-   <link href="https://tocktock.github.io/testpost/algorithms-backjun-16234/"/>
+   <link href="https://tocktock.github.io/algorithms/algorithms-backjun-16234/"/>
    <updated>2020-09-30T00:00:00+09:00</updated>
-   <id>https://tocktock.github.io/testpost/algorithms-backjun-16234</id>
+   <id>https://tocktock.github.io/algorithms/algorithms-backjun-16234</id>
    <content type="html">&lt;p&gt;#[백준🔉][16234] 인구이동 문제 해설&lt;/p&gt;
 
 &lt;hr /&gt;
