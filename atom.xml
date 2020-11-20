@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-11-03T05:03:08+09:00</updated>
+ <updated>2020-11-20T20:05:21+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -13,11 +13,225 @@
 
  
  <entry>
-   <title>Algorithms Programmers 3ntiling</title>
-   <link href="https://tocktock.github.io/algorithms-programmers-3NTiling/"/>
+   <title>elasticsearch 소개</title>
+   <link href="https://tocktock.github.io/elasticsearch/elasticsearch-introduction/"/>
+   <updated>2020-11-04T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/elasticsearch/elasticsearch-introduction</id>
+   <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch이란?&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.elastic.co/kr/what-is/elasticsearch&quot;&gt;Elasticsearch 홈페이지 가기 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-전문검색full-text-search&quot;&gt;👓 전문검색(Full-Text-Search)&lt;/h2&gt;
+
+&lt;p&gt;네이버 및 구글에서 원하는 문서를 검색하면 잘 나옵니다.
+어떻게 이런게 가능할까요 ???&lt;/p&gt;
+
+&lt;p&gt;전문검색(Full-Text-Search 이하 FTS)은 검색 단어를 입력하면 해당하는 문서와 &lt;strong&gt;“관련 깊은”&lt;/strong&gt; 자료를 보여주게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;단순한 문자열 일치 연산으로는 네이버나 구글의 검색과 같은 결과를 보여주기는 어렵습니다.
+따라서 FTS 에서는 모든 문서의 단어와 문장을 검색하여 점수를 매기게됩니다. 
+이 과정에서는 머신러닝과 같은 자연어 처리 과정이 포함되게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;당연히 모든 문서의 단어와 문장을 검색하고 점수를 매긴 후 점수 순서대로 보여주기 때문에 
+기존의 문자열 일치 연산보다 복잡한 연산을 하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;다시 말하자면 전문검색은 우리가 원하는 문서와 &lt;strong&gt;관련깊은&lt;/strong&gt; 문서들을 보여주는 기술이라 생각하시면 됩니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-elasticsearch&quot;&gt;🥽 ElasticSearch&lt;/h2&gt;
+
+&lt;p&gt;FTS 기능은 분석 엔진으로 제공될 수도 있고 DBMS에 기능이 탑재될 수도 있습니다.&lt;/p&gt;
+
+&lt;p&gt;Lucene, Solr, ElasticSearch 등 다양한 분석 엔진이 있고 
+Mongodb, Postgresql, AzureSQLDatabase 등 다양한 DBMS에서도 지원하고 있으니 더 검색해보는 걸 추천드립니다.&lt;/p&gt;
+
+&lt;p&gt;그 중에 ElasticSearch 를 소개하려고 합니다.&lt;/p&gt;
+
+&lt;p&gt;ElasticSearch 는 FTS 를 지원하는 오픈소스 검색 및 분석 엔진입니다.
+Apache Lucene을 기반으로 구축되었으며 다음과 같은 사항들을 강조합니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;빠르다.&lt;/strong&gt; Lucene을 기반으로 구축되었기 때문에 빠르며, 실시간에 가까운 속도를 보여줍니다.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;분산적이다.&lt;/strong&gt; 샤드라고 하는 저장형태로 여러 컨테이너에 걸쳐 분산, 복제되어 저장되기 때문에 분산적이라고 할 수 있습니다.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;간소화된 데이터&lt;/strong&gt; Beats와 Logstash, Kibana 를 통해 데이터를 실시간으로 시각화하며 로그, 인프라 메트릭 데이터에 신속히 접속가능합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ElasticSearch 는 또한 다음 언어를 위해서 클라이언트가 공식적으로 지원합니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;자바&lt;/li&gt;
+  &lt;li&gt;자바스크립트&lt;/li&gt;
+  &lt;li&gt;Go&lt;/li&gt;
+  &lt;li&gt;.NET(C#)&lt;/li&gt;
+  &lt;li&gt;PHP&lt;/li&gt;
+  &lt;li&gt;Pearl&lt;/li&gt;
+  &lt;li&gt;Python&lt;/li&gt;
+  &lt;li&gt;Ruby&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;😁&lt;/h2&gt;
+
+&lt;p&gt;프로젝트를 진행하면서 Full Text Search 기능이 필요하여 찾다가 ElasticSearch 를 찾게 되었고
+ElasticSearch 에 흥미를 가지게 되었네요.&lt;/p&gt;
+
+&lt;p&gt;저보다 정리를 잘한 가이드북이 있으니 꼭 보시길 추천드립니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북 ✈&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;다음 시간에는 ElasticSearch 를 Ubuntu에 설치하는 방법으로 찾아뵙겠습니다.&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>프로그래머스 연습문제 3 x N 타일링 풀이</title>
+   <link href="https://tocktock.github.io/algorithms/algorithms-programmers-3NTiling/"/>
    <updated>2020-11-01T00:00:00+09:00</updated>
-   <id>https://tocktock.github.io/algorithms-programmers-3NTiling</id>
-   <content type="html">
+   <id>https://tocktock.github.io/algorithms/algorithms-programmers-3NTiling</id>
+   <content type="html">&lt;p&gt;#[프로그래머스✈][연습문제] 3 x N 타일링 풀이&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://programmers.co.kr/learn/courses/30/lessons/12902&quot;&gt;문제풀러가기✈&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-문제-요약&quot;&gt;👓 문제 요약&lt;/h2&gt;
+
+&lt;p&gt;유명한 DP 문제 2 x N 타일링의 업그레이드 버전&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;이젠 세로의 길이가 2가 아니라 3이다!!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;DP 공식을 잘 유도하면 쉽게 풀 수 있다!!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. &lt;a href=&quot;https://programmers.co.kr/learn/courses/30/lessons/12902&quot;&gt;문제풀러가기&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-문제-풀이&quot;&gt;🔑 문제 풀이&lt;/h2&gt;
+
+&lt;p&gt;dp 공식을 유도해야하는데 순서대로 잘 그려보면 알 수 있다.
+일단 n이 홀수면 타일링을 할 수 없으므로 답은 0 이다.&lt;/p&gt;
+
+&lt;p&gt;그려보면&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;n : 2 일 때 답은 3&lt;/li&gt;
+  &lt;li&gt;n : 3 일 때 답은 0&lt;/li&gt;
+  &lt;li&gt;n : 4 일 때 답은 11 이다.&lt;/li&gt;
+  &lt;li&gt;n : 6 일 때는 답이 41 이다. (너무 많이 그려야해서 찾아봤다)&lt;/li&gt;
+  &lt;li&gt;n : 8 일 때는 답이 153 이다. (너무 많이 그려야해서 찾아봤다)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;n 이 4&lt;/strong&gt;일 때를 생각해보자.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;3X2 타일링 의 방법의 수 * 3X2 타일링의 방법의 수 = 9&lt;/li&gt;
+  &lt;li&gt;n 이 4일 때만 만들 수 있는 방법 2를 더하면 &lt;strong&gt;11&lt;/strong&gt;가지의 경우가 있다.
+    &lt;blockquote&gt;
+      &lt;p&gt;(ㅣ = ㅣ 이런식으로 가운데 가로 타일을 놓는 것)&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;n 이 6&lt;/strong&gt;일 때를 생각해보자.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;3X4 타일링의 방법의 수 * 3X2 타일링의 방법의 수 = 33
+    &lt;blockquote&gt;
+      &lt;p&gt;(3X4 에는 3X2와 3X2로 만들 수 있는 모든 경우의 수가 포함되어 있다.)&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;n 이 6일 때만 만들 수 있는 타일의 수 2&lt;/li&gt;
+  &lt;li&gt;또 생각 해야할 것이 3 x 2 의 타일링의 방법의 수 * 2 와 3 X 4 만이 만들 수 있는 타일의 경우 2가지를 곱한 것을 더한다. = 6
+    &lt;blockquote&gt;
+      &lt;p&gt;왜냐하면 3X4 타일링의 방법의 수 * 3X2 타일링의 방법의 수를 할 때 오른쪽 4칸을 포함하는 오직 3X4만이 만들 수 있는 2가지 경우의 수는 들어가있지 않기 때문이다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;n 이 8&lt;/strong&gt; 일 때는&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;위와 마찬가지로 3X6 일때 타일링의 방법의 수 * 3X2 일 때 타일링의 방법의 수 = 123&lt;/li&gt;
+  &lt;li&gt;n 이 8일 때만 만들 수 있는 경우 : 2&lt;/li&gt;
+  &lt;li&gt;3X2 일 때 타일링의 방법의 수 * 3X6일 때만 만들 수 있는 타일링의 수 = 6&lt;/li&gt;
+  &lt;li&gt;3X4 일 때 타일링의 방법의 수 * 3X4일 때만 만들 수 있는 타일링의 수 = 22&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;감이 오는가?? 3XN 을 타일링 할 때는&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;3X(n-2) * 3X2 를 곱한 값&lt;/li&gt;
+  &lt;li&gt;n 일 때만 만들 수 있는 2가지 경우&lt;/li&gt;
+  &lt;li&gt;3X2 * (3X(n-2)일 때만 만들 수 있는 경우 2개)&lt;/li&gt;
+  &lt;li&gt;3X4 * (3X(n-4)일 때만 만들 수 있는 경우 2개)&lt;strong&gt;….&lt;/strong&gt;  앞의 수가 3X(n-2)에 해당할 때까지 해주면 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;다시 말하면&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;N-2 일때 경우의 수 * 3(3X2타일링의 방법의 수)&lt;/li&gt;
+  &lt;li&gt;N일 때만 만들 수 있는 경우 2개&lt;/li&gt;
+  &lt;li&gt;N-2k(k = 1,2,3….) N-2k가 N-2 가 될 때까지의 수 각각에 2를 곱한 값을 더해주면 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;string&amp;gt;
+#include &amp;lt;vector&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//풀이&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//ex n = 8&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//더해야할 것&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//answer(6) * answer(2)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//answer(2) * 2 (n 이 6일때만 존재하는 2개의 경우)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//answer(4) * 2 (n 이 4일때만 존재하는 2개의 경우)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//dp1의 인덱스는0 부터 시작되며 n이 2씩 증가할 때 마다의 값이 저장됨 n이 2,4,6,8 ....일 때&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//dp2는 인덱스 0 부터 인덱스 n - 2 까지의 각각의 값 *2 의 합이 저장.&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4096&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4096&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dp1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dp1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dp2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dp1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000007&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dp2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000007&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-문제-후기&quot;&gt;🔨 문제 후기&lt;/h2&gt;
+
+&lt;p&gt;디피는 어렵다. 단순한 문제 일 수록 더욱 어렵다.&lt;/p&gt;
+
+&lt;p&gt;생각을 많이하고 시간을 많이 소요하는 문제들도 생각보다 많다.&lt;/p&gt;
+
+&lt;p&gt;화이팅!&lt;/p&gt;
 </content>
  </entry>
  
