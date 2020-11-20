@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 백준 16234 인구이동 문제 해설
-categories: testpost
+categories: Algorithms
 ---
 
 #[백준🔉][16234] 인구이동 문제 해설

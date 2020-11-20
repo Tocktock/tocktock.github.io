@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 지킬을 이용하여 깃허브 블로그 만들기
-categories: HowToMake
+categories: Jekyll
 ---
 
 안녕하세요 만냥이의 하루 입니다.
