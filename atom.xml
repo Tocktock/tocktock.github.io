@@ -4,13 +4,156 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-11-20T20:05:21+09:00</updated>
+ <updated>2020-11-20T20:40:19+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
    <email>qnfmtm666@naver.com</email>
  </author>
 
+ 
+ <entry>
+   <title>elasticsearch 설치하기 (Ubuntu 20.04)</title>
+   <link href="https://tocktock.github.io/elasticsearch/elasticsearch-install/"/>
+   <updated>2020-11-06T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/elasticsearch/elasticsearch-install</id>
+   <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch 설치하기 (Ubuntu 20.04)&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.elastic.co/kr/what-is/elasticsearch&quot;&gt;Elasticsearch 홈페이지 가기 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-잠깐만-이거-했니&quot;&gt;👓 잠깐만 이거 했니??!!&lt;/h2&gt;
+
+&lt;p&gt;다음과 같은 사항이 필요합니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Ubuntu 20.04 버전이 깔려 있는 OS&lt;/li&gt;
+  &lt;li&gt;듀얼코어 이상의 cpu 와 4gb 이상의 램
+    &lt;blockquote&gt;
+      &lt;p&gt;원활한 실행을 위해 필요하며 필수는 아닙니다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ElasticSearch는 자바로 만들어졌기 때문에 JDK 가 설치되어야 하지만 ElasticSearch를 설치하면서 JDK 가 같이 깔리게 됩니다. 자바 문제가 발생한다면 지원하는 JDK를 다시 깔고 JAVA_HOME 변수를 다시 설정해주세요. &lt;a href=&quot;https://www.elastic.co/kr/support/matrix#matrix_jvm&quot;&gt;Elasticsearch JDK 버전 확인하기 ✈&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-따라와&quot;&gt;🥽 따라와&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;설치과정은 ElasticSearch 7.x 버전을 기준으로 합니다. 버전이 다르면 수행이 다를 수 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;step-1---설-치-하-자&quot;&gt;Step 1 - 설 치 하 자&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Ubuntu 에서는 ElasticSearch 컴포넌트가 기본적으로 이용이 불가능합니다. 하지만 apt 명령으로 설치 후 Elastic 의 패키지를 설치한다면 이용 가능합니다.&lt;/li&gt;
+  &lt;li&gt;ElasticSearch는 너를 사랑해서 Elastic 인증키로 서명이 되어 있습니다.(보안을 위해서라는 뜻) 키를 통해 인증받은 패키지들은 모두 사용가능합니다.&lt;/li&gt;
+  &lt;li&gt;설치를 위해 다음을 실행하여 Elastic Public GPG 키를 추가해주세요
+    &lt;blockquote&gt;
+      &lt;table&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td&gt;$ curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch&lt;/td&gt;
+            &lt;td&gt;sudo apt-key add -&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;sources.list.d 폴더에 Elastic 소스리스트를 추가해주세요! APT 가 새로운 소스를 찾아야하거든요!! (다음 입력하라는 뜻)
+    &lt;blockquote&gt;
+      &lt;table&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td&gt;$ echo “deb https://artifacts.elastic.co/packages/7.x/apt stable main”&lt;/td&gt;
+            &lt;td&gt;sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;package lists 들을 업데이트 해야겠죠?
+    &lt;blockquote&gt;
+      &lt;p&gt;$ sudo apt update&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;드디어 설치!
+    &lt;blockquote&gt;
+      &lt;p&gt;$ sudo apt install elasticsearch&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;두둔&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2---설-정-하-자&quot;&gt;Step 2 - 설 정 하 자&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;로컬 머신에서 돌리기 위해서 약간의 수정이 필요하답니다!
+ElasticSearch 는 elasticsearch.yml 에서 설정 관리되고 있습니다. (열어라는 뜻)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;$ sudo nano /etc/elasticsearch/elasticsearch.yml&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;내려 내려 내려 내려 (다음 과 같은 영역을 찾아라는 뜻) 그리고 바꿔 (: 이후에 내용을 원하는 값을 설정합니다.)
+# ———————————- Network ———————————–
+#
+# Set the bind address to a specific IP (IPv4 or IPv6):
+#
+network.host: localhost
+. . .&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;h2 id=&quot;주의-yml-파일은-포맷이-매우-중요합니다----다음에-반드시-뛰어쓰기를-해야합니다&quot;&gt;&lt;strong&gt;주의&lt;/strong&gt; yml 파일은 포맷이 매우 중요합니다 ‘ : ‘ 다음에 반드시 뛰어쓰기를 해야합니다.&lt;/h2&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;step-3---실-행-하-자&quot;&gt;Step 3 - 실 행 하 자&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;systemctl 명령으로 실행해봅시다.&lt;/li&gt;
+  &lt;li&gt;초기 수행에 시간이 걸리니 잠시 기다려주세.
+    &lt;blockquote&gt;
+      &lt;p&gt;$ sudo systemctl start elasticsearch&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;한번 확인해볼까요?
+    &lt;blockquote&gt;
+      &lt;p&gt;$ service elasticsearch status&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;위의 명령을 입력후, active running 단어가 보이면 정상 실행중이라는 겁니다. 램 많이 잡아먹네요.&lt;/li&gt;
+  &lt;li&gt;이제 컴퓨터가 켜질 때마다 자동으로 실항하게 해줍니다.
+    &lt;blockquote&gt;
+      &lt;p&gt;$ sudo systemctl enable elasticsearch&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;step-4---확-인-하-자&quot;&gt;Step 4 - 확 인 하 자&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;별도로 포트 설정을 안했다면 &lt;a href=&quot;http://localhost:9200&quot;&gt;http://localhost:9200&lt;/a&gt; 으로 접속하면 json 형식으로 값이 뜨면 성공!!
+    &lt;h2&gt;😁&lt;/h2&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;고생하셨습니다!!&lt;/p&gt;
+
+&lt;p&gt;기본적인 사용법에 대해서는 다음 포스트에서 ~&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>elasticsearch 소개</title>
@@ -75,10 +218,11 @@ Apache Lucene을 기반으로 구축되었으며 다음과 같은 사항들을 �
   &lt;li&gt;PHP&lt;/li&gt;
   &lt;li&gt;Pearl&lt;/li&gt;
   &lt;li&gt;Python&lt;/li&gt;
-  &lt;li&gt;Ruby&lt;/li&gt;
+  &lt;li&gt;
+    &lt;h2 id=&quot;ruby&quot;&gt;Ruby&lt;/h2&gt;
+    &lt;h2&gt;😁&lt;/h2&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h2&gt;😁&lt;/h2&gt;
 
 &lt;p&gt;프로젝트를 진행하면서 Full Text Search 기능이 필요하여 찾다가 ElasticSearch 를 찾게 되었고
 ElasticSearch 에 흥미를 가지게 되었네요.&lt;/p&gt;
