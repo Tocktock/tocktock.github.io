@@ -15,6 +15,8 @@ ul.sidebar-categories { padding-left: 3rem; }
 
 html { font-family: "Sunflower", sans-serif; }
 
+h1, h2, h3, h4 { font-family: "Sunflower", sans-serif; }
+
 .sidebar-item.description { color: bisque; font-size: 1.25rem; }
 
 .post-image-center { align-content: center; }
