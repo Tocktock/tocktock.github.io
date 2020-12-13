@@ -48,6 +48,7 @@ categories: elasticsearch
 ElasticSearch 는 elasticsearch.yml 에서 설정 관리되고 있습니다. (열어라는 뜻)
 
 > $ sudo nano /etc/elasticsearch/elasticsearch.yml
+>
 - 내려 내려 내려 내려 (다음 과 같은 영역을 찾아라는 뜻) 그리고 바꿔 (: 이후에 내용을 원하는 값을 설정합니다.)
   
 >\# ---------------------------------- Network -----------------------------------
@@ -58,6 +59,7 @@ ElasticSearch 는 elasticsearch.yml 에서 설정 관리되고 있습니다. (�
 >. . .
 
 > **주의** yml 파일은 포맷이 매우 중요합니다 ' : ' 다음에 반드시 뛰어쓰기를 해야합니다.
+
 ---
 
 ### Step 3 - 실 행 하 자
