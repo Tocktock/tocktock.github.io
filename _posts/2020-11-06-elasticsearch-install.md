@@ -49,6 +49,7 @@ ElasticSearch 는 elasticsearch.yml 에서 설정 관리되고 있습니다. (�
 
 > $ sudo nano /etc/elasticsearch/elasticsearch.yml
 - 내려 내려 내려 내려 (다음 과 같은 영역을 찾아라는 뜻) 그리고 바꿔 (: 이후에 내용을 원하는 값을 설정합니다.)
+  
 >\# ---------------------------------- Network -----------------------------------
 >\#
 >\# Set the bind address to a specific IP (IPv4 or IPv6):
