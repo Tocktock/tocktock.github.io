@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-12-13T23:38:33+09:00</updated>
+ <updated>2020-12-13T23:41:02+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -211,6 +211,7 @@ ElasticSearch 는 elasticsearch.yml 에서 설정 관리되고 있습니다. (�
 
 &lt;blockquote&gt;
   &lt;p&gt;$ sudo nano /etc/elasticsearch/elasticsearch.yml&lt;/p&gt;
+
   &lt;ul&gt;
     &lt;li&gt;내려 내려 내려 내려 (다음 과 같은 영역을 찾아라는 뜻) 그리고 바꿔 (: 이후에 내용을 원하는 값을 설정합니다.)&lt;/li&gt;
   &lt;/ul&gt;
