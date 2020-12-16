@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-12-16T21:55:13+09:00</updated>
+ <updated>2020-12-16T22:36:57+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -78,6 +78,8 @@
 &lt;p&gt;기본적으로 리눅스의 Curl 기능 또는 vscode 의 rest client 등의 기능과 같이 URL을 이용해 자원에 접근제어를 할 수도 있지만 우리가 저번시간에 설치한 Kibana 의 Dev Tool 기능을 통해 Elastic 환경을 실습해보도록 하겠습니다.&lt;/p&gt;
 
 &lt;p&gt;정상적으로 Kibana 가 설치되고 실행이 되고 있다면 &lt;a href=&quot;http://localhost:5601&quot;&gt;http://localhost:5601&lt;/a&gt; 에 접속하면 Kibana 어플리케이션 메인화면이 기다리고 있어요!!&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;/assets/img/three_hits.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;/assets/img/elasticsearch-CRUD/kibana_main.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
 
