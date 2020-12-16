@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-12-16T20:35:04+09:00</updated>
+ <updated>2020-12-16T21:55:13+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -79,7 +79,7 @@
 
 &lt;p&gt;정상적으로 Kibana 가 설치되고 실행이 되고 있다면 &lt;a href=&quot;http://localhost:5601&quot;&gt;http://localhost:5601&lt;/a&gt; 에 접속하면 Kibana 어플리케이션 메인화면이 기다리고 있어요!!&lt;/p&gt;
 
-&lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;../assets/img/elasticsearch-CRUD/kibana_main.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;/assets/img/elasticsearch-CRUD/kibana_main.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;좌측 상단의 메뉴 버튼을 누른후 아래쪽의 Dev Tools 로 들어가줍니다.&lt;/p&gt;
 
@@ -88,7 +88,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;../assets/img/elasticsearch-CRUD/devTools_main.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;/assets/img/elasticsearch-CRUD/devTools_main.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Dev Tools 콘솔에서 좌측에서 Curl 과 비슷한 기능을 수행하고 우측에서 그 결과를 볼 수 있습니다.&lt;/p&gt;
 
