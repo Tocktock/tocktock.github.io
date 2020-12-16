@@ -56,6 +56,7 @@ LogStash는 다음에 또 알아봅시다~
 
 > $ service kibana status
 
+정상적으로 Kibana 가 실행중이라면 <http://localhost:5601> 를 통해 앱을 확인하실 수 있습니다.
 
 끝 입니다. 다음에는 Kibana 의 dev tool 을 이용해서 REST API 의 기본인 CRUD 기능을 
 배워보겠습니다. ! ! !
