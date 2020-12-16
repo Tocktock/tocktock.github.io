@@ -49,7 +49,7 @@ ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 �
 
 정상적으로 Kibana 가 설치되고 실행이 되고 있다면 <http://localhost:5601> 에 접속하면 Kibana 어플리케이션 메인화면이 기다리고 있어요!!
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/kibana_main.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticsearch-CRUD/kibana_main.png" width="70%" alt="테마선택"/>
 
 좌측 상단의 메뉴 버튼을 누른후 아래쪽의 Dev Tools 로 들어가줍니다.
 
@@ -58,7 +58,7 @@ ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 �
 
 <br><br>
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/devTools_main.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticsearch-CRUD/devTools_main.png" width="70%" alt="테마선택"/>
 
 Dev Tools 콘솔에서 좌측에서 Curl 과 비슷한 기능을 수행하고 우측에서 그 결과를 볼 수 있습니다.
 
