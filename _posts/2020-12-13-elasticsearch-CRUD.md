@@ -49,18 +49,16 @@ ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 �
 
 정상적으로 Kibana 가 설치되고 실행이 되고 있다면 <http://localhost:5601> 에 접속하면 Kibana 어플리케이션 메인화면이 기다리고 있어요!!
 
-<img class="post-image-center" src="/assets/img/three_hits.png" width="70%" alt="테마선택"/>
-
-<img class="post-image-center" src="/assets/img/elasticsearch-CRUD/kibana_main.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/kibana_main.png" width="70%" alt="테마선택"/>
 
 좌측 상단의 메뉴 버튼을 누른후 아래쪽의 Dev Tools 로 들어가줍니다.
 
 <br>
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/stack_management.png" width="30%" alt="테마선택"/>  
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택"/>  
 
 <br><br>
 
-<img class="post-image-center" src="/assets/img/elasticsearch-CRUD/devTools_main.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/devTools_main.png" width="70%" alt="테마선택"/>
 
 Dev Tools 콘솔에서 좌측에서 Curl 과 비슷한 기능을 수행하고 우측에서 그 결과를 볼 수 있습니다.
 
@@ -92,7 +90,7 @@ mydoc 이라는 Index 를 생성해봅시다.
 
 우측에 바로 
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/fourth_result.png" width="30%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/fourth_result.png" width="30%" alt="테마선택"/>
 
 위와 같은 형식의 결과 데이터가 보인다면 성공입니다. 우측상단에 201 status 코드와 해당 요청을 수행하는데 걸린 시간 또한 표시가 됩니다.
 
@@ -106,17 +104,17 @@ mydoc 이라는 Index 를 생성해봅시다.
 
 좌측 상단의 메뉴 - 하단의 Stack Management 를 클릭합니다.
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/stack_management.png" width="30%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택"/>
 
 좌측 중간즈음 Kibana 카테고리 아래 Index Patterns 를 클릭합니다.
 우리가 보려는 Index 를 명시하기 위해 Create Index pattern 을 클릭합니다.
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/index_pattern_mydoc.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/index_pattern_mydoc.png" width="70%" alt="테마선택"/>
 
 Index pattern name 칸에 mydoc 을 입력하고 Next Step 을 클릭합니다.
 
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/index_pattern_step2.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/index_pattern_step2.png" width="70%" alt="테마선택"/>
 
 우리가 만든 데이터에는 시간 데이터가 없기 때문에 아무것도 선택하지 않아도 생성됩니다.
 시간 데이터가 한 개 이상이라면 시간별로 데이터를 추적할 수 있습니다.
@@ -126,7 +124,7 @@ Create Index Pattern 을 클릭합시다.
 
 여기서 우리가 위에서 입력했던 Index 의 데이터들이 나타나게 됩니다.
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/three_hits.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three_hits.png" width="70%" alt="테마선택"/>
 
 데이터를 생성하는 것은 이제 끝났습니다.
 
@@ -139,7 +137,7 @@ Read 는 매우 단순합니다!
 위와 같이 GET <인덱스>/_doc/<아이디> 형식으로 요청을 하게 되면 해당하는 데이터가
 결과값으로 나오게 됩니다.!!
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/get_firstdoc.png" width="30%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/get_firstdoc.png" width="30%" alt="테마선택"/>
 
 우하우하!우하! 
 자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다. 
@@ -163,11 +161,11 @@ second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 �
 
 성공하면 아래과 같이 result 에 updated 라는 결과값이 표시됩니다.
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/updateDoc_result.png" width="30%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/updateDoc_result.png" width="30%" alt="테마선택"/>
 
 Kibana 의 Discover 탭을 보게 되면
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/updated_second_discover.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/updated_second_discover.png" width="70%" alt="테마선택"/>
 
 우하! 행복하군요 Update 가 성공된 것을 확인할 수 있습니다.!!
 
@@ -179,7 +177,7 @@ Kibana 의 Discover 탭을 보게 되면
 
 바로 실행!!
 
-<img class="post-image-center" src="../assets/img/elasticsearch-CRUD/remove_fourthDoc_result.png" width="30%" alt="자료 삭제"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/remove_fourthDoc_result.png" width="30%" alt="자료 삭제"/>
 
 > 삭제 결과 연산을 캡처 하는 것을 깜빡해서 데이터를 하나 더 만들고 다시 삭제해서 이전과 아이디가 다릅니다. ㅜㅜ 
 
@@ -192,10 +190,10 @@ Kibana 의 Discover 탭을 보게 되면
         DELETE mydoc
 
 삭제... 요청...
-<img class="post-image-center" src="..../assets/img/elasticsearch-CRUD/deleteDoc.png" width="50%" alt="자료 삭제"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc.png" width="50%" alt="자료 삭제"/>
 
 
-<img class="post-image-center" src="..../assets/img/elasticsearch-CRUD/deleteDoc_result.png" width="30%" alt="자료 삭제"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc_result.png" width="30%" alt="자료 삭제"/>
 
 성공... 
 
