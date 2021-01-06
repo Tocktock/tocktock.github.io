@@ -4,13 +4,118 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2020-12-16T22:43:37+09:00</updated>
+ <updated>2021-01-06T14:04:11+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
    <email>qnfmtm666@naver.com</email>
  </author>
 
+ 
+ <entry>
+   <title>elasticsearch Search 기능 !! Full Text Search !!</title>
+   <link href="https://tocktock.github.io/elasticsearch/elasticsearch-fulltextsearch/"/>
+   <updated>2021-01-06T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/elasticsearch/elasticsearch-fulltextsearch</id>
+   <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch CRUD 기본사용법 (feat. Kibana)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.elastic.co/kr/what-is/elasticsearch&quot;&gt;Elasticsearch 홈페이지 가기 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;elasticsearch-의-진정한-기능-full-text-search&quot;&gt;ElasticSearch 의 진정한 기능 Full Text Search!!&lt;/h2&gt;
+
+&lt;p&gt;이번에는 ElasticSearch 를 쓰는 이유중 하나인 전문검색 (Full Text Search) 의 간단한 기능을 알아보고자 합니다.
+이 부분에 대해서는 내용이 워낙 방대하다보니 제 글은 맛보기 용으로 생각해주시고 &lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북&lt;/a&gt; 을 더 참고해주시면 감사하겠습니다.!&lt;/p&gt;
+
+&lt;h3 id=&quot;전문검색&quot;&gt;전문검색?&lt;/h3&gt;
+
+&lt;p&gt;전문검색은 간단한 예시로 네이버의 검색, 구글의 검색 기능을 생각하시면 편합니다.
+데이터베이스의 특징인 특정 단어의 포함 여부, 조건문의 기능과 유사하지만 특정 단어와의 상관관계에 대한 색인기능이 추가되어 있다고 생각하시면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;글로만 읽어도 엄청 복잡합니다. 바로 예시 들어가겠습니다.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>elasticsearch 여러 데이터를 한번에 저장! Bulk!!</title>
+   <link href="https://tocktock.github.io/elasticsearch/elasticsearch-bulk/"/>
+   <updated>2021-01-06T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/elasticsearch/elasticsearch-bulk</id>
+   <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch bulk 기본사용법 (feat. Kibana)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.elastic.co/kr/what-is/elasticsearch&quot;&gt;Elasticsearch 홈페이지 가기 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;이번에는 쉬어가는 타임으로 bulk 기능을 알아보죠~!
+하지만 반드시 필수 요소라는것 !!&lt;/p&gt;
+
+&lt;h2 id=&quot;-bulk-one-shot&quot;&gt;🚚🚚 Bulk One Shot!!&lt;/h2&gt;
+
+&lt;p&gt;ElasticSearch 의 여러 명령을 실행하기 위해서는 bulk 기능이 정말 편리합니다.
+bulk 는 기본적인 CRUD 명령 수행이 가능합니다.&lt;/p&gt;
+
+&lt;p&gt;바로 예를 보시죠!&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POST _bulk
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;test&quot;, &quot;_id&quot; : &quot;1&quot; } }
+{ &quot;field1&quot; : &quot;value1&quot; }
+{ &quot;delete&quot; : { &quot;_index&quot; : &quot;test&quot;, &quot;_id&quot; : &quot;2&quot; } }
+{ &quot;create&quot; : { &quot;_index&quot; : &quot;test&quot;, &quot;_id&quot; : &quot;3&quot; } }
+{ &quot;field1&quot; : &quot;value3&quot; }
+{ &quot;update&quot; : {&quot;_id&quot; : &quot;1&quot;, &quot;_index&quot; : &quot;test&quot;} }
+{ &quot;doc&quot; : {&quot;field2&quot; : &quot;value2&quot;} }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;bulk 기능은 POST 메소드로 “POST url/_bulk” 로 사용 가능합니다.&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;kibana로 테스트 하시는 경우 url을 따로 지정안해주셔도 됩니다.
+커맨드로 하시는 경우는 POST localhost:9200/_bulk 로 사용가능하십니다!&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이후에 Request Body 를 포함하여 요청을 전송해야합니다.&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;create, index, update, delete 기능은 해당 키워드 안에 curly brace 로 묶습니다.&lt;/li&gt;
+      &lt;li&gt;curly brace 안에는 _index 로서 원하는 인덱스, _id로 원하는 id를 지정하여 기능을 수행할 수 있습니다.&lt;/li&gt;
+      &lt;li&gt;delete 를 제외한 create, index, update 다음에는 한 줄의 curly brace 단계가 더 있는데요. 이는 원하는 기능을 수행하기 위해 추가하는 필드입니다.&lt;/li&gt;
+      &lt;li&gt;특히 update 의 경우에는 추가 필드에 “doc” 키워드를 이용해서 접근하셔야 합니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;속도는-&quot;&gt;속도는 🚀🚀&lt;/h2&gt;
+
+&lt;p&gt;기본적으로 한 번의 대량의 명령 데이터를 실행할 때는 bulk 기능을 쓰는 것이 속도가 빠릅니다.
+최적의 데이터 명령 수를 알기 위해서는 벤치마크를 이용하여 처음에는 100, 200, 400 으로 늘려가며 테스트 해보는 것을 추천드립니다!! 어느정도 늘렸을 때 속도가 이전 단계보다 매우 완화된 상태라면 그 전단계가 최적화된 명령 개수입니다.&lt;/p&gt;
+
+&lt;p&gt;너무 많은 명령 데이터를 사용하개 되면 클러스터의 메모리에 과부하를 주게되니 명심하세요!&lt;/p&gt;
+
+&lt;p&gt;정말 공부할 수록 훌륭한 검색엔진입니다. 웹 공부를 하시는 분은 ElasticSearch를 무조건 강추!! 하는바입니다 ^^&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>elasticsearch 기본사용법 (CRUD !!)</title>
@@ -20,6 +125,7 @@
    <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch CRUD 기본사용법 (feat. Kibana)&lt;/p&gt;
 
 &lt;hr /&gt;
+
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북 ✈&lt;/a&gt;&lt;/p&gt;
@@ -110,7 +216,7 @@
 &lt;p&gt;위의 텍스트를 Dev Tools 콘솔 좌측에 입력후 해당 줄에 생기는 ▶ 이렇게 생긴 삼각형 버튼을 누르면 해당하는 요청이 전송됩니다.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Dev Tools 에서는 http://&lt;호스트&gt;:&lt;포트&gt;/ 가 생략되어 있습니다. 
+  &lt;p&gt;Dev Tools 에서는 http://&lt;호스트&gt;:&lt;포트&gt;/ 가 생략되어 있습니다.
 즉 위의 요청은 원래대로라면 PUT http://localhost:5601/mydoc 입니다. Dev tools 에서는 이 사항이 동일시 적용됩니다.&lt;/포트&gt;&lt;/호스트&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -120,7 +226,7 @@
     {
     &quot;title&quot; : &quot;first Title&quot;,
     &quot;contents&quot; : &quot;first contents&quot;
-    } 
+    }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;우측에 바로&lt;/p&gt;
@@ -132,9 +238,9 @@
 &lt;p&gt;저는 second, third 가 들어가는 데이터를 두개 더 만들었습니다.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;POST &lt;인덱스&gt;/_doc/&lt;아이디&gt; 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
- 해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
-또한 PUT 메소드를 통해 PUT &lt;인덱스&gt;/_create/&lt;아이디&gt; 처럼 생성만 가능하게도 할 수 있씁니다.&lt;/아이디&gt;&lt;/인덱스&gt;&lt;/아이디&gt;&lt;/인덱스&gt;&lt;/p&gt;
+  &lt;p&gt;POST &lt;인덱스&gt;/\_doc/&lt;아이디&gt; 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
+해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
+또한 PUT 메소드를 통해 PUT &lt;인덱스&gt;/\_create/&lt;아이디&gt; 처럼 생성만 가능하게도 할 수 있씁니다.&lt;/아이디&gt;&lt;/인덱스&gt;&lt;/아이디&gt;&lt;/인덱스&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;이제 확인을 해봅시다. 😎😎&lt;/p&gt;
@@ -160,7 +266,7 @@ Create Index Pattern 을 클릭합시다.&lt;/p&gt;
 
 &lt;p&gt;여기서 우리가 위에서 입력했던 Index 의 데이터들이 나타나게 됩니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;/assets/img/elasticSearch-CRUD/three_hits.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;/assets/img/elasticSearch-CRUD/three.png&quot; width=&quot;70%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;데이터를 생성하는 것은 이제 끝났습니다.&lt;/p&gt;
 
@@ -171,13 +277,13 @@ Create Index Pattern 을 클릭합시다.&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    GET mydoc/_doc/cdRVaXYBNC5Keng2JJce
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;위와 같이 GET &lt;인덱스&gt;/_doc/&lt;아이디&gt; 형식으로 요청을 하게 되면 해당하는 데이터가
+&lt;p&gt;위와 같이 GET &lt;인덱스&gt;/\_doc/&lt;아이디&gt; 형식으로 요청을 하게 되면 해당하는 데이터가
 결과값으로 나오게 됩니다.!!&lt;/아이디&gt;&lt;/인덱스&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img class=&quot;post-image-center&quot; src=&quot;/assets/img/elasticSearch-CRUD/get_firstdoc.png&quot; width=&quot;30%&quot; alt=&quot;테마선택&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;우하우하!우하! 
-자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다. 
+&lt;p&gt;우하우하!우하!
+자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다.
 이제 얼마 안남았으니 영차영차! 😁😁😁😁&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -192,7 +298,7 @@ Create Index Pattern 을 클릭합시다.&lt;/p&gt;
 second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 만들어줍니다.
 해당하는 Id 가 존재할 경우 데이터 전체를 업데이트하게 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm 
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
     {
     &quot;title&quot; : &quot;updated second title&quot;,
     &quot;contents&quot; : &quot;updated second contents&quot;
@@ -213,7 +319,7 @@ second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 �
 
 &lt;p&gt;마지막입니다.!! 이것만 알면 CRUD 기능은 끝 입니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm 
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;바로 실행!!&lt;/p&gt;

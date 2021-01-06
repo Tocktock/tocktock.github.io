@@ -115,12 +115,12 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/elasticsearch"
-            >elasticsearch (4)</a
+            >elasticsearch (6)</a
           >
         </li>
         
       </ul>
-                                 
+                                     
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -128,7 +128,7 @@
   </nav>
 
   <div class="sidebar-item">
-    <p>&copy; 2020. All rights reserved.</p>
+    <p>&copy; 2021. All rights reserved.</p>
   </div>
 </div>
 
@@ -151,6 +151,7 @@
   <p>#[🌎elasticsearch] Elasticsearch CRUD 기본사용법 (feat. Kibana)</p>
 
 <hr />
+
 <ul>
   <li>
     <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
@@ -241,7 +242,7 @@
 <p>위의 텍스트를 Dev Tools 콘솔 좌측에 입력후 해당 줄에 생기는 ▶ 이렇게 생긴 삼각형 버튼을 누르면 해당하는 요청이 전송됩니다.</p>
 
 <blockquote>
-  <p>Dev Tools 에서는 http://<호스트>:<포트>/ 가 생략되어 있습니다. 
+  <p>Dev Tools 에서는 http://<호스트>:<포트>/ 가 생략되어 있습니다.
 즉 위의 요청은 원래대로라면 PUT http://localhost:5601/mydoc 입니다. Dev tools 에서는 이 사항이 동일시 적용됩니다.</포트></호스트></p>
 </blockquote>
 
@@ -251,7 +252,7 @@
     {
     "title" : "first Title",
     "contents" : "first contents"
-    } 
+    }
 </code></pre></div></div>
 
 <p>우측에 바로</p>
@@ -263,9 +264,9 @@
 <p>저는 second, third 가 들어가는 데이터를 두개 더 만들었습니다.</p>
 
 <blockquote>
-  <p>POST <인덱스>/_doc/<아이디> 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
- 해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
-또한 PUT 메소드를 통해 PUT <인덱스>/_create/<아이디> 처럼 생성만 가능하게도 할 수 있씁니다.</아이디></인덱스></아이디></인덱스></p>
+  <p>POST <인덱스>/\_doc/<아이디> 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
+해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
+또한 PUT 메소드를 통해 PUT <인덱스>/\_create/<아이디> 처럼 생성만 가능하게도 할 수 있씁니다.</아이디></인덱스></아이디></인덱스></p>
 </blockquote>
 
 <p>이제 확인을 해봅시다. 😎😎</p>
@@ -291,7 +292,7 @@ Create Index Pattern 을 클릭합시다.</p>
 
 <p>여기서 우리가 위에서 입력했던 Index 의 데이터들이 나타나게 됩니다.</p>
 
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three_hits.png" width="70%" alt="테마선택" /></p>
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three.png" width="70%" alt="테마선택" /></p>
 
 <p>데이터를 생성하는 것은 이제 끝났습니다.</p>
 
@@ -302,13 +303,13 @@ Create Index Pattern 을 클릭합시다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    GET mydoc/_doc/cdRVaXYBNC5Keng2JJce
 </code></pre></div></div>
 
-<p>위와 같이 GET <인덱스>/_doc/<아이디> 형식으로 요청을 하게 되면 해당하는 데이터가
+<p>위와 같이 GET <인덱스>/\_doc/<아이디> 형식으로 요청을 하게 되면 해당하는 데이터가
 결과값으로 나오게 됩니다.!!</아이디></인덱스></p>
 
 <p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/get_firstdoc.png" width="30%" alt="테마선택" /></p>
 
-<p>우하우하!우하! 
-자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다. 
+<p>우하우하!우하!
+자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다.
 이제 얼마 안남았으니 영차영차! 😁😁😁😁</p>
 
 <blockquote>
@@ -323,7 +324,7 @@ Create Index Pattern 을 클릭합시다.</p>
 second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 만들어줍니다.
 해당하는 Id 가 존재할 경우 데이터 전체를 업데이트하게 됩니다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
     {
     "title" : "updated second title",
     "contents" : "updated second contents"
@@ -344,7 +345,7 @@ second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 �
 
 <p>마지막입니다.!! 이것만 알면 CRUD 기능은 끝 입니다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
 </code></pre></div></div>
 
 <p>바로 실행!!</p>
@@ -388,27 +389,27 @@ second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 �
     
     <li>
       <h3>
+        <a href="/elasticsearch/elasticsearch-fulltextsearch/">
+          elasticsearch Search 기능 !! Full Text Search !!
+          <small>06 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/elasticsearch/elasticsearch-bulk/">
+          elasticsearch 여러 데이터를 한번에 저장! Bulk!!
+          <small>06 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
         <a href="/elasticsearch/elasticsearch-Kibana-install/">
           elasticsearch Kibana install !!
           <small>10 Dec 2020</small>
-        </a>
-      </h3>
-    </li>
-    
-    <li>
-      <h3>
-        <a href="/elasticsearch/elasticsearch-install/">
-          elasticsearch 설치하기 (Ubuntu 20.04)
-          <small>06 Nov 2020</small>
-        </a>
-      </h3>
-    </li>
-    
-    <li>
-      <h3>
-        <a href="/elasticsearch/elasticsearch-introduction/">
-          elasticsearch 소개
-          <small>04 Nov 2020</small>
         </a>
       </h3>
     </li>
