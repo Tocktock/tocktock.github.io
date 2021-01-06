@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-06T14:04:11+09:00</updated>
+ <updated>2021-01-06T15:13:06+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -17,7 +17,7 @@
    <link href="https://tocktock.github.io/elasticsearch/elasticsearch-fulltextsearch/"/>
    <updated>2021-01-06T00:00:00+09:00</updated>
    <id>https://tocktock.github.io/elasticsearch/elasticsearch-fulltextsearch</id>
-   <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch CRUD 기본사용법 (feat. Kibana)&lt;/p&gt;
+   <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch search 기본사용법 (feat. Kibana)&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -32,17 +32,108 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;elasticsearch-의-진정한-기능-full-text-search&quot;&gt;ElasticSearch 의 진정한 기능 Full Text Search!!&lt;/h2&gt;
+&lt;h2 id=&quot;-elasticsearch-의-진정한-기능-full-text-search&quot;&gt;🧡 ElasticSearch 의 진정한 기능 Full Text Search!!&lt;/h2&gt;
 
 &lt;p&gt;이번에는 ElasticSearch 를 쓰는 이유중 하나인 전문검색 (Full Text Search) 의 간단한 기능을 알아보고자 합니다.
 이 부분에 대해서는 내용이 워낙 방대하다보니 제 글은 맛보기 용으로 생각해주시고 &lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북&lt;/a&gt; 을 더 참고해주시면 감사하겠습니다.!&lt;/p&gt;
 
-&lt;h3 id=&quot;전문검색&quot;&gt;전문검색?&lt;/h3&gt;
+&lt;h2 id=&quot;전문검색&quot;&gt;👓전문검색?&lt;/h2&gt;
 
 &lt;p&gt;전문검색은 간단한 예시로 네이버의 검색, 구글의 검색 기능을 생각하시면 편합니다.
 데이터베이스의 특징인 특정 단어의 포함 여부, 조건문의 기능과 유사하지만 특정 단어와의 상관관계에 대한 색인기능이 추가되어 있다고 생각하시면 됩니다.&lt;/p&gt;
 
-&lt;p&gt;글로만 읽어도 엄청 복잡합니다. 바로 예시 들어가겠습니다.&lt;/p&gt;
+&lt;p&gt;글로만 읽어도 엄청 복잡합니다. 바로 예시 들어가겠습니다.
+일단 ElasticSearch 와 Kibana 를 켜 주시고 Kibana DevTools 로 들어가주세요! 이전에 했으니 여러분 다 할 수 있습니다!&lt;/p&gt;
+
+&lt;h2 id=&quot;-일단-해보자&quot;&gt;😂 일단 해보자!&lt;/h2&gt;
+
+&lt;p&gt;먼저 이전에 배운 bulk 키워드를 통해 검색할 데이터를 먼저 생성합시다!!
+copy copy~&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POST _bulk
+{ &quot;index&quot; : { &quot;_index*&quot; : &quot;test&quot;, &quot;_id&quot; : &quot;1&quot; } }
+{ &quot;field1&quot; : &quot;i love my cute cat&quot; }
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;test&quot;, &quot;_id&quot; : &quot;2&quot; } }
+{ &quot;field1&quot; : &quot;my dog is so big&quot; }
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;test&quot;, &quot;_id&quot; : &quot;3&quot; } }
+{ &quot;field1&quot; : &quot;i am big&quot; }
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;test&quot;, &quot;_id&quot; : &quot;4&quot; } }
+{ &quot;field1&quot; : &quot;my girl friend is cute&quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;제일 먼저 간단한 검색인 URI 검색부터!&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;GET test/_search?q=dog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;자 그럼 다음과 같은 결과가 나올겁니다!&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;took&quot; : 0,
+    &quot;timed_out&quot; : false,
+    &quot;_shards&quot; : {
+        &quot;total&quot; : 1,
+        &quot;successful&quot; : 1,
+        &quot;skipped&quot; : 0,
+        &quot;failed&quot; : 0
+    },
+    &quot;hits&quot; : {
+        &quot;total&quot; : {
+        &quot;value&quot; : 1,
+        &quot;relation&quot; : &quot;eq&quot;
+        },
+        &quot;max_score&quot; : 1.1516262,
+        &quot;hits&quot; : [
+            {
+                &quot;_index&quot; : &quot;test&quot;,
+                &quot;_type&quot; : &quot;_doc&quot;,
+                &quot;_id&quot; : &quot;2&quot;,
+                &quot;_score&quot; : 1.1516262,
+                &quot;_source&quot; : {
+                &quot;field1&quot; : &quot;my dog is so big&quot;
+                }
+            }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;“hits”&lt;/strong&gt; 필드를 주목합시다. 만약 해당 검색에서 아무런 결과가 없다면 이 필드안에는 아무 값이 없습니다.
+&lt;strong&gt;“hits”&lt;/strong&gt; 필드 안에 내용을 잘 보시면 &lt;strong&gt;_score&lt;/strong&gt; 항목이 있습니다. 위에서 검색한 키워드인 “dog” 와 얼마나 상관관계가 있는지에 대한 점수 입니다. 정말 유용한 지표죠?&lt;/p&gt;
+
+&lt;p&gt;URI 검색은&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;GET &amp;lt;index&amp;gt;/_search=?q=&amp;lt;value&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;와 같은 형태의 검색을 말합니다. Request Body 에 옵션을 붙여서 더 자세한 검색이 가능합니다.
+다음 명령어는 test 인덱스의 field1 의 필드에서만 “dog” 를 검색하는 기능입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;GET test/_search
+{
+    &quot;query&quot;: {
+        &quot;match&quot;: {
+        &quot;field1&quot;: &quot;dog&quot;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;만약 특정 인덱스의 모든 document 를 검색하고 싶다면 다음과 같이 해주세요!.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;GET my_index/_search
+{
+    &quot;query&quot;:{
+        &quot;match_all&quot;:{ }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;자자자 기본적인 기능을 배웠습니다.&lt;/p&gt;
+
+&lt;p&gt;다음에는 좀더 심화내용을 배워봅시다! 다음 내용을 보기 전에 커피 스윽~ 스트레칭 쭈욱 하고 오세용~🧡🧡&lt;/p&gt;
 </content>
  </entry>
  
@@ -67,7 +158,7 @@
 &lt;hr /&gt;
 
 &lt;p&gt;이번에는 쉬어가는 타임으로 bulk 기능을 알아보죠~!
-하지만 반드시 필수 요소라는것 !!&lt;/p&gt;
+하지만 반드시 &lt;strong&gt;필수 요소&lt;/strong&gt;라는것 !!&lt;/p&gt;
 
 &lt;h2 id=&quot;-bulk-one-shot&quot;&gt;🚚🚚 Bulk One Shot!!&lt;/h2&gt;
 
@@ -96,12 +187,13 @@ bulk 는 기본적인 CRUD 명령 수행이 가능합니다.&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;이후에 Request Body 를 포함하여 요청을 전송해야합니다.&lt;/p&gt;
+    &lt;p&gt;이후에 &lt;strong&gt;Request Body&lt;/strong&gt; 를 포함하여 요청을 전송해야합니다.&lt;/p&gt;
     &lt;ul&gt;
       &lt;li&gt;create, index, update, delete 기능은 해당 키워드 안에 curly brace 로 묶습니다.&lt;/li&gt;
-      &lt;li&gt;curly brace 안에는 _index 로서 원하는 인덱스, _id로 원하는 id를 지정하여 기능을 수행할 수 있습니다.&lt;/li&gt;
+      &lt;li&gt;curly brace 안에는 &lt;strong&gt;_index 로서 원하는 인덱스, _id로 원하는 id를 지정하여&lt;/strong&gt; 기능을 수행할 수 있습니다.&lt;/li&gt;
       &lt;li&gt;delete 를 제외한 create, index, update 다음에는 한 줄의 curly brace 단계가 더 있는데요. 이는 원하는 기능을 수행하기 위해 추가하는 필드입니다.&lt;/li&gt;
-      &lt;li&gt;특히 update 의 경우에는 추가 필드에 “doc” 키워드를 이용해서 접근하셔야 합니다.&lt;/li&gt;
+      &lt;li&gt;index 와 create 의 경우에는 &lt;strong&gt;“field”&lt;/strong&gt; 키워드가 필요합니다.&lt;/li&gt;
+      &lt;li&gt;update 의 경우에는 추가 필드에 &lt;strong&gt;“doc”&lt;/strong&gt; 키워드를 이용해서 접근하셔야 합니다.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -111,7 +203,7 @@ bulk 는 기본적인 CRUD 명령 수행이 가능합니다.&lt;/p&gt;
 &lt;p&gt;기본적으로 한 번의 대량의 명령 데이터를 실행할 때는 bulk 기능을 쓰는 것이 속도가 빠릅니다.
 최적의 데이터 명령 수를 알기 위해서는 벤치마크를 이용하여 처음에는 100, 200, 400 으로 늘려가며 테스트 해보는 것을 추천드립니다!! 어느정도 늘렸을 때 속도가 이전 단계보다 매우 완화된 상태라면 그 전단계가 최적화된 명령 개수입니다.&lt;/p&gt;
 
-&lt;p&gt;너무 많은 명령 데이터를 사용하개 되면 클러스터의 메모리에 과부하를 주게되니 명심하세요!&lt;/p&gt;
+&lt;p&gt;너무 많은 명령 데이터를 사용하게 되면 클러스터의 메모리에 과부하를 주게되니 명심하세요!&lt;/p&gt;
 
 &lt;p&gt;정말 공부할 수록 훌륭한 검색엔진입니다. 웹 공부를 하시는 분은 ElasticSearch를 무조건 강추!! 하는바입니다 ^^&lt;/p&gt;
 </content>
