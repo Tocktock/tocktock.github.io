@@ -7,6 +7,7 @@ categories: elasticsearch
 #[🌎elasticsearch] Elasticsearch CRUD 기본사용법 (feat. Kibana)
 
 ---
+
 - [Elasticsearch 가이드북 ✈](https://esbook.kimjmin.net/)
 
 - [Elasticsearch 홈페이지 가기 ✈](https://www.elastic.co/kr/what-is/elasticsearch)
@@ -15,16 +16,16 @@ categories: elasticsearch
 
 ### ElasticSearch 의 기본 기능 CRUD 기능을 한번 살펴보겠습니다!.
 
-> ElasticSearch 의 search 와 Bulk 기능은 이후 포스트에서 다루겠습니다. 
+> ElasticSearch 의 search 와 Bulk 기능은 이후 포스트에서 다루겠습니다.
 
 ## 👓 CRUD 는 ??
 
--   Create 
--   Read
--   Update
--   Delete
+- Create
+- Read
+- Update
+- Delete
 
-ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 다루고 있습니다. 
+ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 다루고 있습니다.
 
 ## 🔎 들어가기 전에!!
 
@@ -42,7 +43,6 @@ ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 �
 
         PUT, POST, GET, DELETE 메소드를 통해 자원을 제어할 수 있습니다.
 
-
 ## 😎 Kibana Dev Tool
 
 기본적으로 리눅스의 Curl 기능 또는 vscode 의 rest client 등의 기능과 같이 URL을 이용해 자원에 접근제어를 할 수도 있지만 우리가 저번시간에 설치한 Kibana 의 Dev Tool 기능을 통해 Elastic 환경을 실습해보도록 하겠습니다.
@@ -54,7 +54,7 @@ ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 �
 좌측 상단의 메뉴 버튼을 누른후 아래쪽의 Dev Tools 로 들어가줍니다.
 
 <br>
-<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택"/>  
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택"/>
 
 <br><br>
 
@@ -68,7 +68,7 @@ Dev Tools 콘솔에서 좌측에서 Curl 과 비슷한 기능을 수행하고 �
 
 Index 생성에는 **PUT** 메소드를 사용하여 요청을 해야합니다.
 
->일반적으로 생성에는 POST 갱신에는 PUT 메소드를 사용하지만 ElasticSearch 에서는 둘을 모호하게 사용합니다.
+> 일반적으로 생성에는 POST 갱신에는 PUT 메소드를 사용하지만 ElasticSearch 에서는 둘을 모호하게 사용합니다.
 
 mydoc 이라는 Index 를 생성해봅시다.
 
@@ -76,19 +76,18 @@ mydoc 이라는 Index 를 생성해봅시다.
 
 위의 텍스트를 Dev Tools 콘솔 좌측에 입력후 해당 줄에 생기는 ▶ 이렇게 생긴 삼각형 버튼을 누르면 해당하는 요청이 전송됩니다.
 
-> Dev Tools 에서는 http://<호스트>:<포트>/ 가 생략되어 있습니다. 
+> Dev Tools 에서는 http://<호스트>:<포트>/ 가 생략되어 있습니다.
 > 즉 위의 요청은 원래대로라면 PUT http://localhost:5601/mydoc 입니다. Dev tools 에서는 이 사항이 동일시 적용됩니다.
 
 바로 아래 이어서 첫 데이터를 생성해봅시다.
-
 
         POST mydoc/_doc
         {
         "title" : "first Title",
         "contents" : "first contents"
-        } 
+        }
 
-우측에 바로 
+우측에 바로
 
 <img class="post-image-center" src="/assets/img/elasticSearch-CRUD/fourth_result.png" width="30%" alt="테마선택"/>
 
@@ -96,11 +95,11 @@ mydoc 이라는 Index 를 생성해봅시다.
 
 저는 second, third 가 들어가는 데이터를 두개 더 만들었습니다.
 
-> POST <인덱스>/_doc/<아이디> 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
->  해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
-> 또한 PUT 메소드를 통해 PUT <인덱스>/_create/<아이디> 처럼 생성만 가능하게도 할 수 있씁니다.
+> POST <인덱스>/\_doc/<아이디> 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
+> 해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
+> 또한 PUT 메소드를 통해 PUT <인덱스>/\_create/<아이디> 처럼 생성만 가능하게도 할 수 있씁니다.
 
-이제 확인을 해봅시다. 😎😎 
+이제 확인을 해봅시다. 😎😎
 
 좌측 상단의 메뉴 - 하단의 Stack Management 를 클릭합니다.
 
@@ -113,7 +112,6 @@ mydoc 이라는 Index 를 생성해봅시다.
 
 Index pattern name 칸에 mydoc 을 입력하고 Next Step 을 클릭합니다.
 
-
 <img class="post-image-center" src="/assets/img/elasticSearch-CRUD/index_pattern_step2.png" width="70%" alt="테마선택"/>
 
 우리가 만든 데이터에는 시간 데이터가 없기 때문에 아무것도 선택하지 않아도 생성됩니다.
@@ -124,7 +122,7 @@ Create Index Pattern 을 클릭합시다.
 
 여기서 우리가 위에서 입력했던 Index 의 데이터들이 나타나게 됩니다.
 
-<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three_hits.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three.png" width="70%" alt="테마선택"/>
 
 데이터를 생성하는 것은 이제 끝났습니다.
 
@@ -134,13 +132,13 @@ Read 는 매우 단순합니다!
 
         GET mydoc/_doc/cdRVaXYBNC5Keng2JJce
 
-위와 같이 GET <인덱스>/_doc/<아이디> 형식으로 요청을 하게 되면 해당하는 데이터가
+위와 같이 GET <인덱스>/\_doc/<아이디> 형식으로 요청을 하게 되면 해당하는 데이터가
 결과값으로 나오게 됩니다.!!
 
 <img class="post-image-center" src="/assets/img/elasticSearch-CRUD/get_firstdoc.png" width="30%" alt="테마선택"/>
 
-우하우하!우하! 
-자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다. 
+우하우하!우하!
+자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다.
 이제 얼마 안남았으니 영차영차! 😁😁😁😁
 
 > full-text-search 기능인 키워드를 통해 자료를 찾는 search 기능은 다음포스트에서 다루겠습니다.!!
@@ -153,7 +151,7 @@ Update 는 PUT 메소드를 사용하여 수행할 수 있습니다.
 second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 만들어줍니다.
 해당하는 Id 가 존재할 경우 데이터 전체를 업데이트하게 됩니다.
 
-        PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm 
+        PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
         {
         "title" : "updated second title",
         "contents" : "updated second contents"
@@ -173,13 +171,13 @@ Kibana 의 Discover 탭을 보게 되면
 
 마지막입니다.!! 이것만 알면 CRUD 기능은 끝 입니다.
 
-        DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm 
+        DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
 
 바로 실행!!
 
 <img class="post-image-center" src="/assets/img/elasticSearch-CRUD/remove_fourthDoc_result.png" width="30%" alt="자료 삭제"/>
 
-> 삭제 결과 연산을 캡처 하는 것을 깜빡해서 데이터를 하나 더 만들고 다시 삭제해서 이전과 아이디가 다릅니다. ㅜㅜ 
+> 삭제 결과 연산을 캡처 하는 것을 깜빡해서 데이터를 하나 더 만들고 다시 삭제해서 이전과 아이디가 다릅니다. ㅜㅜ
 
 위와 같이 result 의 값으로 deleted가 뜨면 성공!!!!
 
@@ -192,14 +190,11 @@ Kibana 의 Discover 탭을 보게 되면
 삭제... 요청...
 <img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc.png" width="50%" alt="자료 삭제"/>
 
-
 <img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc_result.png" width="30%" alt="자료 삭제"/>
 
-성공... 
+성공...
 
 이후 Discover 탭에 어떠한 자료도 추적하지 못하게되었습니다.. 흐극
-
-
 
 와우 커피 한잔 하면서 같이 따라해보셨나요. 생각보다 간단합니다.
 다음에는 **Search** 님과 함께 통해 다시 찾아오겠습니다.!!
