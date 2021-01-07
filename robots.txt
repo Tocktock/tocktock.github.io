@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: http://tocktock.github.io/sitemap.xml
