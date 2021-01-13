@@ -122,7 +122,7 @@ Create Index Pattern 을 클릭합시다.
 
 여기서 우리가 위에서 입력했던 Index 의 데이터들이 나타나게 됩니다.
 
-<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three.png" width="70%" alt="테마선택"/>
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three_hits.png" width="70%" alt="테마선택"/>
 
 데이터를 생성하는 것은 이제 끝났습니다.
 
