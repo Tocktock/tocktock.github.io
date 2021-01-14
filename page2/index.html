@@ -116,7 +116,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/elasticsearch"
-            >elasticsearch (6)</a
+            >elasticsearch (7)</a
           >
         </li>
         
@@ -147,6 +147,247 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-CRUD/"> elasticsearch 기본사용법 (CRUD !!) </a>
+    </h1>
+
+    <span class="post-date">13 Dec 2020</span>
+
+    <p>#[🌎elasticsearch] Elasticsearch CRUD 기본사용법 (feat. Kibana)</p>
+
+<hr />
+
+<ul>
+  <li>
+    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="elasticsearch-의-기본-기능-crud-기능을-한번-살펴보겠습니다">ElasticSearch 의 기본 기능 CRUD 기능을 한번 살펴보겠습니다!.</h3>
+
+<blockquote>
+  <p>ElasticSearch 의 search 와 Bulk 기능은 이후 포스트에서 다루겠습니다.</p>
+</blockquote>
+
+<h2 id="-crud-는-">👓 CRUD 는 ??</h2>
+
+<ul>
+  <li>Create</li>
+  <li>Read</li>
+  <li>Update</li>
+  <li>Delete</li>
+</ul>
+
+<p>ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 다루고 있습니다.</p>
+
+<h2 id="-들어가기-전에">🔎 들어가기 전에!!</h2>
+
+<ul>
+  <li>
+    <p>Index</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ElasticSearch 의 Index 는 흔히 아는 배열의 인덱스와는 다르게 데이터베이스의 테이블과 유사한 개념을 가지고 있습니다.
+
+  같은 NoSQL MongoDB 의 Collector 와 비슷하다고 생각하시면 편합니다.
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>HTTP 프로토콜</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ElasticSearch 는 http 프로토콜로 접근제어가 가능합니다.
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>RESTFul</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  PUT, POST, GET, DELETE 메소드를 통해 자원을 제어할 수 있습니다.
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="-kibana-dev-tool">😎 Kibana Dev Tool</h2>
+
+<p>기본적으로 리눅스의 Curl 기능 또는 vscode 의 rest client 등의 기능과 같이 URL을 이용해 자원에 접근제어를 할 수도 있지만 우리가 저번시간에 설치한 Kibana 의 Dev Tool 기능을 통해 Elastic 환경을 실습해보도록 하겠습니다.</p>
+
+<p>정상적으로 Kibana 가 설치되고 실행이 되고 있다면 <a href="http://localhost:5601">http://localhost:5601</a> 에 접속하면 Kibana 어플리케이션 메인화면이 기다리고 있어요!!</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/kibana_main.png" width="70%" alt="테마선택" /></p>
+
+<p>좌측 상단의 메뉴 버튼을 누른후 아래쪽의 Dev Tools 로 들어가줍니다.</p>
+
+<p><br />
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택" /></p>
+
+<p><br /><br /></p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/devTools_main.png" width="70%" alt="테마선택" /></p>
+
+<p>Dev Tools 콘솔에서 좌측에서 Curl 과 비슷한 기능을 수행하고 우측에서 그 결과를 볼 수 있습니다.</p>
+
+<h2 id="-create">🔨 Create</h2>
+
+<p>일단 데이터베이스에서도 자원을 저장하고 사용하기 위해서 테이블을 만들듯이 ElasticSearch 에서도 이에 해당하는 Index 를 생성해줘야 합니다.</p>
+
+<p>Index 생성에는 <strong>PUT</strong> 메소드를 사용하여 요청을 해야합니다.</p>
+
+<blockquote>
+  <p>일반적으로 생성에는 POST 갱신에는 PUT 메소드를 사용하지만 ElasticSearch 에서는 둘을 모호하게 사용합니다.</p>
+</blockquote>
+
+<p>mydoc 이라는 Index 를 생성해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     PUT mydoc
+</code></pre></div></div>
+
+<p>위의 텍스트를 Dev Tools 콘솔 좌측에 입력후 해당 줄에 생기는 ▶ 이렇게 생긴 삼각형 버튼을 누르면 해당하는 요청이 전송됩니다.</p>
+
+<blockquote>
+  <p>Dev Tools 에서는 http://<호스트>:<포트>/ 가 생략되어 있습니다.
+즉 위의 요청은 원래대로라면 PUT http://localhost:5601/mydoc 입니다. Dev tools 에서는 이 사항이 동일시 적용됩니다.</포트></호스트></p>
+</blockquote>
+
+<p>바로 아래 이어서 첫 데이터를 생성해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    POST mydoc/_doc
+    {
+    "title" : "first Title",
+    "contents" : "first contents"
+    }
+</code></pre></div></div>
+
+<p>우측에 바로</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/fourth_result.png" width="30%" alt="테마선택" /></p>
+
+<p>위와 같은 형식의 결과 데이터가 보인다면 성공입니다. 우측상단에 201 status 코드와 해당 요청을 수행하는데 걸린 시간 또한 표시가 됩니다.</p>
+
+<p>저는 second, third 가 들어가는 데이터를 두개 더 만들었습니다.</p>
+
+<blockquote>
+  <p>POST <인덱스>/\_doc/<아이디> 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
+해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
+또한 PUT 메소드를 통해 PUT <인덱스>/\_create/<아이디> 처럼 생성만 가능하게도 할 수 있씁니다.</아이디></인덱스></아이디></인덱스></p>
+</blockquote>
+
+<p>이제 확인을 해봅시다. 😎😎</p>
+
+<p>좌측 상단의 메뉴 - 하단의 Stack Management 를 클릭합니다.</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택" /></p>
+
+<p>좌측 중간즈음 Kibana 카테고리 아래 Index Patterns 를 클릭합니다.
+우리가 보려는 Index 를 명시하기 위해 Create Index pattern 을 클릭합니다.</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/index_pattern_mydoc.png" width="70%" alt="테마선택" /></p>
+
+<p>Index pattern name 칸에 mydoc 을 입력하고 Next Step 을 클릭합니다.</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/index_pattern_step2.png" width="70%" alt="테마선택" /></p>
+
+<p>우리가 만든 데이터에는 시간 데이터가 없기 때문에 아무것도 선택하지 않아도 생성됩니다.
+시간 데이터가 한 개 이상이라면 시간별로 데이터를 추적할 수 있습니다.
+Create Index Pattern 을 클릭합시다.</p>
+
+<p>이제 좌측 메뉴를 클릭 메뉴 상단의 Kibana - Discover 탭을 선택합니다.</p>
+
+<p>여기서 우리가 위에서 입력했던 Index 의 데이터들이 나타나게 됩니다.</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three_hits.png" width="70%" alt="테마선택" /></p>
+
+<p>데이터를 생성하는 것은 이제 끝났습니다.</p>
+
+<h2 id="-read">🔨 Read</h2>
+
+<p>Read 는 매우 단순합니다!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    GET mydoc/_doc/cdRVaXYBNC5Keng2JJce
+</code></pre></div></div>
+
+<p>위와 같이 GET <인덱스>/\_doc/<아이디> 형식으로 요청을 하게 되면 해당하는 데이터가
+결과값으로 나오게 됩니다.!!</아이디></인덱스></p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/get_firstdoc.png" width="30%" alt="테마선택" /></p>
+
+<p>우하우하!우하!
+자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다.
+이제 얼마 안남았으니 영차영차! 😁😁😁😁</p>
+
+<blockquote>
+  <p>full-text-search 기능인 키워드를 통해 자료를 찾는 search 기능은 다음포스트에서 다루겠습니다.!!</p>
+</blockquote>
+
+<h2 id="-update">🔨 Update</h2>
+
+<p>이번에는 Update 기능을 수행해보겠습니다.</p>
+
+<p>Update 는 PUT 메소드를 사용하여 수행할 수 있습니다.
+second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 만들어줍니다.
+해당하는 Id 가 존재할 경우 데이터 전체를 업데이트하게 됩니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
+    {
+    "title" : "updated second title",
+    "contents" : "updated second contents"
+    }
+</code></pre></div></div>
+
+<p>성공하면 아래과 같이 result 에 updated 라는 결과값이 표시됩니다.</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/updateDoc_result.png" width="30%" alt="테마선택" /></p>
+
+<p>Kibana 의 Discover 탭을 보게 되면</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/updated_second_discover.png" width="70%" alt="테마선택" /></p>
+
+<p>우하! 행복하군요 Update 가 성공된 것을 확인할 수 있습니다.!!</p>
+
+<h2 id="-delete">🔨 Delete</h2>
+
+<p>마지막입니다.!! 이것만 알면 CRUD 기능은 끝 입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
+</code></pre></div></div>
+
+<p>바로 실행!!</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/remove_fourthDoc_result.png" width="30%" alt="자료 삭제" /></p>
+
+<blockquote>
+  <p>삭제 결과 연산을 캡처 하는 것을 깜빡해서 데이터를 하나 더 만들고 다시 삭제해서 이전과 아이디가 다릅니다. ㅜㅜ</p>
+</blockquote>
+
+<p>위와 같이 result 의 값으로 deleted가 뜨면 성공!!!!</p>
+
+<p>여러분 만남이 있으면 끝도 있는법.</p>
+
+<p>마지막으로 Index 님을 삭제 해드립시다. 잘가 … 😭😭😭😭</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    DELETE mydoc
+</code></pre></div></div>
+
+<p>삭제… 요청…
+<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc.png" width="50%" alt="자료 삭제" /></p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc_result.png" width="30%" alt="자료 삭제" /></p>
+
+<p>성공…</p>
+
+<p>이후 Discover 탭에 어떠한 자료도 추적하지 못하게되었습니다.. 흐극</p>
+
+<p>와우 커피 한잔 하면서 같이 따라해보셨나요. 생각보다 간단합니다.
+다음에는 <strong>Search</strong> 님과 함께 통해 다시 찾아오겠습니다.!!</p>
+
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html">더 많은 자료 보러 공식홈페이지 가기!!</a></p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -607,196 +848,6 @@ ElasticSearch 에 흥미를 가지게 되었네요.</p>
 <p>생각을 많이하고 시간을 많이 소요하는 문제들도 생각보다 많다.</p>
 
 <p>화이팅!</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/jekyll/HowTo-MakeYourBlog/"> 지킬을 이용하여 깃허브 블로그 만들기 </a>
-    </h1>
-
-    <span class="post-date">03 Oct 2020</span>
-
-    <p>안녕하세요 만냥이의 하루 입니다.</p>
-
-<p>저를 포함해서 많은 개발자 분들이 깃허브 블로그를 만드는데 지킬을 사용하고 계시는데 오늘은 그 방법에 대해서 글을 써보려고 합니다.</p>
-
-<hr />
-
-<h2 id="목차">목차</h2>
-
-<ul>
-  <li><strong>당신에게 먼저 필요한 것 !!</strong></li>
-  <li><strong>지킬이 뭐에요??</strong></li>
-  <li><strong>지킬 테마 선택</strong></li>
-  <li><strong>깃허브 페이지로 배포하기</strong></li>
-  <li><strong>첫 블로그 글 써보기</strong></li>
-  <li><strong>마무리</strong></li>
-</ul>
-
-<hr />
-
-<h2 id="당신에게-먼저-필요한-것-"><strong>당신에게 먼저 필요한 것 !!</strong></h2>
-
-<ol>
-  <li>당연하게도 깃허브 아이디가 필요합니다.!! <a href="https://github.com/">🚗깃허브로!</a></li>
-  <li>Git에 대한 기본적인 이해 <a href="https://medium.com/webeveloper/%EA%B9%83%ED%97%88%EB%B8%8C-%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95-github-tutorials-4a63f31bb6a5">🚗깃허브 기본!!</a></li>
-  <li>마크다운 언어에 대한 기본적인 이해 (블로그 글작성을 위해 필요합니다.) <a href="https://gist.github.com/ihoneymon/652be052a0727ad59601">🚗마크다운 언어 배우기</a></li>
-  <li>개발할 수 있는 환경이 필요합니다. 저는 VSCode 를 사용했습니다. <a href="https://code.visualstudio.com/">🚗VSCode 다운받기</a></li>
-  <li>루비 언어 설치! <a href="https://jekyllrb.com/docs/installation/windows/">🚗설치하는법!</a></li>
-  <li><strong>끈기와 인내심(가장중요😊)</strong></li>
-</ol>
-
-<hr />
-
-<h2 id="지킬이-뭐에요-">지킬이 뭐에요 ??</h2>
-
-<p><a href="https://jekyllrb.com/">🚗지킬 사이트로 가보기 !!</a></p>
-
-<p>지킬은 마크다운, 리퀴드, HTML &amp; CSS 를 사용할 수 있는 정적인 웹페이지를 배포 할 수 있도록 도와주는 프레임워크라고 생각하시면 됩니다.</p>
-
-<p>루비 언어로 만들어진 지킬은 복잡한 데이터베이스나 업데이트 구조가 필요 없고 이미 다른 누군가가 만들어 놓은 지킬 테마를 이용하면 자신만의 블로그를 배포할 수 있습니다.</p>
-
-<p><strong>어렵다구요?? 사용하면서 알아갑시다!!</strong></p>
-
-<h2 id="지킬-테마-선택">지킬 테마 선택</h2>
-
-<h3 id="테마-고르는-사이트">테마 고르는 사이트</h3>
-
-<blockquote>
-  <p>테마를 고르실 때에는 원하는 디자인뿐만 아니라 그리고 원하는 기능의 제공 여부(카테고리, 태그 기능 등)를 체크하세요!!
-<a href="https://jekyll-themes.com/blog/top-jekyll-themes/">🚗지킬 top 10 테마 추천!!🚗</a></p>
-</blockquote>
-
-<ul>
-  <li><a href="https://jamstackthemes.dev">jamstackthemes.dev</a></li>
-  <li>jekyllthemes.org</li>
-  <li>jekyllthemes.io</li>
-</ul>
-
-<p>저는 두 번째 사이트인 jekyllthemes.org 를 기준으로 말씀 드리겠습니다.</p>
-
-<p>원하는 테마를 고른 후 누르시면 다음과 같은 페이지가 나옵니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/pick_themes.png" width="70%" alt="테마선택" /></p>
-
-<p>저는 지금 제 블로그에서도 사용중이고 기본적인 기능에 충실한 Lanyon 테마를 선택했습니다.
-테마를 선택하는 3가지 사이트 모두 테마를 선택하게 되면 깃허브로 이어지는 버튼이 있습니다.
-위의 경우는 Hompage라고 되어 있군요. 클릭해줍니다.</p>
-
-<h2 id="깃허브-페이지로-배포하기">깃허브 페이지로 배포하기</h2>
-
-<blockquote>
-  <p>Lanyon 테마는 자체적으로 카테고리, 태그 기능을 제공하지 않습니다. 후에 추가 설정 및 코드를 작성해야만 해당 기능을 사용하실 수 있습니다.</p>
-</blockquote>
-
-<p>깃허브 페이지가 나오면 아래 README 문서를 잘 읽어보고 자신이 원하는 기능과 디자인에 적합한 테마인지 한번 더 훑어봅시다 !!</p>
-
-<p>그리고 오른쪽 중간에 보면 fork 라는 버튼이 있습니다.<strong>(로그인 필요)</strong></p>
-
-<p><img class="post-image-center" src="/assets/img/forklButton.png" width="70%" alt="fork 버튼 위치" />
-Fork 버튼을 누르게 되면 로그인 된 내 계정의 Repository 로 해당 깃허브 소스가 모두 복사가 됩니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/forked.png" width="70%" alt="레포지토리 이름" /></p>
-
-<blockquote>
-  <p>(사진의 경우 제 깃허브에서 가져온 것이라 Repository 이름이 tocktock.github.io 보입니다.)</p>
-</blockquote>
-
-<p>Fork를 하게 되면 자신의 계정에 Repository가 생성 됩니다.
-위 사진에서 <strong>”/”</strong> 왼쪽에 있는 것이 자신의 계정 닉네임이고 오른쪽이 Repository 이름 입니다.</p>
-
-<p>Repository 는 자신이 Fork 한 Repository 의 이름으로 생성됩니다.
-깃허브 블로그를 만들기 위해서는 이 Repository 를 (자신의 계정 닉네임).github.io 라는 형식으로 바꾸어 주어야 합니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/setting.png" width="70%" alt="세팅위치" /></p>
-
-<p>화면의 중앙 즈음 보면 Settings 라는 태그가 보입니다. (누르고 들어가라는 뜻 입니다..)</p>
-
-<p>Setting 페이지의 Repository name 을 (자신의 계정 닉네임).github.io 로 바꾸어줍니다. <strong>🛑자신의 계정 닉네임을 반드시 소문자로 해주세요🛑</strong></p>
-
-<p>새로고침 하고 내리다 보면 Github Page 라는 문구가 보입니다.
-<img class="post-image-center" src="/assets/img/deployed.png" width="70%" alt="깃허브페이지정보" /></p>
-
-<p>위와 같이 <strong>Your site published at 어쩌구 저쩌구</strong> 라고 되어있으면 성공입니다.</p>
-
-<blockquote>
-  <p>깃허브 페이지 자체는 반드시 (자신의 계정 닉네임).github.io 일 필요는 없습니다. 원하면 바꿀 수 있습니다</p>
-</blockquote>
-
-<p>해당 하는 Repository 는 깃허브 자체에서 파일을 작성하고 커밋해도 되지만 플러그인, 빌드 과정에서 필요한 소스가 설치가 안되어있는 경우도 있기도 하고 개별환경의 편의성을 위해서 이 Repository 를 자신의 컴퓨터에 Clone 해줍니다.</p>
-
-<blockquote>
-  <p>GitHub Clone 방법은 Github Desktop을 사용하는 방법과 커맨드 창에서 git clone “repository 주소” 를 입력하는 방법이 있습니다.</p>
-</blockquote>
-
-<p>vscode를 기준으로</p>
-
-<p>해당하는 폴더를 vscode 로 열고 좌측 상단의 Terminal 탭을 눌러 New Terminal 을 클릭해줍니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/terminal.png" width="70%" alt="vscode 에서 terminal" /></p>
-
-<ul>
-  <li>
-    <p>지킬과 번들러 gems를 설치하려고 합니다. 터미널에서 다음을 입력합니다.</p>
-
-    <blockquote>
-      <p>gem install jekyll bundler</p>
-    </blockquote>
-  </li>
-  <li>해당 하는 사이트를 빌드하기 위해 다음을 입력한다.
-    <blockquote>
-      <p>jekyll build</p>
-    </blockquote>
-  </li>
-  <li>빌드된 사이트를 로컬에서 실행해보기 위해 다음을 입력한다.
-    <blockquote>
-      <p>jekyll serve</p>
-    </blockquote>
-  </li>
-</ul>
-
-<p>모든 과정이 순탄하게 진행되었다면 http://localhost:4000 에서 빌드된 자신의 사이트를 볼 수 있다.</p>
-
-<p>이 상태로 GitHub 로 push 하게 되면 깃허브 페이지에서 자신의 블로그를 볼 수 있다.</p>
-
-<h2 id="첫-블로그-글-써보기">첫 블로그 글 써보기</h2>
-
-<p>_posts 아래의 폴더에 다음과 같은 형식의 파일을 만든다.
-(년도)-(월)-(일)-페이지의주소가될곳.md</p>
-
-<blockquote>
-  <p>예시 : 2020-10-03-this-is-my-url.md</p>
-</blockquote>
-
-<p>해당하는 파일에 아래와 같은 글을 적습니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/firstpost.png" width="70%" alt="첫 글 사진" /></p>
-
-<p>터미널에서 jekyll serve 를 입력하여 로컬에서 정상적으로 작동하는지 확인합니다.</p>
-
-<blockquote>
-  <p>이미 jekyll serve 가 실해중이라면 저장하는 것만으로 해당 사이트에 반영됩니다.</p>
-</blockquote>
-
-<p><img class="post-image-center" src="/assets/img/firstpost-insite.png" width="70%" alt="첫 글" /></p>
-
-<p>정상적으로 포스트가 등록 되었다면 GitHub에 push를 해줍니다!.</p>
-
-<p>와 첫글이다!!</p>
-
-<blockquote>
-  <p>원치 않은 오류가 발생하여 정상적으로 작동 안한다면 google 에 빌드 실패이유를 검색하시거나 파일명이 제대로 작성되었는지 확인해주세요!</p>
-</blockquote>
-
-<h1 id="마무리">마무리</h1>
-
-<p>지킬은 잘 만들어지고 사용하기 간편한 프레임워크이지만 자신의 블로그를 자신의 손맛대로 조금씩 변형하려면 조금 더 자세하게 알 필요가 있습니다.</p>
-
-<p>다음 시간에는 config.yml 파일을 건드리는 것과 간단하게 카테고리를 생성하는 법을 알아 보도록 하겠습니다.</p>
-
-<p>고생하셨습니다. ❤❤❤❤</p>
 
     <hr />
   </div>
