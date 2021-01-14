@@ -21,90 +21,96 @@ categories: Algorithms
 
 ## 🔑 문제 풀이
 
-최소신장트리를 푸는 유명한 2가지 방법이 있다.
+숫자 세개를 뽑아서... 0 을 만드는지 확인하면 된다!.
+다만 3개 전부 완전탐색을 돌려버리게 된다면 타임아웃이 뜨지 않을까?
+주어진 조건에서 숫자의 개수는 최대 3천개라 했으니 아마 타임아웃이 뜰거 같다.
 
-- 크루스칼 알고리즘
-- 프림 알고리즘
+#### 그래서 제가 어떻게 풀었냐면 !!
 
-> 솔직히 둘이 좀 헷갈린다. 최소비용 부터 시작하는게 크루스칼 이였나??? 프림인가??
+일단 숫자 세개의 합이 0이 되어야하니, 숫자들을 정렬하고 최저의 수를 선택하고 이 숫자와
+다른 숫자 2개를 선택했을 때 0이 되는 경우를 구했습니다. !!!!! **빠밤!!**
 
-우리는 크루스칼 알고리즘 (포스트 적으면서 외움.)으로 한번 해보자!
+저희는 최저의 수를 선택했기 때문에 해당 숫자보다 오른쪽에 있는 수는 무조건 선택된 숫자보다 크다는 겁니다.!!
 
-> 더 쉽거든
+그리고 숫자 두개를 정할껀데,
 
-간략하게 크루스칼 알고리즘이 뭐냐면..
+- 하나는 최저 숫자보다 한 단계 크거나 같은수
+- 다른 하나는 가장 큰 수
 
-- 가장 적은 비용의 간선을 선택해서 이어나감.
-- **🛑간선을 추가하게 되면 사이클이 형성될 경우 간선을 추가하지 않음🛑**
+를 선택해서
+선택지의 폭을 줄여나가는 겁니다.
 
-사실 두번째 내용이 핵심이다.
-제일 적인 비용의 간선은 정렬하고 추가해 나가면 되는데, 사이클의 유무를 따지는게 여간 귀찮은게 아니다.
+만약 세 개를 더했는데 0보다 크다? 그러면 가장 큰 수를 가르키는 포인트를 한 단계 낮은 숫자로 옮깁니다.
+만약 세 개를 더했는데 0보다 작다? 그러면 선택된 최저의 수를 가지고는 0을 만들 수 없습니다.
 
-나에게 가장 쉬운 방법은 간선을 추가할 때마다 노드들(여기선 섬)끼리 그룹화 하는 것이다.
+> 선택된 숫자를 제외하고 가장 작은 수와 가장 큰 수를 더했기 때문
 
-> 다들 자신에게 편한 방법으로 하세용~
+만약 세개를 더했는데 0이랑 같다? 정답에 추가합니다.
 
-그룹화해서 노드를 연결 했을 때 같은 그룹에 속해있나 아닌가만 따지면 된다.
+자자자자 **요약**해줄게요 !
 
-예를 들어 다음과 같이 상황이 놓여져 있다고 생각하자
+- 최저의 수 선택 - selected 라 하겠습니다.
+- 최저의 수와 같은 또는 한 단계 큰 수를 가르키는 포인트 - 그 숫자를 left라 하겠습니다.
+- 최대의 수를 가르키는 포인트 - 그 숫자를 right라 하겠습니다.
+- selected + left + right === 0 -> 답에 추가!
+- selected + left + right < 0 -> selected 의 숫자로는 더이상 0을 만들 수가 없음!
+- selected + left + right > 0 -> right 의 숫자를 한 단계 낮춰줌 !!
 
-1 - 2 - 3 이 하나의 그룹이고 대표는 1이다.
-4 - 5 - 6 이 하나의 그룹이고 대표는 4이다.
+이 것을 반복하시면 됩니다. 반복은 컴퓨터가 하기 때문에 마음껏 돌려주세요!
 
-만약 노드4 와 노드6 의 간선이 있다고 생각하고 연결해보려고 하자.
-노드4 의 대표는 노드4 이고, 노드6 의 대표도 노드4 이다. **같은 그룹**이라는 것이다.
-
-만약 노드 5와 노드 6 을 연결하려고 하면 서로의 대표가 다르기 때문에 가능하다는 것이다!!!!!!!!!!!
-이 경우 노드 4,5,6 의 대표를 바꾸어 주어야한다. 이렇게 숫자로 주어진 경우는 단순하게 대표 4의 값을 6으로 바꾸어주면 된다.
-
-그럼 노드 6을 선택하면 그룹 대표인 노드 4, 다시 4의 대표는 노드 1 ... 알겠지용,,?
-6-> 4-> 1
+다만 중복을 피하기 위해 포인트를 옮길 때는 같은 수는 전부 지나쳐주세요!!
 
 > 노드가 숫자로 주어지면 이렇게 푸는게 나은거 같습니다!!
 
 ## 🥽 소스코드 및 소스해석
 
 ```javascript
-let group = new Array(128);
-function solution(n, costs) {
-  var answer = 0;
-  costs.sort((a, b) => {
-    return a[2] - b[2];
-  });
-  for (let index = 0; index < n; index++) {
-    group[index] = index;
-  }
-  for (let index = 0; index < costs.length; index++) {
-    let groupA = travel(costs[index][0]);
-    let groupB = travel(costs[index][1]);
-    if (groupA === groupB) continue;
-    answer += costs[index][2];
-    group[groupA] = groupA < groupB ? groupA : groupB;
-    group[groupB] = group[groupA];
+var threeSum = function (nums) {
+  let answer = [];
+  let selected = 0;
+  let left = selected + 1;
+  let right = nums.length - 1;
+  if (nums.length < 3) return answer;
+  nums.sort((a, b) => a - b);
+  while (nums[selected] <= 0 && left !== right) {
+    if (nums[selected] + nums[left] + nums[right] === 0) {
+      answer.push([nums[selected], nums[left], nums[right]]);
+      while (nums[right] === nums[right - 1]) right--;
+      while (left + 1 < nums.length && nums[left] === nums[left + 1]) left++;
+      right--;
+      left++;
+    } else if (nums[selected] + nums[left] + nums[right] < 0) {
+      while (left + 1 < nums.length && nums[left] === nums[left + 1]) left++;
+      left++;
+    } else {
+      while (nums[right] === nums[right - 1]) right--;
+      right--;
+    }
+    if (right <= left) {
+      [selected, left, right] = setValue(selected, left, right, nums);
+    }
   }
   return answer;
-}
-
-const travel = (n) => {
-  if (n === group[n]) return n;
-  else return travel(group[n]);
 };
-
-solution(6, [
-  [0, 1, 5],
-  [0, 3, 2],
-  [0, 4, 3],
-  [1, 4, 1],
-  [3, 4, 10],
-  [1, 2, 2],
-  [2, 5, 3],
-  [4, 5, 4],
-]);
+const setValue = (selected, left, right, nums) => {
+  if (nums[selected] === nums[selected + 1]) {
+    while (nums[selected] === nums[selected + 1]) {
+      selected++;
+    }
+  }
+  selected++;
+  left = selected + 1;
+  right = nums.length - 1;
+  return [selected, left, right];
+};
 ```
 
 ## 🔨 문제 후기
 
-오늘 코딩테스트 보고 나는 왜이리 멍청하지 하다가 이 문제를 풀고 희망을 가졌다.
-나도 풀 수 있따!.
+자잘한 조건 때문에 오래걸린 문제!!
 
-물론 저보다 더 잘하는 사람이 많을 것 입니다... 겸손하자...
+나는 정말 숫자에 약한 것 같다 ㅜㅜ 다들 화이팅!!
+
+코드를 깔끔하게 정리하는 법좀 배워야할 듯 싶다.
+
+릿코드 상당히 괜찮은 사이트 같습니다!
