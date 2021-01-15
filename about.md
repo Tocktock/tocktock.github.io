@@ -47,3 +47,5 @@ title: About me
 
 - 이메일 : qnfmtm666@naver.com
 - 벨로그 : https://velog.io/@qnfmtm666
+
+  > 벨로그는 이 블로그와 같은 내용으로 운영되고 있습니다.
