@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     NestJS 박살내기 - 이거는 알고 시작하자. &middot; 영원 
+  </title>
+
+  
+  <link rel="canonical" href="https://tocktock.github.io/algorithms/nestjs-1-prerequisite/" />
+  
+
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/poole.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/syntax.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="https://tocktock.github.io/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="https://tocktock.github.io/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="https://tocktock.github.io/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="https://tocktock.github.io/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/about/"
+        >About me</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Algorithms"
+            >Algorithms (19)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Jekyll"
+            >Jekyll (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/elasticsearch"
+            >elasticsearch (7)</a
+          >
+        </li>
+        
+      </ul>
+                                           
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2021. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">영원</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">NestJS 박살내기 - 이거는 알고 시작하자.</h1>
+  <span class="post-date">15 Jan 2021</span>
+  <h1 id="1-nestjs-이거는-알고-시작하자">1. [NestJS] 이거는 알고 시작하자.</h1>
+
+<p>NestJS를 시작하기전 이거만큼은 알고 시작하자!!
+🚨🚨🚨 본 포스트와 이후 nestjs 시리즈에서는 Javascript, Typescript 를 배우기 위한 내용은 다루지 않습니다. 🚨🚨🚨</p>
+
+<hr />
+
+<h2 id="prerequisites">📣Prerequisites</h2>
+
+<h3 id="1-javascript--typescript">1. Javascript &amp; Typescript</h3>
+
+<p>Javascript 는 FrontEnd 를 공부중이시거나 NodeJS 를 다루어 보신분이라면 알고 계실거라고 생각합니다!
+다만 Typescript 까지 해야하느냐?? 라고 물으신다면</p>
+
+<ul>
+  <li><strong>예</strong></li>
+</ul>
+
+<p>NestJS 의 주요 핵심중 하나는 <strong>의존성주입</strong>(Defendency Injection) 입니다.</p>
+
+<p>의존성주입이 무엇인지 먼저 알아보죠.</p>
+
+<h3 id="2-의존성주입-dependency-injection">2. 의존성주입 (Dependency Injection)</h3>
+
+<p>의존성 주입은 제어의역전(Inversion of Control) 의 기술중 하나입니다.</p>
+
+<p>🙄🙄🙄</p>
+
+<p>의존성 주입이란 말을 처음 들은 여러분의 표정이 상상이 갑니다.</p>
+
+<p>간단하게 먼저 말하자면</p>
+
+<ul>
+  <li>제어의역전 : <strong>“내가 대신 제어해줄게”</strong></li>
+  <li>의존성주입 : <strong>“니가 정의한 코드(클래스, 변수 등등)를”</strong></li>
+</ul>
+
+<p>예를 들어보겠습니다.</p>
+
+<p>NestJS 에서는 생성자를 통해 의존성을 주입할 수 있습니다.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Controller</span><span class="p">,</span> <span class="nx">Get</span><span class="p">,</span> <span class="nx">Post</span><span class="p">,</span> <span class="nx">Body</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@nestjs/common</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">CreateCatDto</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./dto/create-cat.dto</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">CatsService</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./cats.service</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Cat</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./interfaces/cat.interface</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="p">@</span><span class="nd">Controller</span><span class="p">(</span><span class="dl">"</span><span class="s2">cats</span><span class="dl">"</span><span class="p">)</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">CatsController</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">catsService</span><span class="p">:</span> <span class="nx">CatsService</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="p">@</span><span class="nd">Post</span><span class="p">()</span>
+  <span class="k">async</span> <span class="nx">create</span><span class="p">(@</span><span class="nd">Body</span><span class="p">()</span> <span class="nx">createCatDto</span><span class="p">:</span> <span class="nx">CreateCatDto</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">catsService</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">createCatDto</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="p">@</span><span class="nd">Get</span><span class="p">()</span>
+  <span class="k">async</span> <span class="nx">findAll</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Cat</span><span class="p">[]</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">catsService</span><span class="p">.</span><span class="nx">findAll</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>위의 코드에서</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">catsService</span><span class="p">:</span> <span class="nx">CatsService</span><span class="p">)</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+<p>여기에 해당하는 코드를 보시면 생성자에서 catService 의 타입만 지정했습니다. 그럼에도 불구하고</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">@</span><span class="nd">Post</span><span class="p">()</span>
+  <span class="k">async</span> <span class="nx">create</span><span class="p">(@</span><span class="nd">Body</span><span class="p">()</span> <span class="nx">createCatDto</span><span class="p">:</span> <span class="nx">CreateCatDto</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">catsService</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">createCatDto</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>여기서 catService 의 create 메소드를 호출하고 있습니다.</p>
+
+<p>이는 NestJS 가 “오 catsService 는 CatsService 타입이네? 내가 직접 찾아서 할당해줘야겠다!!”
+라는 행동을 하게 됩니다. 이후 이 클래스의 생성, 소멸 주기를 몰라도 그냥 미친듯이 사용 가능합니다.
+NestJS 가 해당 객체를 관리해줄거거든요. 이미 내 손을 떠난 문제에요!!</p>
+
+<p><strong>“무슨 말인지 모르겠어.. 그냥 의존성주입이고 나발이고 내가 다 만들어서 개발할래!!”</strong>
+라고 생각하신다면… 프레임워크를 사용안하시고 모든 것을 직접 개발하셔도 됩니다.
+다만 프레임워크의 장점을 버리는 것이 더 큰 고통을 안겨줄지도 몰라요 😭😭😭</p>
+
+<p>자 위에서 보신것과 같이 NestJS가 의존성주입을 사용하기 위해서 우리는 <strong>타입</strong>을 지정해주었습니다.
+Nodejs 환경에서 Javascript 는 타입을 명시할 수 없습니다. 따라서 Typescript 를 사용하게됩니다.</p>
+
+<p>이제 Typescript 를 꼭 해야합니까?? 의 답변이 이해 하시겠죠??</p>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-16/">
+          leetcodd 16 3sum closet 문제풀기
+          <small>15 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/elasticsearch/elasticsearch-explore-folder/">
+          Elasticsearch 폴더에는 뭐가 있을까??
+          <small>14 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-15/">
+          leetcodd 15 3sum 문제풀기
+          <small>14 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+  
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>
