@@ -46,3 +46,4 @@ title: About me
 #### Contact
 
 - 이메일 : qnfmtm666@naver.com
+- 벨로그 : https://velog.io/@qnfmtm666
