@@ -104,7 +104,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/Algorithms"
-            >Algorithms (17)</a
+            >Algorithms (18)</a
           >
         </li>
          
@@ -121,7 +121,7 @@
         </li>
         
       </ul>
-                                       
+                                           
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -147,6 +147,109 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-16/"> leetcodd 16 3sum closet 문제풀기 </a>
+    </h1>
+
+    <span class="post-date">15 Jan 2021</span>
+
+    <p>#[leetcode][16] 3sum closet 문제풀기!</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/problems/3sum-closest">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>이번에도 숫자를 엄청 줄게!!
+숫자 3개를 뽑아서 그 숫자들의 합이 내가 원하는 숫자랑 가장 가까워지는 값을 찾아줘!!</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/3sum-closest">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이v">🔑 문제 풀이v</h2>
+
+<p>이번에도 숫자 세개를 뽑아서… 더해서 … 원하는 숫자와 얼마나 가까운지 체크하면 된다!
+다만 이번에도 3개 전부 완전탐색을 돌려버리게 된다면 타임아웃이 뜨지 않을까?</p>
+
+<p>저번과 마찬가지로 투포인터 접근법으로 풀었다.
+이전 문제를 풀었다면 별로 어렵지 않을 것이다!</p>
+
+<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
+
+<p>저번과 마찬가지로 정렬 후 selected, left, right 숫자를 선정합니다.</p>
+
+<ul>
+  <li>select : 가장 작은 숫자</li>
+  <li>left : selected + 1</li>
+  <li>right : 가장 큰 숫자</li>
+</ul>
+
+<p>이후 알고리즘은</p>
+
+<ul>
+  <li>합을 계산한 후 원하는 숫자와의 거리를 구한후,</li>
+  <li>이전에 구한 원하는 숫자와의 거리의 최솟값과 비교한후</li>
+  <li>더 작다면 이번에 계산한 값과, 거리를 저장!</li>
+</ul>
+
+<p>가장 중요한 left 와 right 의 인덱스를 어떻게 변화시킬거냐.. 는 다음과 같습니다.</p>
+
+<ul>
+  <li>원하는 숫자가 방금 구한 합보다 작다면 right 인덱스를 1 줄여주고
+    <blockquote>
+      <p>왜냐면 방금 구한 합보다 작아져야 원하는 숫자에 더 가까워지기 때문 !!</p>
+    </blockquote>
+  </li>
+  <li>반대의 경우 left 인덱스를 1 늘립니다.</li>
+</ul>
+
+<p>계싼은 컴퓨터에게 맡겨욥!!</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">threeSumClosest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">minDist</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
+  <span class="nx">nums</span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">-</span> <span class="nx">b</span><span class="p">);</span>
+  <span class="kd">let</span> <span class="nx">selected</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="nx">selected</span> <span class="o">&lt;</span> <span class="nx">nums</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">left</span> <span class="o">=</span> <span class="nx">selected</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">left</span> <span class="o">&lt;</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">selected</span><span class="p">]</span> <span class="o">+</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span> <span class="o">+</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">];</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">minDist</span> <span class="o">&gt;=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">sum</span> <span class="o">-</span> <span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">minDist</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">sum</span> <span class="o">-</span> <span class="nx">target</span><span class="p">);</span>
+        <span class="nx">answer</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">-</span> <span class="nx">sum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">right</span><span class="o">--</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">left</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">selected</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>이전 문제를 풀었기 때문에 쉽게 풀 수 있었다.
+이 알고리즘으로는 시간복잡도 O(n^2) 에 풀 수 있다.
+혹시 O(nlgn) 방법으로도 가능할까 싶어서 생각하고 찾아봤는데.. 답은 나오지 않았다.
+뭔가 있을거 같은데 …</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -319,10 +422,6 @@
 <p>이 것을 반복하시면 됩니다. 반복은 컴퓨터가 하기 때문에 마음껏 돌려주세요!</p>
 
 <p>다만 중복을 피하기 위해 포인트를 옮길 때는 같은 수는 전부 지나쳐주세요!!</p>
-
-<blockquote>
-  <p>노드가 숫자로 주어지면 이렇게 푸는게 나은거 같습니다!!</p>
-</blockquote>
 
 <h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
 
@@ -636,81 +735,6 @@ copy copy~</p>
 <p>자자자 기본적인 기능을 배웠습니다.</p>
 
 <p>다음에는 좀더 심화내용을 배워봅시다! 다음 내용을 보기 전에 커피 스윽~ 스트레칭 쭈욱 하고 오세용~🧡🧡</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-bulk/"> elasticsearch 여러 데이터를 한번에 저장! Bulk!! </a>
-    </h1>
-
-    <span class="post-date">06 Jan 2021</span>
-
-    <p>#[🌎elasticsearch] Elasticsearch bulk 기본사용법 (feat. Kibana)</p>
-
-<hr />
-
-<ul>
-  <li>
-    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
-  </li>
-</ul>
-
-<hr />
-
-<p>이번에는 쉬어가는 타임으로 bulk 기능을 알아보죠~!
-하지만 반드시 <strong>필수 요소</strong>라는것 !!</p>
-
-<h2 id="-bulk-one-shot">🚚🚚 Bulk One Shot!!</h2>
-
-<p>ElasticSearch 의 여러 명령을 실행하기 위해서는 bulk 기능이 정말 편리합니다.
-bulk 는 기본적인 CRUD 명령 수행이 가능합니다.</p>
-
-<p>바로 예를 보시죠!</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST _bulk
-{ "index" : { "_index" : "test", "_id" : "1" } }
-{ "field1" : "value1" }
-{ "delete" : { "_index" : "test", "_id" : "2" } }
-{ "create" : { "_index" : "test", "_id" : "3" } }
-{ "field1" : "value3" }
-{ "update" : {"_id" : "1", "_index" : "test"} }
-{ "doc" : {"field2" : "value2"} }
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>bulk 기능은 POST 메소드로 “POST url/_bulk” 로 사용 가능합니다.</p>
-
-    <blockquote>
-      <p>kibana로 테스트 하시는 경우 url을 따로 지정안해주셔도 됩니다.
-커맨드로 하시는 경우는 POST localhost:9200/_bulk 로 사용가능하십니다!</p>
-    </blockquote>
-  </li>
-  <li>
-    <p>이후에 <strong>Request Body</strong> 를 포함하여 요청을 전송해야합니다.</p>
-    <ul>
-      <li>create, index, update, delete 기능은 해당 키워드 안에 curly brace 로 묶습니다.</li>
-      <li>curly brace 안에는 <strong>_index 로서 원하는 인덱스, _id로 원하는 id를 지정하여</strong> 기능을 수행할 수 있습니다.</li>
-      <li>delete 를 제외한 create, index, update 다음에는 한 줄의 curly brace 단계가 더 있는데요. 이는 원하는 기능을 수행하기 위해 추가하는 필드입니다.</li>
-      <li>index 와 create 의 경우에는 <strong>“field”</strong> 키워드가 필요합니다.</li>
-      <li>update 의 경우에는 추가 필드에 <strong>“doc”</strong> 키워드를 이용해서 접근하셔야 합니다.</li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="속도는-">속도는 🚀🚀</h2>
-
-<p>기본적으로 한 번의 대량의 명령 데이터를 실행할 때는 bulk 기능을 쓰는 것이 속도가 빠릅니다.
-최적의 데이터 명령 수를 알기 위해서는 벤치마크를 이용하여 처음에는 100, 200, 400 으로 늘려가며 테스트 해보는 것을 추천드립니다!! 어느정도 늘렸을 때 속도가 이전 단계보다 매우 완화된 상태라면 그 전단계가 최적화된 명령 개수입니다.</p>
-
-<p>너무 많은 명령 데이터를 사용하게 되면 클러스터의 메모리에 과부하를 주게되니 명심하세요!</p>
-
-<p>정말 공부할 수록 훌륭한 검색엔진입니다. 웹 공부를 하시는 분은 ElasticSearch를 무조건 강추!! 하는바입니다 ^^</p>
 
     <hr />
   </div>

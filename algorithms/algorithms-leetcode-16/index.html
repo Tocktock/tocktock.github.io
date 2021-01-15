@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     leetcodd 16 3sum closet 문제풀기 &middot; 영원 
+  </title>
+
+  
+  <link rel="canonical" href="https://tocktock.github.io/algorithms/algorithms-leetcode-16/" />
+  
+
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/poole.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/syntax.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="https://tocktock.github.io/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="https://tocktock.github.io/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="https://tocktock.github.io/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="https://tocktock.github.io/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/about/"
+        >About me</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Algorithms"
+            >Algorithms (18)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Jekyll"
+            >Jekyll (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/elasticsearch"
+            >elasticsearch (7)</a
+          >
+        </li>
+        
+      </ul>
+                                           
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2021. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">영원</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">leetcodd 16 3sum closet 문제풀기</h1>
+  <span class="post-date">15 Jan 2021</span>
+  <p>#[leetcode][16] 3sum closet 문제풀기!</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/problems/3sum-closest">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>이번에도 숫자를 엄청 줄게!!
+숫자 3개를 뽑아서 그 숫자들의 합이 내가 원하는 숫자랑 가장 가까워지는 값을 찾아줘!!</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/3sum-closest">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이v">🔑 문제 풀이v</h2>
+
+<p>이번에도 숫자 세개를 뽑아서… 더해서 … 원하는 숫자와 얼마나 가까운지 체크하면 된다!
+다만 이번에도 3개 전부 완전탐색을 돌려버리게 된다면 타임아웃이 뜨지 않을까?</p>
+
+<p>저번과 마찬가지로 투포인터 접근법으로 풀었다.
+이전 문제를 풀었다면 별로 어렵지 않을 것이다!</p>
+
+<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
+
+<p>저번과 마찬가지로 정렬 후 selected, left, right 숫자를 선정합니다.</p>
+
+<ul>
+  <li>select : 가장 작은 숫자</li>
+  <li>left : selected + 1</li>
+  <li>right : 가장 큰 숫자</li>
+</ul>
+
+<p>이후 알고리즘은</p>
+
+<ul>
+  <li>합을 계산한 후 원하는 숫자와의 거리를 구한후,</li>
+  <li>이전에 구한 원하는 숫자와의 거리의 최솟값과 비교한후</li>
+  <li>더 작다면 이번에 계산한 값과, 거리를 저장!</li>
+</ul>
+
+<p>가장 중요한 left 와 right 의 인덱스를 어떻게 변화시킬거냐.. 는 다음과 같습니다.</p>
+
+<ul>
+  <li>원하는 숫자가 방금 구한 합보다 작다면 right 인덱스를 1 줄여주고
+    <blockquote>
+      <p>왜냐면 방금 구한 합보다 작아져야 원하는 숫자에 더 가까워지기 때문 !!</p>
+    </blockquote>
+  </li>
+  <li>반대의 경우 left 인덱스를 1 늘립니다.</li>
+</ul>
+
+<p>계싼은 컴퓨터에게 맡겨욥!!</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">threeSumClosest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">minDist</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
+  <span class="nx">nums</span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">-</span> <span class="nx">b</span><span class="p">);</span>
+  <span class="kd">let</span> <span class="nx">selected</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="nx">selected</span> <span class="o">&lt;</span> <span class="nx">nums</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">left</span> <span class="o">=</span> <span class="nx">selected</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">left</span> <span class="o">&lt;</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">selected</span><span class="p">]</span> <span class="o">+</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span> <span class="o">+</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">];</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">minDist</span> <span class="o">&gt;=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">sum</span> <span class="o">-</span> <span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">minDist</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">sum</span> <span class="o">-</span> <span class="nx">target</span><span class="p">);</span>
+        <span class="nx">answer</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">-</span> <span class="nx">sum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">right</span><span class="o">--</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">left</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">selected</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>이전 문제를 풀었기 때문에 쉽게 풀 수 있었다.
+이 알고리즘으로는 시간복잡도 O(n^2) 에 풀 수 있다.
+혹시 O(nlgn) 방법으로도 가능할까 싶어서 생각하고 찾아봤는데.. 답은 나오지 않았다.
+뭔가 있을거 같은데 …</p>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/elasticsearch/elasticsearch-explore-folder/">
+          Elasticsearch 폴더에는 뭐가 있을까??
+          <small>14 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-15/">
+          leetcodd 15 3sum 문제풀기
+          <small>14 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-programmers-connectLand/">
+          프로그래머스 연습문제 섬 연결하기
+          <small>13 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+  
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>
