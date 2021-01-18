@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     leetcod Best Time to Buy and Sell Stock II 문제풀기 &middot; 영원 
+  </title>
+
+  
+  <link rel="canonical" href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-1/" />
+  
+
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/poole.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/syntax.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="https://tocktock.github.io/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="https://tocktock.github.io/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="https://tocktock.github.io/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="https://tocktock.github.io/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/about/"
+        >About me</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Algorithms"
+            >Algorithms (21)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Jekyll"
+            >Jekyll (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/elasticsearch"
+            >elasticsearch (7)</a
+          >
+        </li>
+        
+      </ul>
+                                           
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2021. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">영원</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">leetcod Best Time to Buy and Sell Stock II 문제풀기</h1>
+  <span class="post-date">18 Jan 2021</span>
+  <p>#[📣top interview question] Best Time to Buy and Sell Stock II 문제풀기!</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>어떤 물건의 가격이 매일 달라..</p>
+
+<p>매일 달라지는 가격을 줄테니…</p>
+
+<p>나를 부자로 만들어줘!!</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>가격이 언제 꺾이는지 (하강하다 상승, 상승하다 하강) 에 포인트를 주면 될 것 같다.</p>
+
+<p>하강하다가 상승한다면 그 지점에서 사야하고, 상승하다가 하강하면 팔아야한다.</p>
+
+<p>더 쉽게 풀려면 그냥</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prices[i] &lt; prices[i + 1]
+</code></pre></div></div>
+
+<p>일 때 그 차이를 그냥 더해주면 되지 싶다.</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">maxProfit</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">prices</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">buyDate</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">profit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">prices</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">prices</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">buyDate</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">buyDate</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">//감소할때 팔면 이득.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">buyDate</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">profit</span> <span class="o">+=</span> <span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="nx">prices</span><span class="p">[</span><span class="nx">buyDate</span><span class="p">];</span>
+        <span class="nx">buyDate</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">profit</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>에이 너무 쉽네 하고 Hard 문제 도전했다가 탈탈 털렸다…
+틈틈히 시간 날 때마다 Hard 문제도 풀어야겠다.</p>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-TIQ-1-2/">
+          leetcodd  3sum 문제풀기
+          <small>18 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/nestjs-1-prerequisite/">
+          NestJS 박살내기 - 이거는 알고 시작하자.
+          <small>15 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-16/">
+          leetcodd 16 3sum closet 문제풀기
+          <small>15 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+  
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>
