@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-19T23:40:43+09:00</updated>
+ <updated>2021-01-20T01:52:49+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -3540,6 +3540,252 @@ x, y, left, right, 들어올 때 index 를 저장하는 Node 구조체를 생성
  </entry>
  
  <entry>
+   <title>Elasticsearch 타입에 대해서 알아보자!</title>
+   <link href="https://tocktock.github.io/elasticsearch/elasticsearch-type/"/>
+   <updated>2020-01-20T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/elasticsearch/elasticsearch-type</id>
+   <content type="html">&lt;p&gt;#[🌎elasticsearch] Elasticsearch 타입에 대해서 알아보자!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://esbook.kimjmin.net/&quot;&gt;Elasticsearch 가이드북 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.elastic.co/kr/what-is/elasticsearch&quot;&gt;Elasticsearch 홈페이지 가기 ✈&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;ElasticSearch 의 다양한 기능들을 둘러보기 전 꼭 알아야 할 타입들에 대해서 알아보겠습니다.!!
+진짜 진짜 진짜 중요하니 꼭 커피 스윽 마시고 읽어주세요!!&lt;/p&gt;
+
+&lt;h2 id=&quot;-mapping&quot;&gt;🍔 Mapping&lt;/h2&gt;
+
+&lt;p&gt;Mapping 어떻게 ElasticSearch 의 문서들이 저장되고 색인 되었는지에 대한 정의입니다.
+이 Mapping 의 정의를 통해 불필요한 프로세스 들과 공간 낭비를 줄이고 필요한 기능을 사용할 수 있습니다.
+예를 들면,&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;어떤 필드들이 Full-Text-Search 의 대상이 되어야 하는가?&lt;/li&gt;
+  &lt;li&gt;어떤 필드들이 숫자, 날짜, 위치 정보를 포함하는가?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;또한 이후 포스트에서 Dynamic Mapping 을 다룰 때에도 Mapping 과 타입에 대한 기본 개념이 필요합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;-field-data-type&quot;&gt;🍟 Field Data Type&lt;/h2&gt;
+
+&lt;p&gt;먼저 이번 포스트에서는 Metadata Fields 가 아닌 Properties 에 대한 Field Type 다룹니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Metadata Fields 는 “_index”, “_id”, “_source” 와 같이 metadata 와 관련된 녀석들입니다!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;먼저 중요한 녀석들을 뽑자면,&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Text&lt;/li&gt;
+  &lt;li&gt;Keyword&lt;/li&gt;
+  &lt;li&gt;Numbers&lt;/li&gt;
+  &lt;li&gt;Date&lt;/li&gt;
+  &lt;li&gt;Object&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;그 외에&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Nested&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;등이 있습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;더 자세한 내용은 &lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html#structured-data-types&quot;&gt;👆엘라스틱 홈페이지 참고하기!!&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;keyword--text&quot;&gt;🍕Keyword &amp;amp; Text&lt;/h2&gt;
+
+&lt;p&gt;요 두 녀석은 정말 중요합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;keyword&lt;/strong&gt; 는 exact search, sorting, aggregations 등을 위한 녀석입니다. 예를 들면 Id, Email, Tag 등을 검색할 때 유용합니다.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;text&lt;/strong&gt; 는 Full-Text-Search 기능을 위한 녀석입니다. 우리가 검색하려는 단어와 최대한 관련된 검색을 위해 사용하는 놈 입니다!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;기본적으로 우리가 어떤 필드 타입을 지정해주지 않고 문자열 데이터를 넣게 되면 (지정 안해도 가능합니다.)
+ElasticSearch 는 이 필드가 어떤 용도로 사용될 지 알 방법이 없기 때문에 keyword 와 text 타입을 같이 지정해주어 색인과정을 진행하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;keyword 와 text 의 두 기능이 모두 필요하다면 keyword 와 text 타입을 같이 지정해주는 것이 정말 유용합니다.&lt;/p&gt;
+
+&lt;p&gt;하지만 예를 들어봅시다.
+문서의 작성자를 검색을 하고 싶습니다. 작성자를 Email 이라고 합시다.
+우리가 검색할 단어와 Email 이 비슷한지는 상관관계를 따질 필요가 없습니다.
+오직 keyword 타입의 필드만 있으면 되겠죠.&lt;/p&gt;
+
+&lt;p&gt;그럼 Email 필드에 text 타입은 불필요한 타입이고, 이는 disk 공간을 낭비하게 됩니다.
+만약 문서가 수백만 수천만개가 넘어간다면 이는 무시할 수 없는 공간일 것 입니다.&lt;/p&gt;
+
+&lt;p&gt;이는 반대도 마찬가지 입니다.&lt;/p&gt;
+
+&lt;p&gt;필드에 필요한 Type 만 지정하는 것은 결국 disk 비용을 줄이는 결과를 가져오겠죠??
+비용은 매우 중요하니까 꼭 필요한 만큼만 씁시다!!&lt;/p&gt;
+
+&lt;h2 id=&quot;-numbers&quot;&gt;🥞 Numbers&lt;/h2&gt;
+
+&lt;p&gt;숫자 또한 중요하지만 알아야 할 개념은 많지 않습니다.
+만약 JSON 형식의 데이터가 날라와 저장하는데 정수 형식이다 그러면 Long 타입으로,
+실수 형식이다 그러면 Double 타입으로 자동으로 매핑됩니다.&lt;/p&gt;
+
+&lt;p&gt;자 여기서 질문. 왜 Long 이고, Double 일까?&lt;/p&gt;
+
+&lt;p&gt;ElasticSearch 는 지정되지 않은 타입에 대해서 정보가 없습니다.&lt;/p&gt;
+
+&lt;p&gt;다시말해 정수가 저장되면 이 정수의 범위가 어떻게 될지에 대해서 알 수 없습니다.
+그렇기 때문에 Interger 가 아니라 더 큰 수를 담을 수 있는 Long 타입에 매핑하는 것 입니다.
+Double 또한 마찬가지 입니다.&lt;/p&gt;
+
+&lt;p&gt;하지만 무조건 Long, Double 타입을 사용하는건 좋지 않습니다.
+이전에 이미 말했지만 비용은 매우 중요합니다. Integer 의 범위면 충분한데 Long 을 사용하는 것은 disk 공간을 낭비하는 행동이겠죠?&lt;/p&gt;
+
+&lt;p&gt;만약 정확하게 특정 필드가 다룰 숫자의 범위를 안다면 그에 맞게 사용하시는 것이 좋습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;-date&quot;&gt;🍗 Date&lt;/h2&gt;
+
+&lt;p&gt;JSON 형식의 데이터에는 이 필드는 date 타입이다!! 라고 알려주는 지표가 없습니다.
+우리가 JSON 형식으로 데이터를 주고 받을텐데.. ElasticSearch 는 이걸 어떻게 알까요?&lt;/p&gt;
+
+&lt;p&gt;ElasticSearch 는 매우 유용한 기능을 가지고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;이 필드가 Date 타입인지 아닌지 &lt;strong&gt;유추&lt;/strong&gt;하는 것이죠&lt;/p&gt;
+
+&lt;p&gt;문자열 필드이며, Date 정보를 포함하고 있다면 예들들어 다음과 같은 형식이라면&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;date&quot;: &quot;2015-01-01&quot; }
+{ &quot;date&quot;: &quot;2015-01-01T12:10:30Z&quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;ElasticSearch 는 아!! 이 필드는 Date 타입이구나! 라고 추론하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;물론 이 형식은 아래와 같이 형식을 정할 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;mappings&quot;: {
+    &quot;properties&quot;: {
+        &quot;date&quot;: {
+            &quot;type&quot;:   &quot;date&quot;,
+            &quot;format&quot;: &quot;yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis&quot;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아직 mapping 하는 법을 배우진 않았지만 format 형식을 보면서 아 이런 식으로 지정 가능하구나 라고 아시면 될 것 같습니다.&lt;/p&gt;
+
+&lt;p&gt;또한 미리 지정한다면 Interger, Long 타입을 Date 필드로 표현이 가능도 합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Integer 타입은 1970년 1월 1일 부터 초를 단위로 계산한 값입니다.&lt;/li&gt;
+  &lt;li&gt;Long 타입은 1970년 1월 1일부터 밀리초를 단위로 계산한 값입니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;-object&quot;&gt;☕ Object&lt;/h2&gt;
+
+&lt;p&gt;JSON 의 데이터 형식은 Object 라고 보시면 됩니다.
+계층적으로 내부 Object 를 다시 포함하게 되죠.&lt;/p&gt;
+
+&lt;p&gt;ElasticSearch 에서는 사실 Object 라는 타입이 애매모호합니다.&lt;/p&gt;
+
+&lt;p&gt;예를 들어&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;region&quot;: &quot;US&quot;,
+    &quot;manager&quot;: {
+        &quot;age&quot;:     30,
+        &quot;name&quot;: {
+        &quot;first&quot;: &quot;John&quot;,
+        &quot;last&quot;:  &quot;Smith&quot;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이런 데이터가 있다면 ElasticSearch 는 내부적으로&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;region&quot;:             &quot;US&quot;,
+    &quot;manager.age&quot;:        30,
+    &quot;manager.name.first&quot;: &quot;John&quot;,
+    &quot;manager.name.last&quot;:  &quot;Smith&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;점을 통해 저장합니다. 따라서 내부적으로 본다면, “Object 라는 타입은 없다.” 라고도 할 수 있겠네요.&lt;/p&gt;
+
+&lt;h2 id=&quot;-nested&quot;&gt;🥧 Nested&lt;/h2&gt;
+
+&lt;p&gt;Nested 타입은 배열과 관련이 있습니다.
+더 자세하게 말하면 Object 의 배열을 색인 하기 위한 특수 타입이라고 보시면 되겠네요.&lt;/p&gt;
+
+&lt;p&gt;이전에 말했던 것 처럼ElasticSearch 내부적으로는 Object 라는 타입이 없다. 라고 말씀드렸는데요.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;group&quot; : &quot;fans&quot;,
+        &quot;user&quot; : [
+            {
+            &quot;first&quot; : &quot;John&quot;,
+            &quot;last&quot; :  &quot;Smith&quot;
+            },
+            {
+            &quot;first&quot; : &quot;Alice&quot;,
+            &quot;last&quot; :  &quot;White&quot;
+            }
+        ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이와 같은 타입은 어떻게 저장되어야 할까요? user.first 는 여러개 있으니 배열로 저장해야 할 것입니다.
+다음과 같이요.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;group&quot; :        &quot;fans&quot;,
+    &quot;user.first&quot; : [ &quot;alice&quot;, &quot;john&quot; ],
+    &quot;user.last&quot; :  [ &quot;smith&quot;, &quot;white&quot; ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이렇게 저장되면 alice white 라는 이름과 john smith 이름의 연관성은 사라지게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;순수히 user.first 에 “alice”, “john” 이 저장되었고
+마찬기자로 user.last 에 “smith”, “white” 이 저장되었기 때문이죠.&lt;/p&gt;
+
+&lt;p&gt;다시말해 smith 라고 검색한다면 alice 가 튀어나올 수도 있는 상황이라는 겁니다.&lt;/p&gt;
+
+&lt;p&gt;이를 해결하기 위해 Nested 라는 타입을 지정할 수 있습니다.
+Nested 를 사용하게 되면 ElasticSearch 는 배열을 내부적으로 숨겨진 문서에 해당 내용을 따로 저장하게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;만약 user 가 11명이라면, 11개의 숨겨진 user 문서와 1개의 본 문서가 저장되겠네요.&lt;/p&gt;
+
+&lt;p&gt;문서가 늘어난다는 것은 검색 비용이 늘어난다는 말입니다.
+유의해서 써라… 이 말이죠.&lt;/p&gt;
+
+&lt;h2 id=&quot;-끝-입니다&quot;&gt;😂 끝 입니다!!&lt;/h2&gt;
+
+&lt;p&gt;끝이라 적고 한가지만 더 말씀드리자면..
+이 Mapping 을 통해 데이터 타입을 정하고 인덱스를 만들었습니다.
+그리고 엄청난 양의 데이터를 만들고 나니 데이터의 타입을 변경해야할 상황이 오게 되면…&lt;/p&gt;
+
+&lt;p&gt;인덱스를 삭제하고 다시 만드는 Reindex 과정이 필요합니다… 그러니 반드시.. 심사숙고해서.. 만드세요..&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;짞짞짞 고생 많으셨습니다.!! 잠시 눈 운동하고 쉬고 계세요!!&lt;/p&gt;
+
+&lt;p&gt;다음에는 또 어려운 내용으로 찾아뵐게요.. 흑흐구 ㅜㅜ 공부할 수록 알아야할 내용이 많습니다.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>leetcodd Substring with Concatenation of All Wordsb 문제풀기</title>
    <link href="https://tocktock.github.io/algorithms/algorithms-leetcode-30/"/>
    <updated>2020-01-19T00:00:00+09:00</updated>
@@ -3556,7 +3802,7 @@ x, y, left, right, 들어올 때 index 를 저장하는 Node 구조체를 생성
 
 &lt;h2 id=&quot;-문제-요약&quot;&gt;👓 문제 요약&lt;/h2&gt;
 
-&lt;p&gt;문자열과 단어집을 줄테니 단어집의 모오오오든 단어를 포함하는 문자열의 인덱스를 반환해줘!&lt;/p&gt;
+&lt;p&gt;문자열과 단어집을 줄테니 단어집의 모오오오든 단어를 포함하는 문자열의 부분 집합을 찾아줘!!&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;자세한 문제 설명과 릿코드 홈페이지 참고. &lt;a href=&quot;https://leetcode.com/problems/substring-with-concatenation-of-all-words/&quot;&gt;문제풀러가기&lt;/a&gt;&lt;/p&gt;
@@ -3564,65 +3810,95 @@ x, y, left, right, 들어올 때 index 를 저장하는 Node 구조체를 생성
 
 &lt;h2 id=&quot;-문제-풀이&quot;&gt;🔑 문제 풀이&lt;/h2&gt;
 
-&lt;p&gt;숫자 세개를 뽑아서… 0 을 만드는지 확인하면 된다!.
-다만 3개 전부 완전탐색을 돌려버리게 된다면 타임아웃이 뜨지 않을까?
-주어진 조건에서 숫자의 개수는 최대 3천개라 했으니 아마 타임아웃이 뜰거 같다.&lt;/p&gt;
+&lt;p&gt;단순히 Brute force 기법을 쓴다면 시간제한에 걸리게 된다.
+자료구조 Map을 통해 특정 문자를 logN 시간만에 접근하는 방법을 통해 풀자!&lt;/p&gt;
 
 &lt;h4 id=&quot;그래서-제가-어떻게-풀었냐면-&quot;&gt;그래서 제가 어떻게 풀었냐면 !!&lt;/h4&gt;
 
-&lt;p&gt;일단 숫자 세개의 합이 0이 되어야하니, 숫자들을 정렬하고 최저의 수를 선택하고 이 숫자와
-다른 숫자 2개를 선택했을 때 0이 되는 경우를 구했습니다. !!!!! &lt;strong&gt;빠밤!!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;단어집의 모든 단어를 map 자료구조에 할당하고&lt;/p&gt;
 
-&lt;p&gt;저희는 최저의 수를 선택했기 때문에 해당 숫자보다 오른쪽에 있는 수는 무조건 선택된 숫자보다 크다는 겁니다.!!&lt;/p&gt;
+&lt;p&gt;단어집의 모든 단어를 합친 길이 만큼 문자열에서 떼와서 검사를 했다.&lt;/p&gt;
 
-&lt;p&gt;그리고 숫자 두개를 정할껀데,&lt;/p&gt;
+&lt;p&gt;당연히 통과할 줄 알았는데, 단순히 map 자료형으로는 시간적 제한을 통과하지 못했다.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;하나는 최저 숫자보다 한 단계 크거나 같은수&lt;/li&gt;
-  &lt;li&gt;다른 하나는 가장 큰 수&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;그래서 찾아본 결과 !!&lt;/p&gt;
 
-&lt;p&gt;를 선택해서
-선택지의 폭을 줄여나가는 겁니다.&lt;/p&gt;
+&lt;p&gt;뚜둔&lt;/p&gt;
 
-&lt;p&gt;만약 세 개를 더했는데 0보다 크다? 그러면 가장 큰 수를 가르키는 포인트를 한 단계 낮은 숫자로 옮깁니다.
-만약 세 개를 더했는데 0보다 작다? 그러면 선택된 최저의 수를 가지고는 0을 만들 수 없습니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;선택된 숫자를 제외하고 가장 작은 수와 가장 큰 수를 더했기 때문&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;만약 세개를 더했는데 0이랑 같다? 정답에 추가합니다.&lt;/p&gt;
-
-&lt;p&gt;자자자자 &lt;strong&gt;요약&lt;/strong&gt;해줄게요 !&lt;/p&gt;
+&lt;h4 id=&quot;map과-hashmap의-차이를-아시나요&quot;&gt;Map과 HashMap의 차이를 아시나요?&lt;/h4&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;최저의 수 선택 - selected 라 하겠습니다.&lt;/li&gt;
-  &lt;li&gt;최저의 수와 같은 또는 한 단계 큰 수를 가르키는 포인트 - 그 숫자를 left라 하겠습니다.&lt;/li&gt;
-  &lt;li&gt;최대의 수를 가르키는 포인트 - 그 숫자를 right라 하겠습니다.&lt;/li&gt;
-  &lt;li&gt;selected + left + right === 0 -&amp;gt; 답에 추가!&lt;/li&gt;
-  &lt;li&gt;selected + left + right &amp;lt; 0 -&amp;gt; selected 의 숫자로는 더이상 0을 만들 수가 없음!&lt;/li&gt;
-  &lt;li&gt;selected + left + right &amp;gt; 0 -&amp;gt; right 의 숫자를 한 단계 낮춰줌 !!&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Map&lt;/strong&gt; 자료형은 레드블랙트리 기반으로 되어 있습니다.
+모든 데이터는 정렬되어 저장이 됩니다.
+레드블랙트리는 Binary Search Tree 에 Self-Balancing 기능이 추가된 자료구조 입니다.
+Search 에 Time complexity 가 O(logN) 을 보장하긴 하지만 키 삽입, 제거 할 때마다 트리를 보정하는 비용이 들어가기 때문에 성능이 저하될 수 있습니다. 물론 O(logN) 을 크게 벗어나진 않습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;HashMap 은 hash table 을 통해 자료에 접근하게 따라서 데이터를 정렬하지 않습니다.
+충분한 크기의 hash table 이 주어진다면, 데이터의 삽입, 제거, 검색시에 성능저하가 거의 일어나지 않습니다.&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;이 것을 반복하시면 됩니다. 반복은 컴퓨터가 하기 때문에 마음껏 돌려주세요!&lt;/p&gt;
+&lt;p&gt;저는 기본적인 Map 자료구조를 이용했을 때 문제의 시간제한을 통과하지 못했습니다.
+다른거는 전부 그대로 두고 hash table 을 사용하니 바로 통과하더군요!!&lt;/p&gt;
 
-&lt;p&gt;다만 중복을 피하기 위해 포인트를 옮길 때는 같은 수는 전부 지나쳐주세요!!&lt;/p&gt;
+&lt;p&gt;만약 데이터의 양이 매우 많아진다면 Hash Table 을 사용하는 것도 좋은 선택인 것 같습니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
 
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;vector&amp;gt;
+#include&amp;lt;string&amp;gt;
+#include&amp;lt;algorithm&amp;gt;
+#include&amp;lt;unordered_map&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findSubstring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testSubstringMatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordsSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;unordered_map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mapWord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;findSubstring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;findSubstring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;mapWord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;testSubstringMatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push_back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testSubstringMatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordsSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;unordered_map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mapTemp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compareStr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;mapTemp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compareStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapTemp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compareStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mapWord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compareStr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordsSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;-문제-후기&quot;&gt;🔨 문제 후기&lt;/h2&gt;
 
-&lt;p&gt;자잘한 조건 때문에 오래걸린 문제!!&lt;/p&gt;
-
-&lt;p&gt;나는 정말 숫자에 약한 것 같다 ㅜㅜ 다들 화이팅!!&lt;/p&gt;
-
-&lt;p&gt;코드를 깔끔하게 정리하는 법좀 배워야할 듯 싶다.&lt;/p&gt;
-
-&lt;p&gt;릿코드 상당히 괜찮은 사이트 같습니다!&lt;/p&gt;
+&lt;p&gt;자료구조에 대해 더 신경써야할 시간이 온 것 같다. !!!!
+Hard 문제는 확실히 일반 문제랑 조금 다르다.!!&lt;/p&gt;
 </content>
  </entry>
  
