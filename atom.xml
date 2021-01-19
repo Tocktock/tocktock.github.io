@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-18T15:32:21+09:00</updated>
+ <updated>2021-01-19T23:40:43+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -13,10 +13,79 @@
 
  
  <entry>
-   <title>leetcodd  3sum 문제풀기</title>
+   <title>leetcod Best Time to Buy and Sell Stock II 문제풀기</title>
    <link href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-2/"/>
    <updated>2021-01-18T00:00:00+09:00</updated>
    <id>https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-2</id>
+   <content type="html">&lt;p&gt;#[📣top interview question] Best Time to Buy and Sell Stock II 문제풀기!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/&quot;&gt;문제풀러가기✈&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-문제-요약&quot;&gt;👓 문제 요약&lt;/h2&gt;
+
+&lt;p&gt;어떤 물건의 가격이 매일 달라..&lt;/p&gt;
+
+&lt;p&gt;매일 달라지는 가격을 줄테니…&lt;/p&gt;
+
+&lt;p&gt;나를 부자로 만들어줘!!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;자세한 문제 설명과 릿코드 홈페이지 참고. &lt;a href=&quot;https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/&quot;&gt;문제풀러가기&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-문제-풀이&quot;&gt;🔑 문제 풀이&lt;/h2&gt;
+
+&lt;p&gt;가격이 언제 꺾이는지 (하강하다 상승, 상승하다 하강) 에 포인트를 주면 될 것 같다.&lt;/p&gt;
+
+&lt;p&gt;하강하다가 상승한다면 그 지점에서 사야하고, 상승하다가 하강하면 팔아야한다.&lt;/p&gt;
+
+&lt;p&gt;더 쉽게 풀려면 그냥&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;prices[i] &amp;lt; prices[i + 1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;일 때 그 차이를 그냥 더해주면 되지 싶다.&lt;/p&gt;
+
+&lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;maxProfit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;//감소할때 팔면 이득.&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-문제-후기&quot;&gt;🔨 문제 후기&lt;/h2&gt;
+
+&lt;p&gt;에이 너무 쉽네 하고 Hard 문제 도전했다가 탈탈 털렸다…
+틈틈히 시간 날 때마다 Hard 문제도 풀어야겠다.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>leetcodd Remove Duplicates from Sorted Array Solution 문제풀기</title>
+   <link href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-1/"/>
+   <updated>2021-01-18T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-1</id>
    <content type="html">&lt;p&gt;#[leetcode][📣top interview question] Remove Duplicates from Sorted Array Solution 문제풀기!&lt;/p&gt;
 
 &lt;hr /&gt;
@@ -88,75 +157,6 @@ for (int i = 0; i &amp;lt; len; i++) {
 &lt;p&gt;취업관련 코딩테스트 준비를 하다가 찾은 문제집 !! 괜찮은 것 같다!!&lt;/p&gt;
 
 &lt;p&gt;하루에 3시간씩 알고리즘 관련 문제를 푸는데, 시간이 남으면 Hard 문제도 도전해야겠다!&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>leetcod Best Time to Buy and Sell Stock II 문제풀기</title>
-   <link href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-1/"/>
-   <updated>2021-01-18T00:00:00+09:00</updated>
-   <id>https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-1</id>
-   <content type="html">&lt;p&gt;#[📣top interview question] Best Time to Buy and Sell Stock II 문제풀기!&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/&quot;&gt;문제풀러가기✈&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;-문제-요약&quot;&gt;👓 문제 요약&lt;/h2&gt;
-
-&lt;p&gt;어떤 물건의 가격이 매일 달라..&lt;/p&gt;
-
-&lt;p&gt;매일 달라지는 가격을 줄테니…&lt;/p&gt;
-
-&lt;p&gt;나를 부자로 만들어줘!!&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;자세한 문제 설명과 릿코드 홈페이지 참고. &lt;a href=&quot;https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/&quot;&gt;문제풀러가기&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;-문제-풀이&quot;&gt;🔑 문제 풀이&lt;/h2&gt;
-
-&lt;p&gt;가격이 언제 꺾이는지 (하강하다 상승, 상승하다 하강) 에 포인트를 주면 될 것 같다.&lt;/p&gt;
-
-&lt;p&gt;하강하다가 상승한다면 그 지점에서 사야하고, 상승하다가 하강하면 팔아야한다.&lt;/p&gt;
-
-&lt;p&gt;더 쉽게 풀려면 그냥&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;prices[i] &amp;lt; prices[i + 1]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;일 때 그 차이를 그냥 더해주면 되지 싶다.&lt;/p&gt;
-
-&lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;maxProfit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;//감소할때 팔면 이득.&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;buyDate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;-문제-후기&quot;&gt;🔨 문제 후기&lt;/h2&gt;
-
-&lt;p&gt;에이 너무 쉽네 하고 Hard 문제 도전했다가 탈탈 털렸다…
-틈틈히 시간 날 때마다 Hard 문제도 풀어야겠다.&lt;/p&gt;
 </content>
  </entry>
  
@@ -3536,6 +3536,93 @@ x, y, left, right, 들어올 때 index 를 저장하는 Node 구조체를 생성
 1 1 1 2&lt;/p&gt;
 
 &lt;p&gt;이런식으로 나오면 두개 다 삭제해야하는 줄 알고 처음에 코드를 짯다가 낭패 맞았다. 문제가 애매하면 답이나 질문들을 먼저 참고하자.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>leetcodd Substring with Concatenation of All Wordsb 문제풀기</title>
+   <link href="https://tocktock.github.io/algorithms/algorithms-leetcode-30/"/>
+   <updated>2020-01-19T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/algorithms/algorithms-leetcode-30</id>
+   <content type="html">&lt;p&gt;#[leetcode][30] Substring with Concatenation of All Words 문제풀기!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://leetcode.com/problems/substring-with-concatenation-of-all-words/&quot;&gt;문제풀러가기✈&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-문제-요약&quot;&gt;👓 문제 요약&lt;/h2&gt;
+
+&lt;p&gt;문자열과 단어집을 줄테니 단어집의 모오오오든 단어를 포함하는 문자열의 인덱스를 반환해줘!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;자세한 문제 설명과 릿코드 홈페이지 참고. &lt;a href=&quot;https://leetcode.com/problems/substring-with-concatenation-of-all-words/&quot;&gt;문제풀러가기&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;-문제-풀이&quot;&gt;🔑 문제 풀이&lt;/h2&gt;
+
+&lt;p&gt;숫자 세개를 뽑아서… 0 을 만드는지 확인하면 된다!.
+다만 3개 전부 완전탐색을 돌려버리게 된다면 타임아웃이 뜨지 않을까?
+주어진 조건에서 숫자의 개수는 최대 3천개라 했으니 아마 타임아웃이 뜰거 같다.&lt;/p&gt;
+
+&lt;h4 id=&quot;그래서-제가-어떻게-풀었냐면-&quot;&gt;그래서 제가 어떻게 풀었냐면 !!&lt;/h4&gt;
+
+&lt;p&gt;일단 숫자 세개의 합이 0이 되어야하니, 숫자들을 정렬하고 최저의 수를 선택하고 이 숫자와
+다른 숫자 2개를 선택했을 때 0이 되는 경우를 구했습니다. !!!!! &lt;strong&gt;빠밤!!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;저희는 최저의 수를 선택했기 때문에 해당 숫자보다 오른쪽에 있는 수는 무조건 선택된 숫자보다 크다는 겁니다.!!&lt;/p&gt;
+
+&lt;p&gt;그리고 숫자 두개를 정할껀데,&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;하나는 최저 숫자보다 한 단계 크거나 같은수&lt;/li&gt;
+  &lt;li&gt;다른 하나는 가장 큰 수&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;를 선택해서
+선택지의 폭을 줄여나가는 겁니다.&lt;/p&gt;
+
+&lt;p&gt;만약 세 개를 더했는데 0보다 크다? 그러면 가장 큰 수를 가르키는 포인트를 한 단계 낮은 숫자로 옮깁니다.
+만약 세 개를 더했는데 0보다 작다? 그러면 선택된 최저의 수를 가지고는 0을 만들 수 없습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;선택된 숫자를 제외하고 가장 작은 수와 가장 큰 수를 더했기 때문&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;만약 세개를 더했는데 0이랑 같다? 정답에 추가합니다.&lt;/p&gt;
+
+&lt;p&gt;자자자자 &lt;strong&gt;요약&lt;/strong&gt;해줄게요 !&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;최저의 수 선택 - selected 라 하겠습니다.&lt;/li&gt;
+  &lt;li&gt;최저의 수와 같은 또는 한 단계 큰 수를 가르키는 포인트 - 그 숫자를 left라 하겠습니다.&lt;/li&gt;
+  &lt;li&gt;최대의 수를 가르키는 포인트 - 그 숫자를 right라 하겠습니다.&lt;/li&gt;
+  &lt;li&gt;selected + left + right === 0 -&amp;gt; 답에 추가!&lt;/li&gt;
+  &lt;li&gt;selected + left + right &amp;lt; 0 -&amp;gt; selected 의 숫자로는 더이상 0을 만들 수가 없음!&lt;/li&gt;
+  &lt;li&gt;selected + left + right &amp;gt; 0 -&amp;gt; right 의 숫자를 한 단계 낮춰줌 !!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 것을 반복하시면 됩니다. 반복은 컴퓨터가 하기 때문에 마음껏 돌려주세요!&lt;/p&gt;
+
+&lt;p&gt;다만 중복을 피하기 위해 포인트를 옮길 때는 같은 수는 전부 지나쳐주세요!!&lt;/p&gt;
+
+&lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-문제-후기&quot;&gt;🔨 문제 후기&lt;/h2&gt;
+
+&lt;p&gt;자잘한 조건 때문에 오래걸린 문제!!&lt;/p&gt;
+
+&lt;p&gt;나는 정말 숫자에 약한 것 같다 ㅜㅜ 다들 화이팅!!&lt;/p&gt;
+
+&lt;p&gt;코드를 깔끔하게 정리하는 법좀 배워야할 듯 싶다.&lt;/p&gt;
+
+&lt;p&gt;릿코드 상당히 괜찮은 사이트 같습니다!&lt;/p&gt;
 </content>
  </entry>
  
