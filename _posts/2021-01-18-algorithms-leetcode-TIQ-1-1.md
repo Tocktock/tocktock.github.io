@@ -1,6 +1,6 @@
 ---
 layout: post
-title: leetcodd Remove Duplicates from Sorted Array Solution 문제풀기
+title: leetcode Remove Duplicates from Sorted Array Solution 문제풀기
 categories: Algorithms
 ---
 

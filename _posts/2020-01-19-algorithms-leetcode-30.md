@@ -1,6 +1,6 @@
 ---
 layout: post
-title: leetcodd Substring with Concatenation of All Wordsb 문제풀기
+title: leetcode Substring with Concatenation of All Wordsb 문제풀기
 categories: Algorithms
 ---
 

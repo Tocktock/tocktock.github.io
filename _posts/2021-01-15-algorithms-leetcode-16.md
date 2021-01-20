@@ -1,6 +1,6 @@
 ---
 layout: post
-title: leetcodd 16 3sum closet 문제풀기
+title: leetcode 16 3sum closet 문제풀기
 categories: Algorithms
 ---
 

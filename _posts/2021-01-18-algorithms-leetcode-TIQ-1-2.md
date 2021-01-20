@@ -1,6 +1,6 @@
 ---
 layout: post
-title: leetcod Best Time to Buy and Sell Stock II 문제풀기
+title: leetcode Best Time to Buy and Sell Stock II 문제풀기
 categories: Algorithms
 ---
 
