@@ -104,7 +104,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/Algorithms"
-            >Algorithms (22)</a
+            >Algorithms (24)</a
           >
         </li>
          
@@ -147,6 +147,276 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2020-kidung-bo/"> 프로그래머스 2020 kakao 기둥과 보 설치 문제 해설 </a>
+    </h1>
+
+    <span class="post-date">29 Sep 2020</span>
+
+    <p>#[프로그래머스][2020 kakao] 기둥과 보 설치 문제 해설</p>
+
+<hr />
+
+<ul>
+  <li>정답률 : 1.9%</li>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/60061">문제풀러가기</a></li>
+</ul>
+
+<hr />
+
+<h2 id="문제-요약">문제 요약</h2>
+
+<p><strong>죠르디</strong> 는 기둥과 보를 이용하여 벽면 구조물을 자동으로 세우려고 한다. 2차원 벽면 n x n 의 격자칸이 주어지고, 기둥과 보를 설치하고 제거하는 명령어가 주어 질 때 해당 명령어가 실행 가능하다면 실행하라.</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/60061">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="문제-풀이">문제 풀이</h2>
+
+<ul>
+  <li>보는 오른쪽으로, 기둥은 위로 설치, 제거한다.</li>
+  <li>보는 양쪽 끝 아래에 기둥이 존재하거나 양쪽으로 보가 존재해야 한다.</li>
+  <li>기둥은 아래에 기둥이 있거나 아래에 보가 있어야 한다.</li>
+  <li>어떤 기둥 또는 보를 제거했을 때 <strong>모든 기둥과 보</strong>가 유지될 수 있어야만 제거를 진행한다.</li>
+</ul>
+
+<h2 id="소스코드-및-소스해석">소스코드 및 소스해석</h2>
+
+<blockquote>
+  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
+</blockquote>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="c1">//https://programmers.co.kr/learn/courses/30/lessons/60061</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">build_frame</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">myadd</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">iscol</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">myremove</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">iscol</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">iscol</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">checkEvery</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">board</span><span class="p">[</span><span class="mi">128</span><span class="p">][</span><span class="mi">128</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span> <span class="c1">//4방향 top 부터 시계방향.</span>
+<span class="kt">int</span> <span class="n">g_n</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">answer</span><span class="p">;</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">input</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">}</span> <span class="p">,{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">}</span> <span class="p">};</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">input2</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span> <span class="p">,{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span> <span class="p">};</span>
+	<span class="n">answer</span> <span class="o">=</span> <span class="n">solution</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">input2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">build_frame</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">answer</span><span class="p">;</span>
+	<span class="n">g_n</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">build_frame</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">build_frame</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">myadd</span><span class="p">(</span><span class="n">build_frame</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">build_frame</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="o">!</span><span class="n">build_frame</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+		<span class="p">}</span>
+		<span class="k">else</span> <span class="p">{</span>
+			<span class="n">myremove</span><span class="p">(</span><span class="n">build_frame</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">build_frame</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="o">!</span><span class="n">build_frame</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">//i = x, j = y, x 오름차순, x가 같으면 y좌표 기준</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">answer</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span> <span class="p">}));</span>
+			<span class="p">}</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">answer</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">({</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">1</span> <span class="p">}));</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">myadd</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">iscol</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">iscol</span> <span class="o">&amp;&amp;</span> <span class="n">check</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">true</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">iscol</span> <span class="o">&amp;&amp;</span> <span class="n">check</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="nb">false</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">myremove</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">iscol</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="c1">//!(board[y][x + 1][0] &amp;&amp; check(x + 1, y, iscol)) ||</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">iscol</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">checkEvery</span><span class="p">())</span> <span class="p">{</span>
+			<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="n">board</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="p">{</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">checkEvery</span><span class="p">())</span> <span class="p">{</span>
+			<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">iscol</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">iscol</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)))</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">iscol</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+		<span class="o">||</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))){</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;}</span>
+	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">checkEvery</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">g_n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">//i = x, j = y, x 오름차순, x가 같으면 y좌표 기준</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">g_n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">?</span> <span class="o">!</span><span class="n">check</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span> <span class="o">:</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;}</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">?</span> <span class="o">!</span><span class="n">check</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="nb">false</span><span class="p">)</span> <span class="o">:</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="문제-후기">문제 후기</h2>
+
+<p>인풋값이 크지 않으므로 전수조사를 수행하길 권한다.
+사실 나도 제거 할 때 모든 조건을 어째 고려해야하나 싶다가 전수조사 하니까 답이 떠버렸다.</p>
+
+<p>헿</p>
+
+    <hr />
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2020-keyAndLock/"> 프로그래머스 2020 kakao 자물쇠와 열쇠 문제 풀이 </a>
+    </h1>
+
+    <span class="post-date">29 Sep 2020</span>
+
+    <p>#[프로그래머스✈][2020 kakao] 자물쇠와 열쇠 문제 풀이</p>
+
+<hr />
+
+<ul>
+  <li>정답률: 7.4%</li>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/60059">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>고고학자로 위장한 도굴꾼 <strong>튜브</strong>는 고대 유적지에서 자물쇠를 발견했습니다.
+가지고 있는 열쇠가 이 자물쇠에 맞는지 사방으로 끼워보고 돌려서도 끼워보고 해서 자물쇠를 열어 발굴할 수 있는지 확인하려고 합니다. 문제를 푸시오.</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/42892">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>20x20의 크기의 board에 열쇠가 맞는지 모든 케이스를 맞춰보는 겁니다. 여러분 이건 어려운게 아니라 <strong>귀찮은</strong> 문제 입니다.</p>
+
+<p>이 녀석을 혼쭐 내줍시다.</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<blockquote>
+  <p>해당소스는 프로그래머스에서 풀고 바로 가져온 코드 입니다.</p>
+</blockquote>
+
+<p>키를 만들고 사방으로 끼우고 돌려서도 끼우고 다 해봅니다.
+<strong>노동은 컴퓨터가 하잖아요?</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">makeMyKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">key</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">makeMyTempKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dir</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">keysize</span><span class="p">,</span> <span class="kt">int</span> <span class="n">locksize</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">lock</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">mykey</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">32</span><span class="p">][</span><span class="mi">32</span><span class="p">];</span>
+<span class="kt">bool</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">key</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">lock</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">makeMyKey</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">tempKey</span><span class="p">(</span><span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">0</span><span class="p">));</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">makeMyTempKey</span><span class="p">(</span><span class="n">tempKey</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">tempKey</span><span class="p">,</span><span class="n">lock</span><span class="p">))</span> <span class="p">{</span>
+					<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">makeMyKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">key</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">++</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">--</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="n">_j</span><span class="p">][</span><span class="n">_i</span><span class="p">];</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">--</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">mykey</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">_j</span><span class="p">][</span><span class="n">_i</span><span class="p">];</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">--</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">mykey</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">_j</span><span class="p">][</span><span class="n">_i</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">makeMyTempKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dir</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">keysize</span><span class="p">,</span> <span class="kt">int</span> <span class="n">locksize</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">keyX</span> <span class="o">=</span> <span class="n">keysize</span> <span class="o">-</span> <span class="n">x</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">keyY</span> <span class="o">=</span> <span class="n">keysize</span> <span class="o">-</span> <span class="n">y</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">_i</span> <span class="o">=</span> <span class="n">keyY</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">locksize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">keyX</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">locksize</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">++</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">_j</span> <span class="o">&gt;=</span> <span class="n">keysize</span> <span class="o">||</span> <span class="n">_j</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">_i</span> <span class="o">&gt;=</span> <span class="n">keysize</span> <span class="o">||</span> <span class="n">_i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span> <span class="p">{</span>
+				<span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">mykey</span><span class="p">[</span><span class="n">dir</span><span class="p">][</span><span class="n">_i</span><span class="p">][</span><span class="n">_j</span><span class="p">];</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">lock</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">lock</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">lock</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+				<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>Depth가 깊은거 같다구요? 네 맞습니다. 여러분이 짜실 때는 가능한 많이 줄여서 써주세요.</p>
+
+<p>카카오는 구현능력을 많이 물어보는 것 같다.
+하지만 많이 풀어본다면 너도 할 수 있다구!.
+우리 사랑스러운 튜브 그림을 보는데 너무 귀엽다.</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -567,404 +837,6 @@ x, y, left, right, 들어올 때 index 를 저장하는 Node 구조체를 생성
 <p>문제의 난이도에 비해 정답률이 낮은 것이 좀 의아하다.</p>
 
 <p>내 친구가 라이언 같은 놈이라면 절교한다.</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2019-blockGame/"> 프로그래머스 2019 kakao 블록게임 해설 </a>
-    </h1>
-
-    <span class="post-date">29 Sep 2020</span>
-
-    <h2 id="프로그래머스2019-kakao-블록게임-해설">#[프로그래머스][2019 kakao] 블록게임 해설</h2>
-
-<ul>
-  <li>정답률 : 5.85%</li>
-  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/42894">문제풀러가기</a></li>
-</ul>
-
-<hr />
-
-<h2 id="문제-요약">문제 요약</h2>
-
-<p>피지컬을 극복하려는 프로도의 피빠진 노력</p>
-
-<p>게임의 규칙은 간단하다.</p>
-
-<ul>
-  <li>위에서 검은색 블록을 떨어뜨린다.</li>
-  <li>검은블록을 포함하여 특정 블록이 직사각형의 형태가 되면 그 블록을 지울 수 있다.</li>
-  <li>특정 블록은 무조건 한 개체여야하며 다른 개체와 섞여서는 안된다.</li>
-</ul>
-
-<blockquote>
-  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/42894">문제풀러가기</a></p>
-</blockquote>
-
-<h2 id="문제-풀이">문제 풀이</h2>
-
-<p>테스트 케이스가 많지는 않기 때문에 검은블록을 0, 0 에서부터 n, n까지 다 떨어뜨려 본다.</p>
-
-<h2 id="소스코드-및-소스해석">소스코드 및 소스해석</h2>
-
-<blockquote>
-  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
-</blockquote>
-
-<ul>
-  <li>풀이방법은 12가지의 블록 유형중 삭제될 수 있는지 판단하는 것과 일단 떨어뜨려 보는 것이 있다. (그 외에도 있을 듯) 나는 후자를 택했다.</li>
-  <li>블록을 감싼 직사각형의 Left Top 좌표와 Right Bottom 좌표를 획득하여 해당 하는 좌표 내에서 검은블록이 떨어지면 삭제될 수 있는지 판단한다.</li>
-  <li>위에서부터 차곡차곡 검사한다.</li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
-#include &lt;vector&gt;
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="k">struct</span> <span class="nc">Point</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">};</span>
-<span class="k">struct</span> <span class="nc">BlockInfo</span> <span class="p">{</span>
-    <span class="n">Point</span> <span class="n">lt</span><span class="p">,</span> <span class="n">rb</span><span class="p">;</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">pt</span><span class="p">;</span> <span class="c1">// x,y 반복체?</span>
-<span class="p">};</span>
-
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getLTRB</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">);</span>
-<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">board</span><span class="p">);</span>
-<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">board</span><span class="p">);</span>
-<span class="kt">void</span> <span class="nf">myRemove</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">board</span><span class="p">);</span>
-
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">BlockInfo</span><span class="o">&gt;</span> <span class="n">myblock</span><span class="p">(</span><span class="mi">250</span><span class="p">);</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">board</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">}</span> <span class="p">,{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
-    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">solution</span><span class="p">(</span><span class="n">board</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">board</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-            <span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">pt</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Point</span><span class="p">{</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="p">});</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">pt</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">LTRB</span> <span class="o">=</span> <span class="n">getLTRB</span><span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]]);</span>
-                <span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">lt</span> <span class="o">=</span> <span class="p">{</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">};</span>
-                <span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">rb</span> <span class="o">=</span> <span class="p">{</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="p">};</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kt">bool</span> <span class="n">isPossible</span> <span class="o">=</span> <span class="n">check</span><span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]],</span> <span class="n">board</span><span class="p">);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">isPossible</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">answer</span><span class="o">++</span><span class="p">;</span>
-                    <span class="n">myRemove</span><span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]],</span> <span class="n">board</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getLTRB</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">LTRB</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">2147483647</span><span class="p">,</span> <span class="mi">2147483647</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span> <span class="p">};</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">LTRB</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">board</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">i</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-                        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">board</span><span class="p">[</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">y</span><span class="p">][</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x</span><span class="p">])</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kt">void</span> <span class="nf">myRemove</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">board</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-            <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="문제-후기">문제 후기</h2>
-
-<p>직사각형이라고 하길래</p>
-
-<p>0 0 0 2<br />
-0 1 2 2
-1 1 1 2</p>
-
-<p>이런식으로 나오면 두개 다 삭제해야하는 줄 알고 처음에 코드를 짯다가 낭패 맞았다. 문제가 애매하면 답이나 질문들을 먼저 참고하자.</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-type/"> Elasticsearch 타입에 대해서 알아보자! </a>
-    </h1>
-
-    <span class="post-date">20 Jan 2020</span>
-
-    <p>#[🌎elasticsearch] Elasticsearch 타입에 대해서 알아보자!</p>
-
-<hr />
-
-<ul>
-  <li>
-    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
-  </li>
-</ul>
-
-<hr />
-
-<p>ElasticSearch 의 다양한 기능들을 둘러보기 전 꼭 알아야 할 타입들에 대해서 알아보겠습니다.!!
-진짜 진짜 진짜 중요하니 꼭 커피 스윽 마시고 읽어주세요!!</p>
-
-<h2 id="-mapping">🍔 Mapping</h2>
-
-<p>Mapping 어떻게 ElasticSearch 의 문서들이 저장되고 색인 되었는지에 대한 정의입니다.
-이 Mapping 의 정의를 통해 불필요한 프로세스 들과 공간 낭비를 줄이고 필요한 기능을 사용할 수 있습니다.
-예를 들면,</p>
-
-<ul>
-  <li>어떤 필드들이 Full-Text-Search 의 대상이 되어야 하는가?</li>
-  <li>어떤 필드들이 숫자, 날짜, 위치 정보를 포함하는가?</li>
-</ul>
-
-<p>또한 이후 포스트에서 Dynamic Mapping 을 다룰 때에도 Mapping 과 타입에 대한 기본 개념이 필요합니다.</p>
-
-<h2 id="-field-data-type">🍟 Field Data Type</h2>
-
-<p>먼저 이번 포스트에서는 Metadata Fields 가 아닌 Properties 에 대한 Field Type 다룹니다.</p>
-
-<blockquote>
-  <p>Metadata Fields 는 “_index”, “_id”, “_source” 와 같이 metadata 와 관련된 녀석들입니다!</p>
-</blockquote>
-
-<p>먼저 중요한 녀석들을 뽑자면,</p>
-
-<ul>
-  <li>Text</li>
-  <li>Keyword</li>
-  <li>Numbers</li>
-  <li>Date</li>
-  <li>Object</li>
-</ul>
-
-<p>그 외에</p>
-
-<ul>
-  <li>Nested</li>
-</ul>
-
-<p>등이 있습니다.</p>
-
-<blockquote>
-  <p>더 자세한 내용은 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html#structured-data-types">👆엘라스틱 홈페이지 참고하기!!</a></p>
-</blockquote>
-
-<h2 id="keyword--text">🍕Keyword &amp; Text</h2>
-
-<p>요 두 녀석은 정말 중요합니다.</p>
-
-<ul>
-  <li><strong>keyword</strong> 는 exact search, sorting, aggregations 등을 위한 녀석입니다. 예를 들면 Id, Email, Tag 등을 검색할 때 유용합니다.</li>
-  <li><strong>text</strong> 는 Full-Text-Search 기능을 위한 녀석입니다. 우리가 검색하려는 단어와 최대한 관련된 검색을 위해 사용하는 놈 입니다!</li>
-</ul>
-
-<p>기본적으로 우리가 어떤 필드 타입을 지정해주지 않고 문자열 데이터를 넣게 되면 (지정 안해도 가능합니다.)
-ElasticSearch 는 이 필드가 어떤 용도로 사용될 지 알 방법이 없기 때문에 keyword 와 text 타입을 같이 지정해주어 색인과정을 진행하게 됩니다.</p>
-
-<p>keyword 와 text 의 두 기능이 모두 필요하다면 keyword 와 text 타입을 같이 지정해주는 것이 정말 유용합니다.</p>
-
-<p>하지만 예를 들어봅시다.
-문서의 작성자를 검색을 하고 싶습니다. 작성자를 Email 이라고 합시다.
-우리가 검색할 단어와 Email 이 비슷한지는 상관관계를 따질 필요가 없습니다.
-오직 keyword 타입의 필드만 있으면 되겠죠.</p>
-
-<p>그럼 Email 필드에 text 타입은 불필요한 타입이고, 이는 disk 공간을 낭비하게 됩니다.
-만약 문서가 수백만 수천만개가 넘어간다면 이는 무시할 수 없는 공간일 것 입니다.</p>
-
-<p>이는 반대도 마찬가지 입니다.</p>
-
-<p>필드에 필요한 Type 만 지정하는 것은 결국 disk 비용을 줄이는 결과를 가져오겠죠??
-비용은 매우 중요하니까 꼭 필요한 만큼만 씁시다!!</p>
-
-<h2 id="-numbers">🥞 Numbers</h2>
-
-<p>숫자 또한 중요하지만 알아야 할 개념은 많지 않습니다.
-만약 JSON 형식의 데이터가 날라와 저장하는데 정수 형식이다 그러면 Long 타입으로,
-실수 형식이다 그러면 Double 타입으로 자동으로 매핑됩니다.</p>
-
-<p>자 여기서 질문. 왜 Long 이고, Double 일까?</p>
-
-<p>ElasticSearch 는 지정되지 않은 타입에 대해서 정보가 없습니다.</p>
-
-<p>다시말해 정수가 저장되면 이 정수의 범위가 어떻게 될지에 대해서 알 수 없습니다.
-그렇기 때문에 Interger 가 아니라 더 큰 수를 담을 수 있는 Long 타입에 매핑하는 것 입니다.
-Double 또한 마찬가지 입니다.</p>
-
-<p>하지만 무조건 Long, Double 타입을 사용하는건 좋지 않습니다.
-이전에 이미 말했지만 비용은 매우 중요합니다. Integer 의 범위면 충분한데 Long 을 사용하는 것은 disk 공간을 낭비하는 행동이겠죠?</p>
-
-<p>만약 정확하게 특정 필드가 다룰 숫자의 범위를 안다면 그에 맞게 사용하시는 것이 좋습니다.</p>
-
-<h2 id="-date">🍗 Date</h2>
-
-<p>JSON 형식의 데이터에는 이 필드는 date 타입이다!! 라고 알려주는 지표가 없습니다.
-우리가 JSON 형식으로 데이터를 주고 받을텐데.. ElasticSearch 는 이걸 어떻게 알까요?</p>
-
-<p>ElasticSearch 는 매우 유용한 기능을 가지고 있습니다.</p>
-
-<p>이 필드가 Date 타입인지 아닌지 <strong>유추</strong>하는 것이죠</p>
-
-<p>문자열 필드이며, Date 정보를 포함하고 있다면 예들들어 다음과 같은 형식이라면</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ "date": "2015-01-01" }
-{ "date": "2015-01-01T12:10:30Z" }
-</code></pre></div></div>
-
-<p>ElasticSearch 는 아!! 이 필드는 Date 타입이구나! 라고 추론하게 됩니다.</p>
-
-<p>물론 이 형식은 아래와 같이 형식을 정할 수 있습니다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"mappings": {
-    "properties": {
-        "date": {
-            "type":   "date",
-            "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
-        }
-    }
-}
-</code></pre></div></div>
-
-<p>아직 mapping 하는 법을 배우진 않았지만 format 형식을 보면서 아 이런 식으로 지정 가능하구나 라고 아시면 될 것 같습니다.</p>
-
-<p>또한 미리 지정한다면 Interger, Long 타입을 Date 필드로 표현이 가능도 합니다.</p>
-
-<ul>
-  <li>Integer 타입은 1970년 1월 1일 부터 초를 단위로 계산한 값입니다.</li>
-  <li>Long 타입은 1970년 1월 1일부터 밀리초를 단위로 계산한 값입니다.</li>
-</ul>
-
-<h2 id="-object">☕ Object</h2>
-
-<p>JSON 의 데이터 형식은 Object 라고 보시면 됩니다.
-계층적으로 내부 Object 를 다시 포함하게 되죠.</p>
-
-<p>ElasticSearch 에서는 사실 Object 라는 타입이 애매모호합니다.</p>
-
-<p>예를 들어</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "region": "US",
-    "manager": {
-        "age":     30,
-        "name": {
-        "first": "John",
-        "last":  "Smith"
-        }
-    }
-}
-</code></pre></div></div>
-
-<p>이런 데이터가 있다면 ElasticSearch 는 내부적으로</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "region":             "US",
-    "manager.age":        30,
-    "manager.name.first": "John",
-    "manager.name.last":  "Smith"
-}
-</code></pre></div></div>
-
-<p>점을 통해 저장합니다. 따라서 내부적으로 본다면, “Object 라는 타입은 없다.” 라고도 할 수 있겠네요.</p>
-
-<h2 id="-nested">🥧 Nested</h2>
-
-<p>Nested 타입은 배열과 관련이 있습니다.
-더 자세하게 말하면 Object 의 배열을 색인 하기 위한 특수 타입이라고 보시면 되겠네요.</p>
-
-<p>이전에 말했던 것 처럼ElasticSearch 내부적으로는 Object 라는 타입이 없다. 라고 말씀드렸는데요.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "group" : "fans",
-        "user" : [
-            {
-            "first" : "John",
-            "last" :  "Smith"
-            },
-            {
-            "first" : "Alice",
-            "last" :  "White"
-            }
-        ]
-}
-</code></pre></div></div>
-
-<p>이와 같은 타입은 어떻게 저장되어야 할까요? user.first 는 여러개 있으니 배열로 저장해야 할 것입니다.
-다음과 같이요.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "group" :        "fans",
-    "user.first" : [ "alice", "john" ],
-    "user.last" :  [ "smith", "white" ]
-}
-</code></pre></div></div>
-
-<p>이렇게 저장되면 alice white 라는 이름과 john smith 이름의 연관성은 사라지게 됩니다.</p>
-
-<p>순수히 user.first 에 “alice”, “john” 이 저장되었고
-마찬기자로 user.last 에 “smith”, “white” 이 저장되었기 때문이죠.</p>
-
-<p>다시말해 smith 라고 검색한다면 alice 가 튀어나올 수도 있는 상황이라는 겁니다.</p>
-
-<p>이를 해결하기 위해 Nested 라는 타입을 지정할 수 있습니다.
-Nested 를 사용하게 되면 ElasticSearch 는 배열을 내부적으로 숨겨진 문서에 해당 내용을 따로 저장하게 됩니다.</p>
-
-<p>만약 user 가 11명이라면, 11개의 숨겨진 user 문서와 1개의 본 문서가 저장되겠네요.</p>
-
-<p>문서가 늘어난다는 것은 검색 비용이 늘어난다는 말입니다.
-유의해서 써라… 이 말이죠.</p>
-
-<h2 id="-끝-입니다">😂 끝 입니다!!</h2>
-
-<p>끝이라 적고 한가지만 더 말씀드리자면..
-이 Mapping 을 통해 데이터 타입을 정하고 인덱스를 만들었습니다.
-그리고 엄청난 양의 데이터를 만들고 나니 데이터의 타입을 변경해야할 상황이 오게 되면…</p>
-
-<p>인덱스를 삭제하고 다시 만드는 Reindex 과정이 필요합니다… 그러니 반드시.. 심사숙고해서.. 만드세요..</p>
-
-<hr />
-
-<p>짞짞짞 고생 많으셨습니다.!! 잠시 눈 운동하고 쉬고 계세요!!</p>
-
-<p>다음에는 또 어려운 내용으로 찾아뵐게요.. 흑흐구 ㅜㅜ 공부할 수록 알아야할 내용이 많습니다.</p>
 
     <hr />
   </div>

@@ -104,7 +104,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/Algorithms"
-            >Algorithms (22)</a
+            >Algorithms (24)</a
           >
         </li>
          
@@ -150,7 +150,280 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-2/"> leetcod Best Time to Buy and Sell Stock II 문제풀기 </a>
+      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-32/"> leetcode Longest Valid Parentheses 문제풀기 </a>
+    </h1>
+
+    <span class="post-date">20 Jan 2021</span>
+
+    <p>#[leetcode][32] Longest Valid Parentheses 문제풀기</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/problems/longest-valid-parentheses">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>”(“ 또는 “)” 로만 구성되어 있는 문자열을 줄거야!!
+유효한 괄호들의 가장 긴 길이를 구해줘!</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/longest-valid-parentheses">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>유효한 괄호의 조건은 “)” 가 나왔을 때 “(“ 의 개수와 대조해보면 된다!!</p>
+
+<ul>
+  <li>”()()” -&gt; 유효하다!</li>
+  <li>”(()” -&gt; 유효하지 않다!</li>
+  <li>”)()” -&gt; 유효하지 않다!</li>
+  <li>”()((()))” -&gt; 유효하다!</li>
+</ul>
+
+<p><strong>즉</strong>, 괄호가 유효한 조건을 확인하는 방법은,</p>
+
+<p>”(“ 가 나왔을 때는 입의 방향 기준으로 rightCount를 1 더해주고
+“)” 가 나왔을 때는 rightCount 가 0이 아니라면 rightCount 를 1 빼주고 또한 유효하다고 할 수 있다!!</p>
+
+<p>이 문제는 문자열 전체가 유효한지 아닌지가 아니라 부분집합중 유효한 길이의 최대를 구하는 것이다!</p>
+
+<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
+
+<p>이 문제의 해결법은 Dynamic Programming, Brute Force, Stack 등 여러 방법이 있다.</p>
+
+<p>나는 Dynamic Programming 기법을 이용해 풀었다.</p>
+
+<p>이전에 무엇이 나오던간에 “)” 가 나온 부분이 유효하다면 유효한 괄호의 길이는 2 이상이라는 것을 보장한다.
+즉 유효한 “)” 가 연속으로 나온다면 길이가 2씩 늘어난다는 것을 보장한다!</p>
+
+<p>만약 아래와 같은 상황이라면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>) ( ( ) )
+1 2 3 4 5    : 인덱스 번호
+</code></pre></div></div>
+
+<p>인덱스 4번까지 검사한다면 길이가 2, 5번까지 검사한다면 4 라는 것을 보장할 수 있다.
+아래와 같은 상황이면 어떻게 해야할까?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>( ) ( ( ) )
+1 2 3 4 5 6
+</code></pre></div></div>
+
+<p>인덱스 2번, 5번, 6번에서는 각각 길이가 2, 2, 4 라는 것을 보장할 수 있다.
+<strong>하지만 답은 6이지 않은가 !!</strong></p>
+
+<p>이를 해결하기 위해서 5번 검사할 때 유효한 길이 인 2만큼 전의 인덱스 즉 3번의 인덱스에서 보장한 값이 무엇인지 확인해야한다.
+<strong>어랏 0이네?</strong> 그럼 5번에서는 2까지만 보장한다.</p>
+
+<p>6번을 검사할 때는 유효한길이인 4만큼 전의 인덱스 즉 2번을 보면 2의 길이를 보장한다. !!
+즉 2번에서 보장한 2의 길이와 원래 6에서 보장한 길이 4 더한 6의 길이만큼을 다시 6번에서 보장할 수 있다 뚜둔!!!</p>
+
+<p>즉, 만약 유효한 괄호가 계속 유지가 된다면 원래 유효한 길이 바로 전에도 유효해야 한다는 것이다.</p>
+
+<p>우리가 구하려는 인덱스를 i 라고 하자 (0 부터 시작하자)</p>
+
+<p><strong>dp[i]</strong> 는</p>
+
+<ul>
+  <li>i - 1 이 유효하다면 dp[i - 1] + 2 를 해준다.</li>
+  <li>다시 dp[i - dp[i]] 를 더해준다.</li>
+</ul>
+
+<p>이제 보니 별로 어렵진 않지 않은가?</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">longestValidParentheses</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+  <span class="nx">dp</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="c1">// agari direction</span>
+  <span class="kd">let</span> <span class="nx">rightCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">(</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">rightCount</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">(</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="nx">rightCount</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">rightCount</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+        <span class="p">}</span>
+        <span class="nx">rightCount</span><span class="o">--</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">answer</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">answer</span><span class="p">,</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>구현 능력 자체는 어렵지 않으나, 어떻게 풀지를 생각하는데 조금 오래 걸린 문제다.</p>
+
+<p>stack 으로 푸는 방법도 있길래 봤는데 정말 나는 멀었다고 생각한다.
+이 방법으로도 풀어봐야겠다.</p>
+
+    <hr />
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-31/"> leetcode Next Permutation 문제풀기 </a>
+    </h1>
+
+    <span class="post-date">20 Jan 2021</span>
+
+    <p>#[leetcode][31] Next Permutation 문제풀기!</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/problems/next-permutation">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>다음 순열 구해라.</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/next-permutation">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>솔직히 말해서 다음 순열이 뭔데? 뭔데? 하면서 한 5분은 찾아봤다.</p>
+
+<p>다음 순열은 예를 들면 다음과 같다.
+숫자 1,2,3,4 각각 하나씩 있다. 이를 통해 순열을 만들어보면</p>
+
+<ul>
+  <li>1,2,3,4</li>
+  <li>4,3,2,1</li>
+  <li>2,3,1,4
+등 이 가능하다.</li>
+</ul>
+
+<p>하지만 문제에서는 lexicographically 즉 사전순서대로 순열을 만들었을 때, 해당 순열 다음으로 오는 순열이 무엇이냐??
+를 물어본 것이다.</p>
+
+<p>예를 들면
+1,2,3,4 의 순열들은</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-   1,2,3,4
+-   1,2,4,3
+-   1,3,2,4
+-   1,3,4,2 ....
+</code></pre></div></div>
+
+<p>순서로 이어진다.</p>
+
+<p>단순히 모든 경우의 수를 알아보는 방법도 있겠지만… 우리는 효율적인 코딩을 목표로 하기 때문에 다른 방법을 생각해보자.</p>
+
+<p><strong>!!!! 탐욕기법을 사용 한다면 가능하다!</strong></p>
+
+<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
+
+<p>이 문제의 해결법은 Dynamic Programming, Brute Force, Stack 등 여러 방법이 있다.</p>
+
+<p>나는 Dynamic Programming 기법을 이용해 풀었다.</p>
+
+<p>이전에 무엇이 나오던간에 “)” 가 나온 부분이 유효하다면 유효한 괄호의 길이는 2 이상이라는 것을 보장한다.
+즉 유효한 “)” 가 연속으로 나온다면 길이가 2씩 늘어난다는 것을 보장한다!</p>
+
+<p>만약 아래와 같은 상황이라면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>) ( ( ) )
+1 2 3 4 5    : 인덱스 번호
+</code></pre></div></div>
+
+<p>인덱스 4번까지 검사한다면 길이가 2, 5번까지 검사한다면 4 라는 것을 보장할 수 있다.
+아래와 같은 상황이면 어떻게 해야할까?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>( ) ( ( ) )
+1 2 3 4 5 6
+</code></pre></div></div>
+
+<p>인덱스 2번, 5번, 6번에서는 각각 길이가 2, 2, 4 라는 것을 보장할 수 있다.
+<strong>하지만 답은 6이지 않은가 !!</strong></p>
+
+<p>이를 해결하기 위해서 5번 검사할 때 유효한 길이 인 2만큼 전의 인덱스 즉 3번의 인덱스에서 보장한 값이 무엇인지 확인해야한다.
+<strong>어랏 0이네?</strong> 그럼 5번에서는 2까지만 보장한다.</p>
+
+<p>6번을 검사할 때는 유효한길이인 4만큼 전의 인덱스 즉 2번을 보면 2의 길이를 보장한다. !!
+즉 2번에서 보장한 2의 길이와 원래 6에서 보장한 길이 4 더한 6의 길이만큼을 다시 6번에서 보장할 수 있다 뚜둔!!!</p>
+
+<p>즉, 만약 유효한 괄호가 계속 유지가 된다면 원래 유효한 길이 바로 전에도 유효해야 한다는 것이다.</p>
+
+<p>우리가 구하려는 인덱스를 i 라고 하자 (0 부터 시작하자)</p>
+
+<p><strong>dp[i]</strong> 는</p>
+
+<ul>
+  <li>i - 1 이 유효하다면 dp[i - 1] + 2 를 해준다.</li>
+  <li>다시 dp[i - dp[i]] 를 더해준다.</li>
+</ul>
+
+<p>이제 보니 별로 어렵진 않지 않은가?</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">longestValidParentheses</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+  <span class="nx">dp</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="c1">// agari direction</span>
+  <span class="kd">let</span> <span class="nx">rightCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">(</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">rightCount</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">(</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="nx">rightCount</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">rightCount</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+        <span class="p">}</span>
+        <span class="nx">rightCount</span><span class="o">--</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">answer</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">answer</span><span class="p">,</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>구현 능력 자체는 어렵지 않으나, 어떻게 풀지를 생각하는데 조금 오래 걸린 문제다.</p>
+
+<p>stack 으로 푸는 방법도 있길래 봤는데 정말 나는 멀었다고 생각한다.
+이 방법으로도 풀어봐야겠다.</p>
+
+    <hr />
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-2/"> leetcode Best Time to Buy and Sell Stock II 문제풀기 </a>
     </h1>
 
     <span class="post-date">18 Jan 2021</span>
@@ -222,7 +495,7 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-1/"> leetcodd Remove Duplicates from Sorted Array Solution 문제풀기 </a>
+      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-TIQ-1-1/"> leetcode Remove Duplicates from Sorted Array Solution 문제풀기 </a>
     </h1>
 
     <span class="post-date">18 Jan 2021</span>
@@ -421,208 +694,6 @@ MYSQL !! Postgresql !!!! 원하는 데이터베이스를 선택해서 해봅시�
 유튜브, Udemy 에 수많은 강의들이 있으니 꼭 들어보시길 바랍니다.</p>
 
 <p>다음에는 CRUD 기능 실습을 통해 NestJS 가 이런거구나 라는 것을 알아보겠습니다.!!</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-16/"> leetcodd 16 3sum closet 문제풀기 </a>
-    </h1>
-
-    <span class="post-date">15 Jan 2021</span>
-
-    <p>#[leetcode][16] 3sum closet 문제풀기!</p>
-
-<hr />
-
-<ul>
-  <li><a href="https://leetcode.com/problems/3sum-closest">문제풀러가기✈</a></li>
-</ul>
-
-<hr />
-
-<h2 id="-문제-요약">👓 문제 요약</h2>
-
-<p>이번에도 숫자를 엄청 줄게!!
-숫자 3개를 뽑아서 그 숫자들의 합이 내가 원하는 숫자랑 가장 가까워지는 값을 찾아줘!!</p>
-
-<blockquote>
-  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/3sum-closest">문제풀러가기</a></p>
-</blockquote>
-
-<h2 id="-문제-풀이v">🔑 문제 풀이v</h2>
-
-<p>이번에도 숫자 세개를 뽑아서… 더해서 … 원하는 숫자와 얼마나 가까운지 체크하면 된다!
-다만 이번에도 3개 전부 완전탐색을 돌려버리게 된다면 타임아웃이 뜨지 않을까?</p>
-
-<p>저번과 마찬가지로 투포인터 접근법으로 풀었다.
-이전 문제를 풀었다면 별로 어렵지 않을 것이다!</p>
-
-<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
-
-<p>저번과 마찬가지로 정렬 후 selected, left, right 숫자를 선정합니다.</p>
-
-<ul>
-  <li>select : 가장 작은 숫자</li>
-  <li>left : selected + 1</li>
-  <li>right : 가장 큰 숫자</li>
-</ul>
-
-<p>이후 알고리즘은</p>
-
-<ul>
-  <li>합을 계산한 후 원하는 숫자와의 거리를 구한후,</li>
-  <li>이전에 구한 원하는 숫자와의 거리의 최솟값과 비교한후</li>
-  <li>더 작다면 이번에 계산한 값과, 거리를 저장!</li>
-</ul>
-
-<p>가장 중요한 left 와 right 의 인덱스를 어떻게 변화시킬거냐.. 는 다음과 같습니다.</p>
-
-<ul>
-  <li>원하는 숫자가 방금 구한 합보다 작다면 right 인덱스를 1 줄여주고
-    <blockquote>
-      <p>왜냐면 방금 구한 합보다 작아져야 원하는 숫자에 더 가까워지기 때문 !!</p>
-    </blockquote>
-  </li>
-  <li>반대의 경우 left 인덱스를 1 늘립니다.</li>
-</ul>
-
-<p>계싼은 컴퓨터에게 맡겨욥!!</p>
-
-<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">threeSumClosest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">;</span>
-  <span class="kd">let</span> <span class="nx">minDist</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
-  <span class="nx">nums</span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">-</span> <span class="nx">b</span><span class="p">);</span>
-  <span class="kd">let</span> <span class="nx">selected</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">while</span> <span class="p">(</span><span class="nx">selected</span> <span class="o">&lt;</span> <span class="nx">nums</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">left</span> <span class="o">=</span> <span class="nx">selected</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="kd">let</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nx">left</span> <span class="o">&lt;</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">selected</span><span class="p">]</span> <span class="o">+</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span> <span class="o">+</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">];</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">minDist</span> <span class="o">&gt;=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">sum</span> <span class="o">-</span> <span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
-        <span class="nx">minDist</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">sum</span> <span class="o">-</span> <span class="nx">target</span><span class="p">);</span>
-        <span class="nx">answer</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">;</span>
-      <span class="p">}</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">-</span> <span class="nx">sum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">right</span><span class="o">--</span><span class="p">;</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">left</span><span class="o">++</span><span class="p">;</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nx">selected</span><span class="o">++</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="-문제-후기">🔨 문제 후기</h2>
-
-<p>이전 문제를 풀었기 때문에 쉽게 풀 수 있었다.
-이 알고리즘으로는 시간복잡도 O(n^2) 에 풀 수 있다.
-혹시 O(nlgn) 방법으로도 가능할까 싶어서 생각하고 찾아봤는데.. 답은 나오지 않았다.
-뭔가 있을거 같은데 …</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-explore-folder/"> Elasticsearch 폴더에는 뭐가 있을까?? </a>
-    </h1>
-
-    <span class="post-date">14 Jan 2021</span>
-
-    <p>#[🌎elasticsearch] Elasticsearch 폴더에는 뭐가 있을까??</p>
-
-<hr />
-
-<ul>
-  <li>
-    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
-  </li>
-</ul>
-
-<hr />
-
-<h2 id="-elasitcsearch-폴더-구조">🧡 ElasitcSearch 폴더 구조</h2>
-
-<p>쉬어가는 느낌으로 ElasticSearch 의 directory 구조를 한번 살펴보도록 하겠습니다.</p>
-
-<p>ElasticSearch의 폴더로 한번 가보죠!</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-folder/전체화면.png" width="60%" alt="folder구조" /></p>
-
-<blockquote>
-  <p>저는 elk라는 폴더에 elasticsearch 와 관련된 폴더들을 모아두었습니다.</p>
-</blockquote>
-
-<h2 id="bin-폴더">📒Bin 폴더</h2>
-
-<p>bin 폴더 안에는 elasticsearch-cli, elasticsearch-sql-cli, elasicsearch-plugin 등등</p>
-
-<p>elasticsearch 기능의 핵심적인 스크립트 들이 있습니다.</p>
-
-<blockquote>
-  <p>건들지마세용 …..</p>
-</blockquote>
-
-<p>x-pack 부분은 elasticsearch 의 플러그인(보안, 알림, 모니터링, 보고, 그래프 등)들을 버전에 맞게 묶은 패키지라고 생각하시면 됩니다.!! elasticsearch를 알리게 만든 기능들의 집합체라고 생각합시다.!!</p>
-
-<h2 id="config-폴더">📒Config 폴더</h2>
-
-<h4 id="elasticsearchyml">elasticsearch.yml</h4>
-
-<p>이 파일에서 elasticsearch 의 전반적인 환경을 설정할 수 있습니다. 메모장이나 에디터로 켜시면</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ---------------------------------- Cluster -----------------------------------
-#
-# Use a descriptive name for your cluster:
-#
-#cluster.name: my-application
-#
-</code></pre></div></div>
-
-<p>cluster.name 옆에 #을 지우시고 cluster.name : <원하는 이름=""> 을 쓰시면 클러스터 이름을 설정할 수 있습니다.</원하는></p>
-
-<blockquote>
-  <p>클러스터와 노드에 대한 내용은 이후 포스트에서 자세하게 다루겠습니다.</p>
-</blockquote>
-
-<p>그 밑에 node, paths, memory, network, Discovery 가 있습니다.</p>
-
-<ul>
-  <li>paths 에서는 데이터, 로그가 저장되는 위치를 지정할 수 있습니다.</li>
-  <li>memory 에서는 elasticsearch가 사용하는 메모리의 사용량을 제한할 수 있습니다.
-    <blockquote>
-      <p>해당 memory 제한은 jvm.option 파일에서 힙사이즈를 조정함으로서 디테일하게 설정가능합니다.</p>
-    </blockquote>
-  </li>
-  <li>network 에서는 어떤 ip의 어떤 port 번호로 elasticsearch에 접근 할 지 설정가능합니다.</li>
-  <li>discovery 에서는 elasticsearch 에 얼마나 많은 인스턴스들이 연결 되는지 설정가능합니다.</li>
-</ul>
-
-<h4 id="jvmoptions">jvm.options</h4>
-
-<p>이 파일에서는 elasticsearch 에 허용해줄 메모리 크기를 설정해줄 수 있습니다. 기본은 1기가바이트 입니다. 메모리 외의 내용에 대해서는 전문가가 아니면 건들지 맙시다 …</p>
-
-<h4 id="log4j2properties">log4j2.properties</h4>
-
-<p>여기는 elasticsearch 의 로그 관련 파일로, log4j2는 java 의 가장 강력한 logging 프레임워크중 하나입니다.</p>
-
-<h2 id="modules-폴더">📒modules 폴더</h2>
-
-<p>여기는 완전히 elasticsearch 의 기능에 도움을 주는 built-in module 들이 모여있는 곳입니다.
-많은 x-pack 폴더들이 보이시죠~ ?</p>
-
-<h2 id="plugins-폴더">📒plugins 폴더</h2>
-
-<p>이 폴더는 우리가 elasticsearch 에 custom 플러그인을 추가할 때 사용하는 폴더입니다.</p>
 
     <hr />
   </div>
