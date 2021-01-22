@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     leetcode  Combination Sum II 문제풀기 &middot; 영원 
+  </title>
+
+  
+  <link rel="canonical" href="https://tocktock.github.io/algorithms/algorithms-leetcode-40/" />
+  
+
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/poole.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/syntax.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="https://tocktock.github.io/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="https://tocktock.github.io/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="https://tocktock.github.io/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="https://tocktock.github.io/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/about/"
+        >About me</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Algorithms"
+            >Algorithms (25)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/elasticsearch"
+            >elasticsearch (8)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Jekyll"
+            >Jekyll (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/NestJS"
+            >NestJS (1)</a
+          >
+        </li>
+        
+      </ul>
+                                                   
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2021. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">영원</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">leetcode  Combination Sum II 문제풀기</h1>
+  <span class="post-date">22 Jan 2021</span>
+  <p>#[leetcode][40] Combination Sum II 문제풀기!</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/problems/combination-sum-ii/">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>숫자들을 줄게. 그 숫자들을 조합해서 내가 원하는 숫자가 나오는 조합을 찾아줘!</p>
+
+<p>단, 그 찾은 조합끼리 중복이 있으면 안되!! 그리고 특정 숫자를 내가 준 개수 보다 더 많이 쓰면 안되!!</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/combination-sum-ii/">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>모든 경우를 다 체크해서 만들어진다? 그 결과가 중복되지 않는다? 그럼 push 한다.</p>
+
+<p>라는 방법이 있지만, 이 방법으로는 이미 풀어봤기 때문에 다른 방법을 찾아봤다!</p>
+
+<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
+
+<p>정답에 중복이 되는 이유는 같은 숫자들 끼리 아무런 구별없이 길을 만들어 지나왔기 때문!!</p>
+
+<p>같은 숫자를 쓰는 길은 한 번만 지나가게 하면 된다.!!!! 뚜둔</p>
+
+<p>예를 들어</p>
+
+<p>[1, 2, 2 ,2 ,5] , 5 라는 값이 주어졌다 하면,</p>
+
+<p>1, 2, 5 를 지나가는 길은 오직 한 번만 체크하면 된다.
+두번째 2도 체크하고, 세번째 2도 체크 할 필요가 없다.</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">combinationSum2</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">candidates</span><span class="p">,</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">candidates</span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">-</span> <span class="nx">b</span><span class="p">);</span> <span class="c1">// 오름차순</span>
+  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="cm">/**
+   * @param {number[]} candidates
+   * @param {number[]} path
+   * @param {number} start
+   * @param {number} target
+   */</span>
+  <span class="kd">const</span> <span class="nx">dfs</span> <span class="o">=</span> <span class="p">(</span><span class="nx">_candidates</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">_target</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// 다음 값도 체크해야한다!</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">_target</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">answer</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">_target</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">_candidates</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="kd">let</span> <span class="nx">next</span> <span class="o">=</span> <span class="nx">start</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">_candidates</span><span class="p">[</span><span class="nx">start</span><span class="p">]</span> <span class="o">===</span> <span class="nx">_candidates</span><span class="p">[</span><span class="nx">next</span><span class="p">])</span> <span class="nx">next</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="nx">dfs</span><span class="p">(</span><span class="nx">_candidates</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">next</span><span class="p">,</span> <span class="nx">_target</span><span class="p">);</span>
+
+    <span class="nx">path</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">_candidates</span><span class="p">[</span><span class="nx">start</span><span class="p">]);</span>
+    <span class="nx">dfs</span><span class="p">(</span><span class="nx">_candidates</span><span class="p">,</span> <span class="p">[...</span><span class="nx">path</span><span class="p">],</span> <span class="nx">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">_target</span> <span class="o">-</span> <span class="nx">_candidates</span><span class="p">[</span><span class="nx">start</span><span class="p">]);</span>
+    <span class="nx">path</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+  <span class="p">};</span>
+  <span class="nx">dfs</span><span class="p">(</span><span class="nx">candidates</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">target</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>재미있다.</p>
+
+<p>다른 사람의 풀이 보는 것도 재미있따.</p>
+
+<p>세상에는 천재는 넘치고 내 시간은 부족하다.</p>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/algorithms/nestjs-2-CRUD/">
+          NestJS 박살내기 - CRUD 로 시작하자.
+          <small>21 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-32/">
+          leetcode Longest Valid Parentheses 문제풀기
+          <small>20 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-31/">
+          leetcode Next Permutation 문제풀기
+          <small>20 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+  
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>

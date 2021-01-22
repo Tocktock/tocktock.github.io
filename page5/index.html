@@ -104,7 +104,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/Algorithms"
-            >Algorithms (24)</a
+            >Algorithms (25)</a
           >
         </li>
          
@@ -153,6 +153,153 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/Programmers-2017kakaocord-forthjump/"> 프로그래머스 2017 카카오코드 4단 고음 해설 </a>
+    </h1>
+
+    <span class="post-date">02 Oct 2020</span>
+
+    <p>#[프로그래머스✈][2017 카카오코드] 4단 고음 해설</p>
+
+<hr />
+
+<p>🛑🛑 <strong>아이유 팬은 주의</strong> 🛑🛑
+🛑🛑 <strong>아이유 팬은 주의</strong> 🛑🛑
+🛑🛑 <strong>아이유 팬은 주의</strong> 🛑🛑
+🛑🛑 <strong>해당문제를 풀지 말고 돌아가길 권고</strong> 🛑🛑</p>
+
+<ul>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/1831">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>우리 지은이는 3단 고음을 넘어 4단 고음을넘어
+2147483647 단 고음을 연습중이다.</p>
+
+<p>우리 지은이는 현재 음계의 3배 (음계에 배수라는게 존재하는지 모르겠다.) 높은 음계를 낼 수 있고 <strong>반드시</strong> 3단 점프를 한 후에는 음계를 한 단계씩 두 번을 더 높게 내야한다. 하지만 굳이 연속으로 1단 점프를 할 필요는 없다.</p>
+
+<p>예시 )</p>
+
+<p><strong>(가능)</strong></p>
+
+<ol>
+  <li>3단 점프</li>
+  <li>1단 점프</li>
+  <li>1단 점프</li>
+  <li>끝</li>
+</ol>
+
+<p><strong>(불가능)</strong></p>
+
+<ol>
+  <li>3단 점프</li>
+  <li>1단 점프</li>
+  <li>끝</li>
+</ol>
+
+<p><strong>(가능)</strong></p>
+
+<ol>
+  <li>3단 점프</li>
+  <li>1단 점프</li>
+  <li>3단 점프</li>
+  <li>1단 점프</li>
+  <li>1단 점프</li>
+  <li>1단 점프</li>
+  <li>끝</li>
+</ol>
+
+<p>자세한 문제를 프로그래머스 홈페이지를 참고하는걸 강력히 권고</p>
+
+<p>🛑🛑 <strong>아이유 팬은 주의</strong> 🛑🛑
+🛑🛑 <strong>아이유 팬은 주의</strong> 🛑🛑
+🛑🛑 <strong>아이유 팬은 주의</strong> 🛑🛑
+🛑🛑 <strong>해당문제를 풀지 말고 돌아가길 권고</strong> 🛑🛑</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/42892">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>전형적인 DFS 문제이다.
+범위가 INT_MAX에 해당하는 값이 있으므로 들어오는 인풋을 기준으로 역추적을 하여 1까지 찾아가는 것을 추천한다.</p>
+
+<p>DFS 문제이지만 범위가 매우 크므로 적당한 가지치기가 필요하다.
+3단 점프의 최대 가능 범위를 구하고, 3단 점프와 1단 점프간의
+상관관계 (3단 점프 후에는 반드시 1단 점프 2번이 와야함.)</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<blockquote>
+  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
+</blockquote>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">plusCt</span><span class="p">,</span> <span class="kt">int</span> <span class="n">multiCt</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">g_ans</span><span class="p">;</span>
+<span class="kt">long</span> <span class="kt">long</span> <span class="n">maxNum</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+<span class="kt">long</span> <span class="kt">long</span> <span class="n">minNum</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">solution</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">g_ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">maxNum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">maxNum</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2147483647</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">maxNum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxNum</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">minNum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">minNum</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2147483647</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">minNum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">minNum</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="n">maxNum</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">dfs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">g_ans</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">plusCt</span><span class="p">,</span> <span class="kt">int</span> <span class="n">multiCt</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">plusCt</span> <span class="o">&gt;</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">multiCt</span> <span class="o">&gt;</span> <span class="n">i</span> <span class="o">||</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">multiCt</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">plusCt</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">multiCt</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">==</span> <span class="n">plusCt</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">g_ans</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">dfs</span><span class="p">(</span><span class="n">plusCt</span><span class="p">,</span> <span class="n">multiCt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="o">/</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">dfs</span><span class="p">(</span><span class="n">plusCt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">multiCt</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>프로그래머스도 성장하고 있구나를 많이 느꼈따.</p>
+
+<p>당시 코드 템플릿이나 채점 등 지금과 비교하면 많이 부족한 것을 느낄 수 있다.</p>
+
+<p>그리고 아이유는 아이유다.</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -533,141 +680,6 @@
 <p>방 하나를 2 평 이라고 생각만 해도
 2000000000000평 이고 대한민국 영토의 약 60배..
 그만하자.</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-backjun-16234/"> 백준 16234 인구이동 문제 해설 </a>
-    </h1>
-
-    <span class="post-date">30 Sep 2020</span>
-
-    <p>#[백준🔉][16234] 인구이동 문제 해설</p>
-
-<hr />
-
-<ul>
-  <li>정답비율 : 36.044%</li>
-  <li><a href="https://www.acmicpc.net/problem/16234">문제풀러가기✈</a></li>
-</ul>
-
-<hr />
-
-<h2 id="-문제-요약">👓 문제 요약</h2>
-
-<p>1 x 1 모양의 사각형이 n x n 만큼 펼쳐진 땅이 있다고 가정한다.
-각 사각형은 나라를 지칭하며 그 안에는 백성들의 숫자가 있다.</p>
-
-<p>매우 자유로운 이 대륙의 특정한 나라는 다른 나라의 인구수와 비슷하다면 연합을 하여 연합국 간 인구는 같은 숫자로 유지하기로 법을 제정했다.</p>
-
-<p>위 법을 완전히 수행하기 위해 필요한 일 수를 구하여라.</p>
-
-<p><strong>라고 생각 하면 됨</strong></p>
-
-<blockquote>
-  <p>자세한 문제 설명과 제한 사항은 백준 홈페이지 참고. <a href="https://www.acmicpc.net/problem/16234">문제풀러가기</a></p>
-</blockquote>
-
-<h2 id="-문제-풀이">🔑 문제 풀이</h2>
-
-<p><strong>중요!!!</strong> 필요한 일 수이다. 이동한 횟 수가 아니다. 다시 말해 동일한 날에 연합이 여러개 발생한다 해도 하루에 일어났기 때문에 답을 추가할 때는 <strong>1</strong>을 추가해야한다</p>
-
-<p>각 칸별로 BFS를 수행하면 풀 수 있는 문제.</p>
-
-<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
-
-<blockquote>
-  <p>백준 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 코드에는 테스트 코드가 존재합니다.</p>
-</blockquote>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
-#include&lt;fstream&gt;
-#include&lt;vector&gt;
-#include&lt;string&gt;
-#include&lt;algorithm&gt;
-</span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-<span class="k">struct</span> <span class="nc">Point</span> <span class="p">{</span>
-	<span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
-	<span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">};</span>
-
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;&gt;</span> <span class="n">group</span><span class="p">;</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">myBoard</span><span class="p">;</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span> <span class="n">checked</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">pre</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="kt">int</span> <span class="n">high</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">checked</span><span class="p">);</span>
-<span class="kt">void</span> <span class="nf">flatting</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">myBoard</span><span class="p">);</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-
-	<span class="kt">int</span> <span class="n">boardSize</span><span class="p">;</span>
-	<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">boardSize</span><span class="p">;</span>
-	<span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">;</span>
-	<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">low</span> <span class="o">&gt;&gt;</span> <span class="n">high</span><span class="p">;</span>
-	<span class="n">myBoard</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">boardSize</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">boardSize</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span>
-
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">boardSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">boardSize</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-			<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">myBoard</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
-
-	<span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">group</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-		<span class="n">checked</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-		<span class="n">group</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-		<span class="n">checked</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">boardSize</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">boardSize</span><span class="p">,</span> <span class="nb">false</span><span class="p">));</span>
-		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">boardSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-		<span class="p">{</span>
-			<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">boardSize</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-			<span class="p">{</span>
-				<span class="k">if</span> <span class="p">(</span><span class="n">checked</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-				<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-				<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-				<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-				<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-				<span class="k">if</span> <span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="n">group</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-					<span class="n">group</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-		<span class="n">flatting</span><span class="p">(</span><span class="n">myBoard</span><span class="p">);</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-		<span class="n">answer</span><span class="o">++</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">answer</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kt">void</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">pre</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="kt">int</span> <span class="n">high</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="n">myBoard</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">myBoard</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="k">return</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">checked</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-
-	<span class="kt">int</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">pre</span><span class="p">);</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="n">low</span> <span class="o">&amp;&amp;</span> <span class="n">diff</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">checked</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-		<span class="n">group</span><span class="p">[</span><span class="n">group</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="n">push_back</span><span class="p">({</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">});</span>
-		<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">],</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-		<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">],</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-		<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-		<span class="n">dfs</span><span class="p">(</span><span class="n">myBoard</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">myBoard</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-<span class="kt">void</span> <span class="nf">flatting</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">myBoard</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">group</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-	<span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-		<span class="kt">int</span> <span class="n">flat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-			<span class="n">flat</span> <span class="o">+=</span> <span class="n">myBoard</span><span class="p">[</span><span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">].</span><span class="n">y</span><span class="p">][</span><span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">].</span><span class="n">x</span><span class="p">];</span>
-		<span class="n">flat</span> <span class="o">/=</span> <span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">();</span>
-		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-			<span class="n">myBoard</span><span class="p">[</span><span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">].</span><span class="n">y</span><span class="p">][</span><span class="n">group</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">].</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">flat</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="-문제-후기">🔨 문제 후기</h2>
-
-<p>불필요한 동작도 많은 것 같지만 풀었다는 것에 만족하고 다른 사람의 코드를 보았다. 역시 세상에는 천재는 많고 나는 바보다.</p>
 
     <hr />
   </div>
