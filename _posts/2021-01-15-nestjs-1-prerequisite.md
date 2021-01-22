@@ -1,7 +1,7 @@
 ---
 layout: post
 title: NestJS 박살내기 - 이거는 알고 시작하자.
-categories: Algorithms
+categories: NestJS
 ---
 
 # 1. [NestJS] 이거는 알고 시작하자.
