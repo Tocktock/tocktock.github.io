@@ -4,13 +4,322 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-20T23:12:12+09:00</updated>
+ <updated>2021-01-22T12:26:40+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
    <email>qnfmtm666@naver.com</email>
  </author>
 
+ 
+ <entry>
+   <title>NestJS 박살내기 - CRUD 로 시작하자.</title>
+   <link href="https://tocktock.github.io/algorithms/nestjs-2-CRUD/"/>
+   <updated>2021-01-21T00:00:00+09:00</updated>
+   <id>https://tocktock.github.io/algorithms/nestjs-2-CRUD</id>
+   <content type="html">&lt;h1 id=&quot;2-nestjs-nestjs-박살내기-시작하자&quot;&gt;2. [NestJS] NestJS 박살내기 시작하자.&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-nestjs-박살내기-시리즈의-목적&quot;&gt;👌 NestJS 박살내기 시리즈의 목적&lt;/h2&gt;
+
+&lt;p&gt;저는 &lt;strong&gt;NestJS 전문가&lt;/strong&gt;가 아닙니다.
+저 또한 NestJS 로 어플리케이션을 만들려고 한지 한달이 채 되지 않았습니다.&lt;/p&gt;
+
+&lt;p&gt;다만 제가 공부하면서 습득하고 이해한 내용을 바탕으로 간단한 어플리케이션을 만들며 기본적인 지식을
+여러분께 같이 &lt;strong&gt;공유&lt;/strong&gt;하는 것이 제 목적입니다.&lt;/p&gt;
+
+&lt;p&gt;대부분의 정보는 &lt;strong&gt;NestJS&lt;/strong&gt; , &lt;strong&gt;Github&lt;/strong&gt; 를 참고하고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;이 시리즈는&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CRUD 기능&lt;/li&gt;
+  &lt;li&gt;MySQL DataBase 연결&lt;/li&gt;
+  &lt;li&gt;Auth - 메시지 큐&lt;/li&gt;
+  &lt;li&gt;기타 기능 (카톡 공유, 카톡으로 로그인하기 등)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;의 내용을 다룰 것 입니다.&lt;/p&gt;
+
+&lt;p&gt;사용하는 IDE 는 &lt;strong&gt;VSCode&lt;/strong&gt; 입니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이후 추가할 사항이나 유용한 팁이 있다면 더 추가하겠습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;궁금한 사항이나 제가 틀렸다고 생각하는 부분이 있다면 언제든 피드백 해주세요.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-nestjs-어플리케이션-시작하기&quot;&gt;🛴 NestJS 어플리케이션 시작하기.&lt;/h2&gt;
+
+&lt;p&gt;NestJS 는 Javascript 기반 Typescript 언어를 주로 다룹니다.
+Javascript 환경을 위해서 Node.js 가 설치되어 있는지 먼저 확인해주세요.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://nodejs.org/en/&quot;&gt;Node.js 설치하기&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;NestJS 설치를 위해 다음 명령어를 터미널에서 실행해주세요.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ npm i -g @nestjs/cli
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;설치가 정상적으로 되었다면 이제 프로젝트 폴더를 만들어 봅시다. project-name 은 원하시는데로 하면 됩니다.
+저희는 nestjs-practice 라고 지어보죠.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ nest new nestjs-practice
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;패키지 매니저는 npm 을 사용하겠습니다. (그대로 엔터 눌러주면 됩니다.)&lt;/p&gt;
+
+&lt;h2 id=&quot;구조-살펴보기&quot;&gt;👓구조 살펴보기&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;src
+  app.controller.spec.ts
+  app.controller.ts
+  app.module.ts
+  app.service.ts
+  main.ts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;src 폴더에는 앱의 코드들이 모여있다고 생각하시면 됩니다.
+각 역할을 보자면&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;app.controller.&lt;strong&gt;spec&lt;/strong&gt;.ts : spec 이 붙은 파일들은 &lt;strong&gt;테스트 파일&lt;/strong&gt;입니다. 지금은 무시하셔도 됩니다.&lt;/li&gt;
+  &lt;li&gt;app.&lt;strong&gt;controller&lt;/strong&gt;.ts : 앱의 request 와 response 를 담당하는 &lt;strong&gt;라우팅&lt;/strong&gt; 관련 파일입니다.&lt;/li&gt;
+  &lt;li&gt;app.&lt;strong&gt;module&lt;/strong&gt;.ts : 앱을 구성하는 &lt;strong&gt;구조&lt;/strong&gt;의 메타데이터를 담당하는 파일입니다.&lt;/li&gt;
+  &lt;li&gt;app.&lt;strong&gt;service&lt;/strong&gt;.ts : 앱의 &lt;strong&gt;비지니스 로직&lt;/strong&gt;을 담당하는 파일입니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;앞으로 모든 앱의 구성요소들은 위와 같은 형태로 만들어질거에요!!&lt;/p&gt;
+
+&lt;p&gt;최상의 폴더의 다른 파일들은 구성 요소를 담당하는 녀석이에요.
+예를 들면 typescript 환경설정 파일 또는 패키지 의존성 관리파일 같은 것들이에요.!!&lt;/p&gt;
+
+&lt;h2 id=&quot;기능-만들어보기&quot;&gt;🔨기능 만들어보기&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;nest cli&lt;/strong&gt; 는 정말 유용한 기능들을 많이 지원합니다.
+&lt;strong&gt;nest generate&lt;/strong&gt; 기능을 이용하면 자주 사용하는 용도의 템플릿을 생성할 수 있습니다.
+다음은 &lt;strong&gt;nest generate | g&lt;/strong&gt; 를 이용해 만들 수 있는 명령어들입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ┌───────────────┬─────────────┬──────────────────────────────────────────────┐
+  │ name          │ alias       │ description                                  │
+  │ application   │ application │ Generate a new application workspace         │
+  │ class         │ cl          │ Generate a new class                         │
+  │ configuration │ config      │ Generate a CLI configuration file            │
+  │ controller    │ co          │ Generate a controller declaration            │
+  │ decorator     │ d           │ Generate a custom decorator                  │
+  │ filter        │ f           │ Generate a filter declaration                │
+  │ gateway       │ ga          │ Generate a gateway declaration               │
+  │ guard         │ gu          │ Generate a guard declaration                 │
+  │ interceptor   │ in          │ Generate an interceptor declaration          │
+  │ interface     │ interface   │ Generate an interface                        │
+  │ middleware    │ mi          │ Generate a middleware declaration            │
+  │ module        │ mo          │ Generate a module declaration                │
+  │ pipe          │ pi          │ Generate a pipe declaration                  │
+  │ provider      │ pr          │ Generate a provider declaration              │
+  │ resolver      │ r           │ Generate a GraphQL resolver declaration      │
+  │ service       │ s           │ Generate a service declaration               │
+  │ library       │ lib         │ Generate a new library within a monorepo     │
+  │ sub-app       │ app         │ Generate a new application within a monorepo │
+  │ resource      │ res         │ Generate a new CRUD resource                 │
+  └───────────────┴─────────────┴──────────────────────────────────────────────┘
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;예들 들면&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nest g module catiscute
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위 명령어는 catiscute 라는 모듈을 자동으로 생성해줍니다. 어때요 정말 유용하죠? !!&lt;/p&gt;
+
+&lt;p&gt;자아아아 저기 저기 &lt;strong&gt;CRUD&lt;/strong&gt; 보이시나요? &lt;strong&gt;resource&lt;/strong&gt; 라는 명령어를 이용하시면 CRUD 에 필요한 템플릿을 얻을 수 있습니다.!!!!!
+우후 ~ 박수박수 진짜 어메이징 합니다. 여러분 이 명령어로 바로 템플릿 얻는 거는 진짜 놀라운거에요!!&lt;/p&gt;
+
+&lt;p&gt;이제 users 라는 CRUD 기능을 만들어보죠.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nest g res users
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;를 입력해봅시다. 와우 폴더 보이시나요?? !! 보이시나요!!!
+한 가지 더 말하자면 &lt;strong&gt;app.module.ts&lt;/strong&gt; 파일에 자동으로 &lt;strong&gt;UsersModule&lt;/strong&gt; 이 추가되었습니다.!!!
+와 &lt;strong&gt;미쳐따 미쳐따&lt;/strong&gt;… 진짜 편리하다 … 🙀&lt;/p&gt;
+
+&lt;p&gt;우리는 이제 유저에 관한 기본적인 CRUD 기능을 수행할 수 있습니다. 우후~&lt;/p&gt;
+
+&lt;p&gt;한 번 앱을 실행해볼까요??&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm run start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;어랏 ?!?!? 저는 이런 에러가 떳습니다. nest 가 생성해준 파일에 우리가 설치하지 않은 node 모듈이 있나보네요!!&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1 import { PartialType } from '@nestjs/mapped-types';
+                              ~~~~~~~~~~~~~~~~~~~~~~
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;다음 명령어를 통해 설치해주자구요!!&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install @nestjs/mapped-types --save
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;설치가 되면 다시&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm run start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;유후~ 이번엔 에러가 없습니다!!!!! 로그를 보시면&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [NestFactory] Starting Nest application...
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [InstanceLoader] AppModule dependencies initialized +24ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [InstanceLoader] UsersModule dependencies initialized +2ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RoutesResolver] AppController {}: +8ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RouterExplorer] Mapped {, GET} route +4ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RoutesResolver] UsersController {/users}: +1ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RouterExplorer] Mapped {/users, POST} route +0ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RouterExplorer] Mapped {/users, GET} route +9ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RouterExplorer] Mapped {/users/:id, GET} route +0ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RouterExplorer] Mapped {/users/:id, PUT} route +1ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [RouterExplorer] Mapped {/users/:id, DELETE} route +0ms
+[Nest] 35604   - 2021-01-22 11:31:13 ├F10: AM┤   [NestApplication] Nest application successfully started +2ms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;RouteExplorer&lt;/strong&gt; 를 보시면 &lt;strong&gt;users&lt;/strong&gt; 에 관련된 매핑들을 볼 수 있습니다!!&lt;/p&gt;
+
+&lt;p&gt;이제 편하신 브라우저를 키시고 &amp;lt;localhost:3000&amp;gt; 로 접속하시면!!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;아무런 설정 안하셨으면 앱의 기본 포트는 3000 입니다!!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Hello World!&lt;/strong&gt;
+사실 이 페이지를 보는게 목적이 아니기 때문에 링크 뒤에 /users 를 입력해봅시다&lt;/p&gt;
+
+&lt;p&gt;가보자구요!! &amp;lt;localhost:3000/users&amp;gt;
+&lt;strong&gt;This action returns all users&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;가보자구요!! &amp;lt;localhost:3000/users/1&amp;gt;
+&lt;strong&gt;This action returns a #1 user&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;모야모야~ 벌써 된거야? 우리 뭐 한것도 없는데??&lt;/p&gt;
+
+&lt;p&gt;nest 정말 편한 기능들이 많습니다. 다만 우리가 원하는건 단순히 저런 문자가 아니라 진짜 유저 정보겠죠?&lt;/p&gt;
+
+&lt;p&gt;다음 시간에는 데이터베이스에 연결해서 진짜 유저 정보를 만들고 가져오고 수정하고 삭제하고를 배워보겠습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;-좀-더-살펴보기&quot;&gt;🔨 좀 더 살펴보기&lt;/h2&gt;
+
+&lt;p&gt;자 근데 우리 여기서 마치면 좀 찝찝하잖아요? 그러셔야 합니다. 그럴거에요. 그래서 준비했습니다!!&lt;/p&gt;
+
+&lt;p&gt;코드와 구조를 조금 더 살펴보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;users
+    │  users.controller.spec.ts
+    │  users.controller.ts
+    │  users.module.ts
+    │  users.service.spec.ts
+    │  users.service.ts
+    │
+    ├─dto
+    │      create-user.dto.ts
+    │      update-user.dto.ts
+    │
+    └─entities
+            user.entity.ts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;spec&lt;/strong&gt; 이 붙은 파일은 &lt;strong&gt;테스트 파일&lt;/strong&gt;입니다. 다음에 테스트 할 때 살펴보겠습니다!&lt;/p&gt;
+
+&lt;p&gt;dto 에 관한 내용과 entities 에 관한 내용은 다음번에 데이터베이스 연결하고 알아보겠습니다.&lt;/p&gt;
+
+&lt;p&gt;그럼 service, controller, module 에 대해서 한번 살펴보죠.&lt;/p&gt;
+
+&lt;h4 id=&quot;service&quot;&gt;🍔Service&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;Service&lt;/strong&gt; 파일은 비지니스 로직을 처리하는 파일이라고 했습니다. &lt;strong&gt;UserService&lt;/strong&gt; 클래스 안을 살펴 보시면
+create, findAll, findOne, update, remove 함수들이 있습니다.
+여기서 리턴하는 문자열이 우리가 브라우저에서 본 문자들이죠?&lt;/p&gt;
+
+&lt;p&gt;그리고 클래스 위에 &lt;strong&gt;@Injectable()&lt;/strong&gt; 이라는 &lt;strong&gt;Decorator&lt;/strong&gt; 가 있습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Decorator 는 기능을 확장할 때 쓰일 수 있는 디자인 패턴입니다.
+&lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/decorators.html&quot;&gt;데코레이터 패턴이 뭔가요?&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Injectable 데코레이터는 다른 클래스에 &lt;strong&gt;constructor&lt;/strong&gt; 를 통해 이 클래스를 Inject 하기 위한 데코레이터로 &lt;strong&gt;DI(Dependency Injection)&lt;/strong&gt; 기능을 사용하기 위해 쓰입니다.&lt;/p&gt;
+
+&lt;p&gt;Controller 파일을 보면 더 이해가 잘 될겁니다!&lt;/p&gt;
+
+&lt;h4 id=&quot;controller&quot;&gt;🌭Controller&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;Controller&lt;/strong&gt; 파일은 &lt;strong&gt;라우팅&lt;/strong&gt;을 처리하는 파일입니다.
+일단 UsersController 클래스 안에 constructor 를 보시면. &lt;strong&gt;userService&lt;/strong&gt; 의 &lt;strong&gt;타입만 지정&lt;/strong&gt;했습니다.&lt;/p&gt;
+
+&lt;p&gt;그럼에도 불구하고 create 함수에서 이 &lt;strong&gt;this.userService.create 를 호출&lt;/strong&gt;하고 있는데요.&lt;/p&gt;
+
+&lt;p&gt;이게 어떻게 가능한 것이냐면 바로 &lt;strong&gt;Nest 의 훌륭한 DI 시스템&lt;/strong&gt; 때문입니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;DI 는 간단하게 NestJS 의 틀에 맞게 우리가 어떤 값을 지정해주면 NestJS 가 알아서 컨트롤 해주는 기능입니다.우리 UserService 부분에서 Injectable 데코레이터를 통해 UserService 를 Injectable 한 provider 로 지정했습니다.따라서 UserController 클래스 내의 constructor 에서 단순히 userService 의 타입을 UserService 로 지정해줌으로서NestJS가 알아서 this.userService 의 &lt;strong&gt;생성과 소멸을 관리&lt;/strong&gt;하게 됩니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;와 미쳐따 미쳐따!!! 정말 편하다!!&lt;/p&gt;
+
+&lt;p&gt;아직 몇 가지 더 봐야할 것이 있습니다.&lt;/p&gt;
+
+&lt;p&gt;바로 &lt;strong&gt;@Controller&lt;/strong&gt; 데코레이터 입니다. 데코레이터에서 “users” 라고 지정해주고 있습니다. 이 말은 바로!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;/users 라는 주소로 요청이 들어오면 이 클래스에서 처리하겠다&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;라는 뜻입니다. 우리는 UserController 를 app 모듈에 갔다 붙였으니 주소는 localhost:3000/users 가 되겠죠??.&lt;/p&gt;
+
+&lt;p&gt;이후 UsersController 내의 함수를 보면&lt;/p&gt;
+
+&lt;p&gt;@Post, @Get, @Put, @Delete 데코레이터들이 보입니다.&lt;/p&gt;
+
+&lt;p&gt;이름에서도 유추할 수 있듯이 &lt;strong&gt;/users 에 해당하는 메서드로 들어오면 이 함수에서 처리하겠다.&lt;/strong&gt; 라는 뜻 입니다.&lt;/p&gt;
+
+&lt;p&gt;users 이후 매핑도 지정할 수 있는데요.
+@Get(“:id”) 라는 데코레이터는 &lt;strong&gt;/users/:id 로 들어온 요청을 이 함수에서 처리하겟다&lt;/strong&gt; 라는 뜻 입니다.&lt;/p&gt;
+
+&lt;p&gt;정말 직관적이죠?? 우후~&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;’:’&lt;/strong&gt; 로 시작하는 문자열은 파라메터라는 값으로 인식하겠다는 뜻입니다.
+findOne 을 보시면 함수 인자 값에 @Param(‘id’) 이라는 데코레이터를 붙여 :id 위치의 값을 id 라는 값에 할당하는 과정을 볼 수 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;또한 비슷하게 &lt;strong&gt;@Body&lt;/strong&gt; 데코레이터는 request body 의 내용을 변수에 할당하겠다는 뜻 입니다.&lt;/p&gt;
+
+&lt;p&gt;정말 쉽다쉽다!!&lt;/p&gt;
+
+&lt;h4 id=&quot;module&quot;&gt;🥣Module&lt;/h4&gt;
+
+&lt;p&gt;UsersModule 클래스는 이 users 라는 폴더 안의 &lt;strong&gt;모듈을 관리&lt;/strong&gt;하는 클래스입니다.
+이 모듈의 &lt;strong&gt;controllers&lt;/strong&gt; 는 UsersController 클래스를 통해 관리하겠다!
+이 모듈의 &lt;strong&gt;providers&lt;/strong&gt; 는 UserService 클래스를 통해 관리하겠다 !!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;잘 보시면 배열의 값이므로 복수의 값을 할당할 수 있습니다!!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이 UsersModule 을 app 모듈에서 imports 하고 있기 때문에 app 이 UserModule 을 인식할 수 있던 것 입니다!!&lt;/p&gt;
+
+&lt;p&gt;다른 값에 대해서는 이후 포스트에서 다루겠습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;자 여러분 정말 쉽고 직관적으로 되어있지 않나요? 제가 NestJS 를 좋아하게 된 이유 이기도 합니다.!!&lt;/p&gt;
+
+&lt;p&gt;다음에는 MySQL 데이터베이스를 이용해 진짜 user 정보를 저장해보자구요!&lt;/p&gt;
+
+&lt;p&gt;피드백은 항상 환영입니다!!&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>leetcode Longest Valid Parentheses 문제풀기</title>
@@ -172,12 +481,13 @@
 &lt;ul&gt;
   &lt;li&gt;1,2,3,4&lt;/li&gt;
   &lt;li&gt;4,3,2,1&lt;/li&gt;
-  &lt;li&gt;2,3,1,4
-등 이 가능하다.&lt;/li&gt;
+  &lt;li&gt;2,3,1,4&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;하지만 문제에서는 lexicographically 즉 사전순서대로 순열을 만들었을 때, 해당 순열 다음으로 오는 순열이 무엇이냐??
-를 물어본 것이다.&lt;/p&gt;
+&lt;p&gt;등 이 가능하다.&lt;/p&gt;
+
+&lt;p&gt;하지만 문제에서는 lexicographically 즉 사전순서대로 순열을 만들었을 때,
+해당 순열 다음으로 오는 순열이 무엇이냐?? 를 물어본 것이다.&lt;/p&gt;
 
 &lt;p&gt;예를 들면
 1,2,3,4 의 순열들은&lt;/p&gt;
@@ -192,90 +502,106 @@
 
 &lt;p&gt;단순히 모든 경우의 수를 알아보는 방법도 있겠지만… 우리는 효율적인 코딩을 목표로 하기 때문에 다른 방법을 생각해보자.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;!!!! 탐욕기법을 사용 한다면 가능하다!&lt;/strong&gt;&lt;/p&gt;
-
 &lt;h4 id=&quot;그래서-제가-어떻게-풀었냐면-&quot;&gt;그래서 제가 어떻게 풀었냐면 !!&lt;/h4&gt;
 
-&lt;p&gt;이 문제의 해결법은 Dynamic Programming, Brute Force, Stack 등 여러 방법이 있다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;!!!! 탐욕기법을 사용 한다면 가능하다!&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;나는 Dynamic Programming 기법을 이용해 풀었다.&lt;/p&gt;
+&lt;p&gt;이전 순열은 무조건 이번 순열보다 작기 때문에 규칙을 적용하면 될 것 같다 뜨악!! 갑자기 고기먹고싶다.&lt;/p&gt;
 
-&lt;p&gt;이전에 무엇이 나오던간에 “)” 가 나온 부분이 유효하다면 유효한 괄호의 길이는 2 이상이라는 것을 보장한다.
-즉 유효한 “)” 가 연속으로 나온다면 길이가 2씩 늘어난다는 것을 보장한다!&lt;/p&gt;
+&lt;p&gt;아니 문제로 돌아와서.&lt;/p&gt;
 
-&lt;p&gt;만약 아래와 같은 상황이라면&lt;/p&gt;
+&lt;p&gt;1,2,3,4,5 를 예로 들어보자.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;) ( ( ) )
-1 2 3 4 5    : 인덱스 번호
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;인덱스 4번까지 검사한다면 길이가 2, 5번까지 검사한다면 4 라는 것을 보장할 수 있다.
-아래와 같은 상황이면 어떻게 해야할까?&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;( ) ( ( ) )
-1 2 3 4 5 6
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;인덱스 2번, 5번, 6번에서는 각각 길이가 2, 2, 4 라는 것을 보장할 수 있다.
-&lt;strong&gt;하지만 답은 6이지 않은가 !!&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;이를 해결하기 위해서 5번 검사할 때 유효한 길이 인 2만큼 전의 인덱스 즉 3번의 인덱스에서 보장한 값이 무엇인지 확인해야한다.
-&lt;strong&gt;어랏 0이네?&lt;/strong&gt; 그럼 5번에서는 2까지만 보장한다.&lt;/p&gt;
-
-&lt;p&gt;6번을 검사할 때는 유효한길이인 4만큼 전의 인덱스 즉 2번을 보면 2의 길이를 보장한다. !!
-즉 2번에서 보장한 2의 길이와 원래 6에서 보장한 길이 4 더한 6의 길이만큼을 다시 6번에서 보장할 수 있다 뚜둔!!!&lt;/p&gt;
-
-&lt;p&gt;즉, 만약 유효한 괄호가 계속 유지가 된다면 원래 유효한 길이 바로 전에도 유효해야 한다는 것이다.&lt;/p&gt;
-
-&lt;p&gt;우리가 구하려는 인덱스를 i 라고 하자 (0 부터 시작하자)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;dp[i]&lt;/strong&gt; 는&lt;/p&gt;
+&lt;p&gt;1,4,3,2,5 라는 순열이 주어졌다. 이 순열의 다음 순열은 무엇일까?&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;i - 1 이 유효하다면 dp[i - 1] + 2 를 해준다.&lt;/li&gt;
-  &lt;li&gt;다시 dp[i - dp[i]] 를 더해준다.&lt;/li&gt;
+  &lt;li&gt;1, 5 로 시작할 수도 있다. 이 경우에는 1, 4 이후에 나오는 숫자들은 서로를 조합해서 만들 수 있는 순열중 가장 커야한다.&lt;/li&gt;
+  &lt;li&gt;3, 2, 5 로 만들 수 있는 가장 큰 순열은 무엇일까? 일단 5로 시작 해야하기 때문에 조건에 만족하지 않는다.&lt;/li&gt;
+  &lt;li&gt;1, 4 로 시작해야 한다는 말이다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;이제 보니 별로 어렵진 않지 않은가?&lt;/p&gt;
+&lt;p&gt;여기서 규칙을 찾을 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;다음 순열에서 더 큰 값을 만들기 위해서는 앞 위치에 나오는 숫자는 뒤의 숫자보다 커져야한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;3, 2, 5 의 경우 2 가 5보다 작기 때문에 서로의 위치를 바꾸게 되면&lt;/p&gt;
+
+&lt;p&gt;3, 5, 2 로서 3, 2, 5 순열보다 큰 값이라는 것을 보장한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;하지만&lt;/strong&gt; 바로 다음 순열이라는 것은 보장하지 않는다.&lt;/p&gt;
+
+&lt;p&gt;예를 들어&lt;/p&gt;
+
+&lt;p&gt;1,2,5,4,3 가 있다고 생각하자.&lt;/p&gt;
+
+&lt;p&gt;2 보다 큰 숫자중 5와 바꾸어주면&lt;/p&gt;
+
+&lt;p&gt;1,5,2,4,3 이 된다 하지만 정답은
+1,3,2,4,5 이다.&lt;/p&gt;
+
+&lt;p&gt;즉 단순히 큰 값이 아닌, 큰 값중 가장 작은 값을 찾아 바꿔야 한다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;또 조건이 있다. 2 와 5 처럼 증가하는 모양을 보이는 가장 마지막 놈끼리 바꿔야 한다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;또오오오 조건이 있다. 바꾼 후에 오른쪽에 있는 놈들은 해당 수열로 만들 수 있는 가장 큰 값이다.
+가장 작은 값으로 형태를 바꾸어 주어야한다.&lt;/p&gt;
+
+&lt;p&gt;이건 단순히 바꾼놈 기준 오른쪽에 있는 놈들을 바깥에서 안쪽으로 전부 위치를 교환해주면 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;자자자 정리하자면&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;우리가 바꿀 기준인덱스는 증가하는 모양중 가장 마지막 놈의 작은 녀석이다&lt;/li&gt;
+  &lt;li&gt;기준인덱스와 바꿀 녀석은 기준인덱스 오른쪽에 있는 놈 중 기준인덱스의 위치에 있는 놈 보다 크지만 가장 작은 값이다.&lt;/li&gt;
+  &lt;li&gt;바꾸고 나면 기준인덱스 + 1 위치부터 바깥에서 안쪽으로 전부 위치를 바꿔 주어야한다.&lt;/li&gt;
+  &lt;li&gt;보충 설명하면 기준인덱스 + 1 과 가장 오른쪽 놈을 교환, 기준인덱스 + 2 와 가장 오른쪽에서 - 1 놈과 교환 하라는 말이다.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
 
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;longestValidParentheses&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;answer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;// agari direction&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;rightCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;rightCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;rightCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;rightCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]];&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;rightCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nextPermutation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;standIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;changeIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;standIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;changeIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;answer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;changeIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;standIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;changeIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;answer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;standIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;standIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;changeIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;standIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;swap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;-문제-후기&quot;&gt;🔨 문제 후기&lt;/h2&gt;
 
-&lt;p&gt;구현 능력 자체는 어렵지 않으나, 어떻게 풀지를 생각하는데 조금 오래 걸린 문제다.&lt;/p&gt;
+&lt;p&gt;문제 이해하기가 어려웠다.&lt;/p&gt;
 
-&lt;p&gt;stack 으로 푸는 방법도 있길래 봤는데 정말 나는 멀었다고 생각한다.
-이 방법으로도 풀어봐야겠다.&lt;/p&gt;
+&lt;p&gt;내 영어 능력을 의심했다.&lt;/p&gt;
+
+&lt;p&gt;나랑 비슷한 사람이 많을까?&lt;/p&gt;
 </content>
  </entry>
  
@@ -429,9 +755,9 @@ for (int i = 0; i &amp;lt; len; i++) {
  
  <entry>
    <title>NestJS 박살내기 - 이거는 알고 시작하자.</title>
-   <link href="https://tocktock.github.io/algorithms/nestjs-1-prerequisite/"/>
+   <link href="https://tocktock.github.io/nestjs/nestjs-1-prerequisite/"/>
    <updated>2021-01-15T00:00:00+09:00</updated>
-   <id>https://tocktock.github.io/algorithms/nestjs-1-prerequisite</id>
+   <id>https://tocktock.github.io/nestjs/nestjs-1-prerequisite</id>
    <content type="html">&lt;h1 id=&quot;1-nestjs-이거는-알고-시작하자&quot;&gt;1. [NestJS] 이거는 알고 시작하자.&lt;/h1&gt;
 
 &lt;p&gt;NestJS를 시작하기전 이거만큼은 알고 시작하자!!&lt;/p&gt;

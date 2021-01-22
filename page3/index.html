@@ -119,9 +119,15 @@
             >Jekyll (1)</a
           >
         </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/NestJS"
+            >NestJS (1)</a
+          >
+        </li>
         
       </ul>
-                                               
+                                                   
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -147,6 +153,134 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-fulltextsearch/"> elasticsearch Search 기능 !! Full Text Search !! </a>
+    </h1>
+
+    <span class="post-date">06 Jan 2021</span>
+
+    <p>#[🌎elasticsearch] Elasticsearch search 기본사용법 (feat. Kibana)</p>
+
+<hr />
+
+<ul>
+  <li>
+    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="-elasticsearch-의-진정한-기능-full-text-search">🧡 ElasticSearch 의 진정한 기능 Full Text Search!!</h2>
+
+<p>이번에는 ElasticSearch 를 쓰는 이유중 하나인 전문검색 (Full Text Search) 의 간단한 기능을 알아보고자 합니다.
+이 부분에 대해서는 내용이 워낙 방대하다보니 제 글은 맛보기 용으로 생각해주시고 <a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북</a> 을 더 참고해주시면 감사하겠습니다.!</p>
+
+<h2 id="전문검색">👓전문검색?</h2>
+
+<p>전문검색은 간단한 예시로 네이버의 검색, 구글의 검색 기능을 생각하시면 편합니다.
+데이터베이스의 특징인 특정 단어의 포함 여부, 조건문의 기능과 유사하지만 특정 단어와의 상관관계에 대한 색인기능이 추가되어 있다고 생각하시면 됩니다.</p>
+
+<p>글로만 읽어도 엄청 복잡합니다. 바로 예시 들어가겠습니다.
+일단 ElasticSearch 와 Kibana 를 켜 주시고 Kibana DevTools 로 들어가주세요! 이전에 했으니 여러분 다 할 수 있습니다!</p>
+
+<h2 id="-일단-해보자">😂 일단 해보자!</h2>
+
+<p>먼저 이전에 배운 bulk 키워드를 통해 검색할 데이터를 먼저 생성합시다!!
+copy copy~</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST _bulk
+{ "index" : { "_index*" : "test", "_id" : "1" } }
+{ "field1" : "i love my cute cat" }
+{ "index" : { "_index" : "test", "_id" : "2" } }
+{ "field1" : "my dog is so big" }
+{ "index" : { "_index" : "test", "_id" : "3" } }
+{ "field1" : "i am big" }
+{ "index" : { "_index" : "test", "_id" : "4" } }
+{ "field1" : "my girl friend is cute" }
+</code></pre></div></div>
+
+<p>제일 먼저 간단한 검색인 URI 검색부터!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET test/_search?q=dog
+</code></pre></div></div>
+
+<p>자 그럼 다음과 같은 결과가 나올겁니다!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "took" : 0,
+    "timed_out" : false,
+    "_shards" : {
+        "total" : 1,
+        "successful" : 1,
+        "skipped" : 0,
+        "failed" : 0
+    },
+    "hits" : {
+        "total" : {
+        "value" : 1,
+        "relation" : "eq"
+        },
+        "max_score" : 1.1516262,
+        "hits" : [
+            {
+                "_index" : "test",
+                "_type" : "_doc",
+                "_id" : "2",
+                "_score" : 1.1516262,
+                "_source" : {
+                "field1" : "my dog is so big"
+                }
+            }
+        ]
+    }
+}
+</code></pre></div></div>
+
+<p><strong>“hits”</strong> 필드를 주목합시다. 만약 해당 검색에서 아무런 결과가 없다면 이 필드안에는 아무 값이 없습니다.
+<strong>“hits”</strong> 필드 안에 내용을 잘 보시면 <strong>_score</strong> 항목이 있습니다. 위에서 검색한 키워드인 “dog” 와 얼마나 상관관계가 있는지에 대한 점수 입니다. 정말 유용한 지표죠?</p>
+
+<p>URI 검색은</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET &lt;index&gt;/_search=?q=&lt;value&gt;
+</code></pre></div></div>
+
+<p>와 같은 형태의 검색을 말합니다. Request Body 에 옵션을 붙여서 더 자세한 검색이 가능합니다.
+다음 명령어는 test 인덱스의 field1 의 필드에서만 “dog” 를 검색하는 기능입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET test/_search
+{
+    "query": {
+        "match": {
+        "field1": "dog"
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>만약 특정 인덱스의 모든 document 를 검색하고 싶다면 다음과 같이 해주세요!.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET my_index/_search
+{
+    "query":{
+        "match_all":{ }
+    }
+}
+</code></pre></div></div>
+
+<hr />
+
+<p>자자자 기본적인 기능을 배웠습니다.</p>
+
+<p>다음에는 좀더 심화내용을 배워봅시다! 다음 내용을 보기 전에 커피 스윽~ 스트레칭 쭈욱 하고 오세용~🧡🧡</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -692,92 +826,6 @@ network.host: localhost
 <p>고생하셨습니다!!</p>
 
 <p>기본적인 사용법에 대해서는 다음 포스트에서 ~</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-introduction/"> elasticsearch 소개 </a>
-    </h1>
-
-    <span class="post-date">04 Nov 2020</span>
-
-    <p>#[🌎elasticsearch] Elasticsearch이란?</p>
-
-<hr />
-<ul>
-  <li>
-    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
-  </li>
-</ul>
-
-<hr />
-
-<h2 id="-전문검색full-text-search">👓 전문검색(Full-Text-Search)</h2>
-
-<p>네이버 및 구글에서 원하는 문서를 검색하면 잘 나옵니다.
-어떻게 이런게 가능할까요 ???</p>
-
-<p>전문검색(Full-Text-Search 이하 FTS)은 검색 단어를 입력하면 해당하는 문서와 <strong>“관련 깊은”</strong> 자료를 보여주게 됩니다.</p>
-
-<p>단순한 문자열 일치 연산으로는 네이버나 구글의 검색과 같은 결과를 보여주기는 어렵습니다.
-따라서 FTS 에서는 모든 문서의 단어와 문장을 검색하여 점수를 매기게됩니다. 
-이 과정에서는 머신러닝과 같은 자연어 처리 과정이 포함되게 됩니다.</p>
-
-<p>당연히 모든 문서의 단어와 문장을 검색하고 점수를 매긴 후 점수 순서대로 보여주기 때문에 
-기존의 문자열 일치 연산보다 복잡한 연산을 하게 됩니다.</p>
-
-<p>다시 말하자면 전문검색은 우리가 원하는 문서와 <strong>관련깊은</strong> 문서들을 보여주는 기술이라 생각하시면 됩니다.</p>
-
-<hr />
-
-<h2 id="-elasticsearch">🥽 ElasticSearch</h2>
-
-<p>FTS 기능은 분석 엔진으로 제공될 수도 있고 DBMS에 기능이 탑재될 수도 있습니다.</p>
-
-<p>Lucene, Solr, ElasticSearch 등 다양한 분석 엔진이 있고 
-Mongodb, Postgresql, AzureSQLDatabase 등 다양한 DBMS에서도 지원하고 있으니 더 검색해보는 걸 추천드립니다.</p>
-
-<p>그 중에 ElasticSearch 를 소개하려고 합니다.</p>
-
-<p>ElasticSearch 는 FTS 를 지원하는 오픈소스 검색 및 분석 엔진입니다.
-Apache Lucene을 기반으로 구축되었으며 다음과 같은 사항들을 강조합니다.</p>
-<ul>
-  <li><strong>빠르다.</strong> Lucene을 기반으로 구축되었기 때문에 빠르며, 실시간에 가까운 속도를 보여줍니다.</li>
-  <li><strong>분산적이다.</strong> 샤드라고 하는 저장형태로 여러 컨테이너에 걸쳐 분산, 복제되어 저장되기 때문에 분산적이라고 할 수 있습니다.</li>
-  <li><strong>간소화된 데이터</strong> Beats와 Logstash, Kibana 를 통해 데이터를 실시간으로 시각화하며 로그, 인프라 메트릭 데이터에 신속히 접속가능합니다.</li>
-</ul>
-
-<p>ElasticSearch 는 또한 다음 언어를 위해서 클라이언트가 공식적으로 지원합니다.</p>
-<ul>
-  <li>자바</li>
-  <li>자바스크립트</li>
-  <li>Go</li>
-  <li>.NET(C#)</li>
-  <li>PHP</li>
-  <li>Pearl</li>
-  <li>Python</li>
-  <li>
-    <h2 id="ruby">Ruby</h2>
-  </li>
-</ul>
-
-<h2>😁</h2>
-
-<p>프로젝트를 진행하면서 Full Text Search 기능이 필요하여 찾다가 ElasticSearch 를 찾게 되었고
-ElasticSearch 에 흥미를 가지게 되었네요.</p>
-
-<p>저보다 정리를 잘한 가이드북이 있으니 꼭 보시길 추천드립니다.</p>
-<ul>
-  <li><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></li>
-</ul>
-
-<p>다음 시간에는 ElasticSearch 를 Ubuntu에 설치하는 방법으로 찾아뵙겠습니다.</p>
-
 
     <hr />
   </div>
