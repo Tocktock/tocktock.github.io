@@ -1,7 +1,7 @@
 ---
 layout: post
 title: NestJS 박살내기 - CRUD 로 시작하자.
-categories: Algorithms
+categories: NestJS
 ---
 
 # 2. [NestJS] NestJS 박살내기 시작하자.
