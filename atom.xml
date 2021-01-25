@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-25T10:09:39+09:00</updated>
+ <updated>2021-01-25T10:33:32+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -313,14 +313,15 @@
 &lt;p&gt;다만 제가 공부하면서 습득하고 이해한 내용을 바탕으로 간단한 어플리케이션을 만들며 기본적인 지식을
 여러분께 같이 &lt;strong&gt;공유&lt;/strong&gt;하는 것이 제 목적입니다.&lt;/p&gt;
 
-&lt;p&gt;대부분의 정보는 &lt;strong&gt;NestJS&lt;/strong&gt; , &lt;strong&gt;Github&lt;/strong&gt; 를 참고하고 있습니다.&lt;/p&gt;
+&lt;p&gt;대부분의 정보는 &lt;strong&gt;NestJS Doc&lt;/strong&gt; , &lt;strong&gt;Github&lt;/strong&gt; 를 참고하고 있습니다.&lt;/p&gt;
 
 &lt;p&gt;이 시리즈는&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;CRUD 기능&lt;/li&gt;
   &lt;li&gt;MySQL DataBase 연결&lt;/li&gt;
-  &lt;li&gt;Auth - 메시지 큐&lt;/li&gt;
+  &lt;li&gt;Auth&lt;/li&gt;
+  &lt;li&gt;메시지 큐&lt;/li&gt;
   &lt;li&gt;기타 기능 (카톡 공유, 카톡으로 로그인하기 등)&lt;/li&gt;
 &lt;/ul&gt;
 
