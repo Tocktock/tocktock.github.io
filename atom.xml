@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-25T11:52:40+09:00</updated>
+ <updated>2021-01-25T11:57:41+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -41,7 +41,7 @@
 
 &lt;p&gt;BigInteger 를 쓰면 매우 쉽지만, &lt;strong&gt;그러라고 문제 푸는거 아니잖아 ? ? ?&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;나는 우리가 학창시절 때 배웠던 곱셈 방식을 이용했다.&lt;/p&gt;
+&lt;p&gt;저는 학창시절 때 배웠던 곱셈 방식을 이용했습니다!&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    1 2 3
     4 5 6
@@ -53,7 +53,7 @@
 5 6 0 8 8
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;이런 식으로 중간 단계를 두어 123 * 6, 123 * 5, 123 * 4 를 한 후 한 자리씩 더해주었다.&lt;/p&gt;
+&lt;p&gt;이런 식으로 중간 단계를 두어 123 * 6, 123 * 5, 123 * 4 를 한 후 한 자리씩 더해주었습니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
 
@@ -117,11 +117,11 @@
 
 &lt;h2 id=&quot;-문제-후기&quot;&gt;🔨 문제 후기&lt;/h2&gt;
 
-&lt;p&gt;내가 쓴 코드는 상당히 지저분해진 코드이다.&lt;/p&gt;
+&lt;p&gt;제가 쓴 코드는 상당히 지저분한 코드입니다 ㅜㅜ..&lt;/p&gt;
 
 &lt;p&gt;저번에도 말했지만 &lt;strong&gt;간결할 수록 버그도 적어진다!!&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;분면 줄일 수 있는, 간결해질 수 있는 방법이 있을 것이다. 함수화를 한다던가? 한번 찾아보고
+&lt;p&gt;분명 줄일 수 있는, 간결해질 수 있는 방법이 있을 것이다. 함수화를 한다던가? 한번 찾아보고
 코드를 줄이면 문서를 다시 수정하겠습니다!&lt;/p&gt;
 </content>
  </entry>
@@ -153,26 +153,26 @@
 
 &lt;p&gt;대표적으로 이런 문제는 대부분 2 pointer 문제더라!!&lt;/p&gt;
 
-&lt;p&gt;일단 물 높이를 생각해보자. 인풋이 [2 ,0 ,0 ,3] 이렇게 주어지면, 왼쪽 기둥은 높이가 2, 오른쪽 기둥은 3 이다.
-따라서 물을 다 채우면 왼쪽이 오른쪽 보다 낮기 때문에 높이 2까지만 채워진다.&lt;/p&gt;
+&lt;p&gt;일단 물 높이를 생각해봅시다!!. 인풋이 [2 ,0 ,0 ,3] 이렇게 주어지면, 왼쪽 기둥은 높이가 2, 오른쪽 기둥은 3 이다.
+따라서 물을 다 채우면 왼쪽이 오른쪽 보다 낮기 때문에 높이 2까지만 채워집니다.&lt;/p&gt;
 
-&lt;p&gt;이 원리를 이용해 왼쪽에서 오른쪽 방향으로 하나씩 참고하는 포인터와 반대로 오른쪽에서 왼쪽 방향으로 참고하는 포인터를 생성한다.&lt;/p&gt;
+&lt;p&gt;이 원리를 이용해 왼쪽에서 오른쪽 방향으로 하나씩 참고하는 포인터와 반대로 오른쪽에서 왼쪽 방향으로 참고하는 포인터를 생성합니다!.&lt;/p&gt;
 
-&lt;p&gt;만약 왼쪽에서 하나씩 보다가 현재 기둥이 오른쪽에서 참조하는 기둥의 높이보다 낮거나 같으면 한 칸 물을 채워주고, 반대로 오른쪽 기둥이 더 낮으면 오른쪽에서 물을 채워주는 형식으로 진행한다. 채워주는 양은 현재 물의 높이 - 현재 기둥의 높이라고 생각하면 되겠다. 물을 낮은 곳 부터 차근차근 채워나간다고 생각하자.&lt;/p&gt;
+&lt;p&gt;만약 왼쪽에서 하나씩 보다가 현재 기둥이 오른쪽에서 참조하는 기둥의 높이보다 낮거나 같으면 한 칸 물을 채워주고, 반대로 오른쪽 기둥이 더 낮으면 오른쪽에서 물을 채워주는 형식으로 진행합니다. 채워주는 양은 현재 물의 높이 - 현재 기둥의 높이라고 생각하면 되겠습니다!. 물을 낮은 곳 부터 차근차근 채워나간다고 생각하면 편하겠군요.&lt;/p&gt;
 
 &lt;p&gt;왼쪽에서 먼저가던 오른쪽으로 가던 어느쪽으로 기준을 잡던 상관이 없지만 저는 왼쪽으로 기준 삼았습니다!.&lt;/p&gt;
 
 &lt;h4 id=&quot;그래서-제가-어떻게-풀었냐면-&quot;&gt;그래서 제가 어떻게 풀었냐면 !!&lt;/h4&gt;
 
 &lt;p&gt;물을 채울 때 높이가 가장 중요하다.
-물의 높이는 왼쪽 기둥과 오른쪽 기둥의 높이를 비교하여 낮은 값과, 이때까지 물의 높이 중 더 큰 값을 선택한다.
-알아보기 쉽게 다음과 같이 표기하겠다.&lt;/p&gt;
+물의 높이는 왼쪽 기둥과 오른쪽 기둥의 높이를 비교하여 낮은 값과, 이때까지 물의 높이 중 더 큰 값을 선택하면 됩니다.
+알아보기 쉽게 다음과 같이 표현했습니다.&lt;/p&gt;
 
 &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fixH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]));&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;// fixH가 물의 높이다.&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;그런 다음 왼쪽 오른쪽 어디를 채울지 선택해 채우면 된다!!.&lt;/p&gt;
+&lt;p&gt;그런 다음 왼쪽 오른쪽 어디를 채울지 선택해 채우면 된다!!.!&lt;/p&gt;
 
 &lt;h2 id=&quot;-소스코드-및-소스해석&quot;&gt;🥽 소스코드 및 소스해석&lt;/h2&gt;
 
@@ -199,13 +199,13 @@
 
 &lt;p&gt;재미있다.&lt;/p&gt;
 
-&lt;p&gt;처음에 나는 상당히 긴 코드를 작성했다. 내가 워낙 설계하지 않고 풀다보니 깔끔하게 풀지를 못해서 중간에 값을 변경하고 변경하고 하다가 문제를 통과했다.&lt;/p&gt;
+&lt;p&gt;처음에 저는 상당히 긴 코드를 작성했었습니다. 제가 워낙 설계하지 않고 풀다보니 깔끔하게 풀지를 못해서 중간에 값을 변경하고 또 변경하다가 문제를 통과했습니다.&lt;/p&gt;
 
-&lt;p&gt;다른 사람들이 푼 아주 깔끔한 소스를 보고 약간의 자괴감과 한가지 깨닳음을 얻었따.&lt;/p&gt;
+&lt;p&gt;다른분들이 푼 아주 깔끔한 소스를 보고 약간의 자괴감이 드는 한편 또 깨닳음이 있었습니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;코드가 간결해 질수록 버그도 적어진다!!&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;앞으로 간결하게 코드를 작성하도록 해야할 듯 하다.&lt;/p&gt;
+&lt;p&gt;앞으로 간결하게 코드를 작성하도록 노력해야할 듯 합니다 !!&lt;/p&gt;
 </content>
  </entry>
  
