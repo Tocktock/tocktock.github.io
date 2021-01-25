@@ -158,17 +158,17 @@ src 폴더에는 앱의 코드들이 모여있다고 생각하시면 됩니다.
 
 **RouteExplorer** 를 보시면 **users** 에 관련된 매핑들을 볼 수 있습니다!!
 
-이제 편하신 브라우저를 키시고 <localhost:3000> 로 접속하시면!!
+이제 편하신 브라우저를 키시고 <http://localhost:3000> 로 접속하시면!!
 
 > 아무런 설정 안하셨으면 앱의 기본 포트는 3000 입니다!!
 
 **Hello World!**
 사실 이 페이지를 보는게 목적이 아니기 때문에 링크 뒤에 /users 를 입력해봅시다
 
-가보자구요!! <localhost:3000/users>
+가보자구요!! <http://localhost:3000/users>
 **This action returns all users**
 
-가보자구요!! <localhost:3000/users/1>
+가보자구요!! <http://localhost:3000/users/1>
 **This action returns a #1 user**
 
 모야모야~ 벌써 된거야? 우리 뭐 한것도 없는데??
