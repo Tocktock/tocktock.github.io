@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     leetcode Multiply Strings 문제풀기 &middot; 영원 
+  </title>
+
+  
+  <link rel="canonical" href="https://tocktock.github.io/algorithms/algorithms-leetcode-43/" />
+  
+
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/poole.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/syntax.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="https://tocktock.github.io/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="https://tocktock.github.io/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="https://tocktock.github.io/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="https://tocktock.github.io/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/about/"
+        >About me</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Algorithms"
+            >Algorithms (27)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/elasticsearch"
+            >elasticsearch (8)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Jekyll"
+            >Jekyll (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/NestJS"
+            >NestJS (1)</a
+          >
+        </li>
+        
+      </ul>
+                                                       
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2021. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">영원</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">leetcode Multiply Strings 문제풀기</h1>
+  <span class="post-date">25 Jan 2021</span>
+  <p>#[leetcode][43] Multiply Strings 문제풀기!</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/problems/multiply-strings/">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>숫자 두개를 문자열로 줄테니 곱해줘!</p>
+
+<p>근데 숫자가 엄청 커 ㅎㅎ;;;</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/multiply-strings/">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>BigInteger 를 쓰면 매우 쉽지만, <strong>그러라고 문제 푸는거 아니잖아 ? ? ?</strong></p>
+
+<p>나는 우리가 학창시절 때 배웠던 곱셈 방식을 이용했다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1 2 3
+    4 5 6
+ㅡㅡㅡㅡㅡ
+    7 3 8
+  6 1 5 0
+4 9 2 0 0
+ㅡㅡㅡㅡㅡ
+5 6 0 8 8
+</code></pre></div></div>
+
+<p>이런 식으로 중간 단계를 두어 123 * 6, 123 * 5, 123 * 4 를 한 후 한 자리씩 더해주었다.</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">multiply</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">num1</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span> <span class="o">||</span> <span class="nx">num2</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span><span class="p">)</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">num2</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">answer</span> <span class="o">=</span> <span class="nx">strPlus</span><span class="p">(</span><span class="nx">answer</span><span class="p">,</span> <span class="nx">subMultiply</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">num2</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">subMultiply</span> <span class="o">=</span> <span class="p">(</span><span class="nx">str1</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">pos</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="kd">let</span> <span class="nx">carryOut</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">str1</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">value</span> <span class="o">=</span> <span class="o">+</span><span class="nx">str1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">*</span> <span class="nx">target</span> <span class="o">+</span> <span class="nx">carryOut</span><span class="p">;</span>
+    <span class="nx">carryOut</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">value</span> <span class="o">/</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">value</span> <span class="o">%</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">carryOut</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">carryOut</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="kd">let</span> <span class="nx">gather</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">gather</span> <span class="o">+=</span> <span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">pos</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">gather</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">gather</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="kd">const</span> <span class="nx">strPlus</span> <span class="o">=</span> <span class="p">(</span><span class="nx">str1</span><span class="p">,</span> <span class="nx">str2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// str2가 커야한다</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">str1</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">str2</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nx">str1</span><span class="p">;</span>
+    <span class="nx">str1</span> <span class="o">=</span> <span class="nx">str2</span><span class="p">;</span>
+    <span class="nx">str2</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">str1</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="nx">str2</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="kd">let</span> <span class="nx">carryOut</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">str2</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">str1</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">str2</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">str1Int</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">-</span> <span class="nx">diff</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">?</span> <span class="o">+</span><span class="nx">str1</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">diff</span><span class="p">]</span> <span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">str1Int</span> <span class="o">+</span> <span class="o">+</span><span class="nx">str2</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">carryOut</span><span class="p">;</span>
+    <span class="nx">carryOut</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">value</span> <span class="o">/</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">value</span> <span class="o">%</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">carryOut</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">carryOut</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="kd">let</span> <span class="nx">gather</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">gather</span> <span class="o">+=</span> <span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">gather</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>내가 쓴 코드는 상당히 지저분해진 코드이다.</p>
+
+<p>저번에도 말했지만 <strong>간결할 수록 버그도 적어진다!!</strong></p>
+
+<p>분면 줄일 수 있는, 간결해질 수 있는 방법이 있을 것이다. 함수화를 한다던가? 한번 찾아보고
+코드를 줄이면 문서를 다시 수정하겠습니다!</p>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-42/">
+          leetcode Trapping Rain Water 문제풀기
+          <small>25 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/algorithms-leetcode-40/">
+          leetcode  Combination Sum II 문제풀기
+          <small>22 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/algorithms/nestjs-2-CRUD/">
+          NestJS 박살내기 - CRUD 로 시작하자.
+          <small>21 Jan 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+  
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>
