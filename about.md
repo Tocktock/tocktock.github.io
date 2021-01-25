@@ -16,7 +16,7 @@ title: About me
 # 저는
 
 - 프론트엔드, 백엔드 가리지 않고 웹에 대한 필수적인 사항들을 배우려고 합니다.
-- 혼자서 개발을 많이 했기에, 팀으로 협동하는 프로젝트도 경험하고 싶습니다.
+- 최근에 docker 와 design pattern, elk stack 을 배우고 있습니다.
 - 꼭 만들고 싶은 프로젝트가 2개 있습니다. (블록체인과 저장소에 관한)
 
 # 다음과 같은 기술을 사용할 수 있습니다.
@@ -30,7 +30,7 @@ title: About me
 #### Javascript & Typescript
 
 - NextJS 프레임워크를 사용해 Explore Nasa API 프로젝트를 제작하고 있습니다.
-- ES6 문법을 사랑합니다.
+- Typescript 를 사용해 주로 개발을 합니다.
 
 #### Go
 
