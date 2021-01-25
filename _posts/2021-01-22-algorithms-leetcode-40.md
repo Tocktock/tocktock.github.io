@@ -78,6 +78,5 @@ var combinationSum2 = function (candidates, target) {
 
 재미있다.
 
-다른 사람의 풀이 보는 것도 재미있따.
-
+다른 사람의 풀이 보는 것도 재미있다.
 세상에는 천재는 넘치고 내 시간은 부족하다.
