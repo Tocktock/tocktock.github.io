@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-25T11:45:31+09:00</updated>
+ <updated>2021-01-25T11:52:40+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -298,9 +298,9 @@
  
  <entry>
    <title>NestJS 박살내기 - CRUD 로 시작하자.</title>
-   <link href="https://tocktock.github.io/algorithms/nestjs-2-CRUD/"/>
+   <link href="https://tocktock.github.io/nestjs/nestjs-2-CRUD/"/>
    <updated>2021-01-21T00:00:00+09:00</updated>
-   <id>https://tocktock.github.io/algorithms/nestjs-2-CRUD</id>
+   <id>https://tocktock.github.io/nestjs/nestjs-2-CRUD</id>
    <content type="html">&lt;h1 id=&quot;2-nestjs-nestjs-박살내기-시작하자&quot;&gt;2. [NestJS] NestJS 박살내기 시작하자.&lt;/h1&gt;
 
 &lt;hr /&gt;
