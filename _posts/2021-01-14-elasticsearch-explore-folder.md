@@ -54,8 +54,8 @@ cluster.name 옆에 #을 지우시고 cluster.name : <원하는 이름> 을 쓰�
 그 밑에 node, paths, memory, network, Discovery 가 있습니다.
 
 - paths 에서는 데이터, 로그가 저장되는 위치를 지정할 수 있습니다.
-- memory 에서는 elasticsearch가 사용하는 메모리의 사용량을 제한할 수 있습니다.
-  > 해당 memory 제한은 jvm.option 파일에서 힙사이즈를 조정함으로서 디테일하게 설정가능합니다.
+- memory 에서는 다른 자바프로그램이 엘라스틱 서치의 힙 영역의 메모리를 사용하지 못하도록 lock 을 걸 수 있습니다.
+  > memory 사용량 제한은 jvm.option 파일에서 힙사이즈를 조정함으로서 디테일하게 설정가능합니다.
 - network 에서는 어떤 ip의 어떤 port 번호로 elasticsearch에 접근 할 지 설정가능합니다.
 - discovery 에서는 elasticsearch 에 얼마나 많은 인스턴스들이 연결 되는지 설정가능합니다.
 
