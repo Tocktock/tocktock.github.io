@@ -89,7 +89,7 @@ Tokenizer Filter 는 많은 종류가 있는데 대표적인 3가지를 먼저 �
 **Token Filter** 는 각 Tokenizer Filter 에 의해 만들어진 Token 들에 대한 후처리 작업을 수행합니다.
 가장 대표적인 Lowercase Token Filterr 로 Stop Token Filterr 가 있습니다.
 
-- **Lowercase** : 말 그대로 토큰들을 소문자로 바꾸는 Token filter 입니다.
+- **Lowercase** : 말 그대로 토큰들을 소문자로 **바꾸는** Token filter 입니다.
 - **Stop** : Search 기능에 필요 없는 단어들 예를 들면 is, be, to, a, as 등을 없애는 필터입니다.
 
 > 더 많은 Token filter 를 보고 싶으면 [Token Filters](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/analysis-tokenfilters.html) 를 참조해주세요!! 오른쪽 메뉴바에 다양한 Token filters 가 있습니다.
