@@ -1,14 +1,14 @@
 ---
 layout: post
-title: NestJS 박살내기 - CRUD 로 시작하자.
+title: NestJS 블로그 만들기 - CRUD 로 시작하자.
 categories: NestJS
 ---
 
-# 2. [NestJS] NestJS 박살내기 시작하자.
+# 2. NestJS 블로그 만들기 - CRUD 로 시작하자.
 
 ---
 
-## 👌 NestJS 박살내기 시리즈의 목적
+## 👌 NestJS 블로그 만들기 시리즈의 목적
 
 저는 **NestJS 전문가**가 아닙니다.
 저 또한 NestJS 로 어플리케이션을 만들려고 한지 한달이 채 되지 않았습니다.
@@ -21,7 +21,7 @@ categories: NestJS
 이 시리즈는
 
 - CRUD 기능
-- MySQL DataBase 연결
+- Postgresql DataBase 연결
 - Auth
 - 메시지 큐
 - 기타 기능 (카톡 공유, 카톡으로 로그인하기 등)
@@ -273,6 +273,6 @@ UsersModule 클래스는 이 users 라는 폴더 안의 **모듈을 관리**하�
 
 자 여러분 정말 쉽고 직관적으로 되어있지 않나요? 제가 NestJS 를 좋아하게 된 이유 이기도 합니다.!!
 
-다음에는 MySQL 데이터베이스를 이용해 진짜 user 정보를 저장해보자구요!
+다음에는 Postgresql 데이터베이스를 이용해 진짜 user 정보를 저장해보자구요!
 
 피드백은 항상 환영입니다!!

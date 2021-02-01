@@ -1,6 +1,6 @@
 ---
 layout: post
-title: NestJS 박살내기 - 이거는 알고 시작하자.
+title: NestJS 시리즈 - 이거는 알고 시작하자.
 categories: NestJS
 ---
 
@@ -32,6 +32,8 @@ NestJS 의 주요 핵심중 하나는 **의존성주입**(Defendency Injection) 
 🙄🙄🙄
 
 의존성 주입이란 말을 처음 들은 여러분의 표정이 상상이 갑니다.
+
+저도 그랬거든요 ^^..
 
 간단하게 먼저 말하자면
 
