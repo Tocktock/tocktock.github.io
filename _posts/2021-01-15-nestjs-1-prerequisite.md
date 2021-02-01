@@ -4,7 +4,7 @@ title: NestJS 시리즈 - 이거는 알고 시작하자.
 categories: NestJS
 ---
 
-# 1. [NestJS] 이거는 알고 시작하자.
+# 1. NestJS 블로그 만들기 -이거는 알고 시작하자.
 
 NestJS를 시작하기전 이거만큼은 알고 시작하자!!
 

@@ -28,6 +28,12 @@ categories: NestJS
 
 의 내용을 다룰 것 입니다.
 
+요구사항은 다음과 같습니다.
+
+<img class="post-image-center" src="/assets/img/nest_blog_requirement.png" width="70%" alt="requirement"/>
+
+지속적으로 업데이트 할 예정이니 제 [Github repository](https://github.com/Tocktock/nest-practice)를 참고해주세요.
+
 사용하는 IDE 는 **VSCode** 입니다.
 
 > 이후 추가할 사항이나 유용한 팁이 있다면 더 추가하겠습니다.
