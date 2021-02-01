@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-01-30T21:40:05+09:00</updated>
+ <updated>2021-02-01T11:03:31+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -717,15 +717,15 @@ ElasticSearch 에 내장된 언어분석기가 없다면, Full-Text-Search 에 �
  </entry>
  
  <entry>
-   <title>NestJS 박살내기 - CRUD 로 시작하자.</title>
+   <title>NestJS 블로그 만들기 - CRUD 로 시작하자.</title>
    <link href="https://tocktock.github.io/nestjs/nestjs-2-CRUD/"/>
    <updated>2021-01-21T00:00:00+09:00</updated>
    <id>https://tocktock.github.io/nestjs/nestjs-2-CRUD</id>
-   <content type="html">&lt;h1 id=&quot;2-nestjs-nestjs-박살내기-시작하자&quot;&gt;2. [NestJS] NestJS 박살내기 시작하자.&lt;/h1&gt;
+   <content type="html">&lt;h1 id=&quot;2-nestjs-블로그-만들기---crud-로-시작하자&quot;&gt;2. NestJS 블로그 만들기 - CRUD 로 시작하자.&lt;/h1&gt;
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;-nestjs-박살내기-시리즈의-목적&quot;&gt;👌 NestJS 박살내기 시리즈의 목적&lt;/h2&gt;
+&lt;h2 id=&quot;-nestjs-블로그-만들기-시리즈의-목적&quot;&gt;👌 NestJS 블로그 만들기 시리즈의 목적&lt;/h2&gt;
 
 &lt;p&gt;저는 &lt;strong&gt;NestJS 전문가&lt;/strong&gt;가 아닙니다.
 저 또한 NestJS 로 어플리케이션을 만들려고 한지 한달이 채 되지 않았습니다.&lt;/p&gt;
@@ -739,7 +739,7 @@ ElasticSearch 에 내장된 언어분석기가 없다면, Full-Text-Search 에 �
 
 &lt;ul&gt;
   &lt;li&gt;CRUD 기능&lt;/li&gt;
-  &lt;li&gt;MySQL DataBase 연결&lt;/li&gt;
+  &lt;li&gt;Postgresql DataBase 연결&lt;/li&gt;
   &lt;li&gt;Auth&lt;/li&gt;
   &lt;li&gt;메시지 큐&lt;/li&gt;
   &lt;li&gt;기타 기능 (카톡 공유, 카톡으로 로그인하기 등)&lt;/li&gt;
@@ -1020,7 +1020,7 @@ findOne 을 보시면 함수 인자 값에 @Param(‘id’) 이라는 데코레�
 
 &lt;p&gt;자 여러분 정말 쉽고 직관적으로 되어있지 않나요? 제가 NestJS 를 좋아하게 된 이유 이기도 합니다.!!&lt;/p&gt;
 
-&lt;p&gt;다음에는 MySQL 데이터베이스를 이용해 진짜 user 정보를 저장해보자구요!&lt;/p&gt;
+&lt;p&gt;다음에는 Postgresql 데이터베이스를 이용해 진짜 user 정보를 저장해보자구요!&lt;/p&gt;
 
 &lt;p&gt;피드백은 항상 환영입니다!!&lt;/p&gt;
 </content>
@@ -1705,7 +1705,7 @@ for (int i = 0; i &amp;lt; len; i++) {
  </entry>
  
  <entry>
-   <title>NestJS 박살내기 - 이거는 알고 시작하자.</title>
+   <title>NestJS 시리즈 - 이거는 알고 시작하자.</title>
    <link href="https://tocktock.github.io/nestjs/nestjs-1-prerequisite/"/>
    <updated>2021-01-15T00:00:00+09:00</updated>
    <id>https://tocktock.github.io/nestjs/nestjs-1-prerequisite</id>
@@ -1739,6 +1739,8 @@ for (int i = 0; i &amp;lt; len; i++) {
 &lt;p&gt;🙄🙄🙄&lt;/p&gt;
 
 &lt;p&gt;의존성 주입이란 말을 처음 들은 여러분의 표정이 상상이 갑니다.&lt;/p&gt;
+
+&lt;p&gt;저도 그랬거든요 ^^..&lt;/p&gt;
 
 &lt;p&gt;간단하게 먼저 말하자면&lt;/p&gt;
 
