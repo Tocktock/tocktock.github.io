@@ -131,9 +131,15 @@
             >DevTip (1)</a
           >
         </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/nodejs"
+            >nodejs (1)</a
+          >
+        </li>
         
       </ul>
-                                                               
+                                                                   
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -159,6 +165,255 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-type/"> Elasticsearch 타입에 대해서 알아보자! </a>
+    </h1>
+
+    <span class="post-date">20 Jan 2021</span>
+
+    <p>#[🌎elasticsearch] Elasticsearch 타입에 대해서 알아보자!</p>
+
+<hr />
+
+<ul>
+  <li>
+    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<p>ElasticSearch 의 다양한 기능들을 둘러보기 전 꼭 알아야 할 타입들에 대해서 알아보겠습니다.!!
+진짜 진짜 진짜 중요하니 꼭 커피 스윽 마시고 읽어주세요!!</p>
+
+<h2 id="-mapping">🍔 Mapping</h2>
+
+<p>Mapping 어떻게 ElasticSearch 의 문서들이 저장되고 색인 되었는지에 대한 정의입니다.
+이 Mapping 의 정의를 통해 불필요한 프로세스 들과 공간 낭비를 줄이고 필요한 기능을 사용할 수 있습니다.
+예를 들면,</p>
+
+<ul>
+  <li>어떤 필드들이 Full-Text-Search 의 대상이 되어야 하는가?</li>
+  <li>어떤 필드들이 숫자, 날짜, 위치 정보를 포함하는가?</li>
+</ul>
+
+<p>또한 이후 포스트에서 Dynamic Mapping 을 다룰 때에도 Mapping 과 타입에 대한 기본 개념이 필요합니다.</p>
+
+<h2 id="-field-data-type">🍟 Field Data Type</h2>
+
+<p>먼저 이번 포스트에서는 Metadata Fields 가 아닌 Properties 에 대한 Field Type 다룹니다.</p>
+
+<blockquote>
+  <p>Metadata Fields 는 “_index”, “_id”, “_source” 와 같이 metadata 와 관련된 녀석들입니다!</p>
+</blockquote>
+
+<p>먼저 중요한 녀석들을 뽑자면,</p>
+
+<ul>
+  <li>Text</li>
+  <li>Keyword</li>
+  <li>Numbers</li>
+  <li>Date</li>
+  <li>Object</li>
+</ul>
+
+<p>그 외에</p>
+
+<ul>
+  <li>Nested</li>
+</ul>
+
+<p>등이 있습니다.</p>
+
+<blockquote>
+  <p>더 자세한 내용은 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html#structured-data-types">👆엘라스틱 홈페이지 참고하기!!</a></p>
+</blockquote>
+
+<h2 id="keyword--text">🍕Keyword &amp; Text</h2>
+
+<p>요 두 녀석은 정말 중요합니다.</p>
+
+<ul>
+  <li><strong>keyword</strong> 는 exact search, sorting, aggregations 등을 위한 녀석입니다. 예를 들면 Id, Email, Tag 등을 검색할 때 유용합니다.</li>
+  <li><strong>text</strong> 는 Full-Text-Search 기능을 위한 녀석입니다. 우리가 검색하려는 단어와 최대한 관련된 검색을 위해 사용하는 놈 입니다!</li>
+</ul>
+
+<p>기본적으로 우리가 어떤 필드 타입을 지정해주지 않고 문자열 데이터를 넣게 되면 (지정 안해도 가능합니다.)
+ElasticSearch 는 이 필드가 어떤 용도로 사용될 지 알 방법이 없기 때문에 keyword 와 text 타입을 같이 지정해주어 색인과정을 진행하게 됩니다.</p>
+
+<p>keyword 와 text 의 두 기능이 모두 필요하다면 keyword 와 text 타입을 같이 지정해주는 것이 정말 유용합니다.</p>
+
+<p>하지만 예를 들어봅시다.
+문서의 작성자를 검색을 하고 싶습니다. 작성자를 Email 이라고 합시다.
+우리가 검색할 단어와 Email 이 비슷한지는 상관관계를 따질 필요가 없습니다.
+오직 keyword 타입의 필드만 있으면 되겠죠.</p>
+
+<p>그럼 Email 필드에 text 타입은 불필요한 타입이고, 이는 disk 공간을 낭비하게 됩니다.
+만약 문서가 수백만 수천만개가 넘어간다면 이는 무시할 수 없는 공간일 것 입니다.</p>
+
+<p>이는 반대도 마찬가지 입니다.</p>
+
+<p>필드에 필요한 Type 만 지정하는 것은 결국 disk 비용을 줄이는 결과를 가져오겠죠??
+비용은 매우 중요하니까 꼭 필요한 만큼만 씁시다!!</p>
+
+<h2 id="-numbers">🥞 Numbers</h2>
+
+<p>숫자 또한 중요하지만 알아야 할 개념은 많지 않습니다.
+만약 JSON 형식의 데이터가 날라와 저장하는데 정수 형식이다 그러면 Long 타입으로,
+실수 형식이다 그러면 Double 타입으로 자동으로 매핑됩니다.</p>
+
+<p>자 여기서 질문. 왜 Long 이고, Double 일까?</p>
+
+<p>ElasticSearch 는 지정되지 않은 타입에 대해서 정보가 없습니다.</p>
+
+<p>다시말해 정수가 저장되면 이 정수의 범위가 어떻게 될지에 대해서 알 수 없습니다.
+그렇기 때문에 Interger 가 아니라 더 큰 수를 담을 수 있는 Long 타입에 매핑하는 것 입니다.
+Double 또한 마찬가지 입니다.</p>
+
+<p>하지만 무조건 Long, Double 타입을 사용하는건 좋지 않습니다.
+이전에 이미 말했지만 비용은 매우 중요합니다. Integer 의 범위면 충분한데 Long 을 사용하는 것은 disk 공간을 낭비하는 행동이겠죠?</p>
+
+<p>만약 정확하게 특정 필드가 다룰 숫자의 범위를 안다면 그에 맞게 사용하시는 것이 좋습니다.</p>
+
+<h2 id="-date">🍗 Date</h2>
+
+<p>JSON 형식의 데이터에는 이 필드는 date 타입이다!! 라고 알려주는 지표가 없습니다.
+우리가 JSON 형식으로 데이터를 주고 받을텐데.. ElasticSearch 는 이걸 어떻게 알까요?</p>
+
+<p>ElasticSearch 는 매우 유용한 기능을 가지고 있습니다.</p>
+
+<p>이 필드가 Date 타입인지 아닌지 <strong>유추</strong>하는 것이죠</p>
+
+<p>문자열 필드이며, Date 정보를 포함하고 있다면 예들들어 다음과 같은 형식이라면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ "date": "2015-01-01" }
+{ "date": "2015-01-01T12:10:30Z" }
+</code></pre></div></div>
+
+<p>ElasticSearch 는 아!! 이 필드는 Date 타입이구나! 라고 추론하게 됩니다.</p>
+
+<p>물론 이 형식은 아래와 같이 형식을 정할 수 있습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"mappings": {
+    "properties": {
+        "date": {
+            "type":   "date",
+            "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>아직 mapping 하는 법을 배우진 않았지만 format 형식을 보면서 아 이런 식으로 지정 가능하구나 라고 아시면 될 것 같습니다.</p>
+
+<p>또한 미리 지정한다면 Interger, Long 타입을 Date 필드로 표현이 가능도 합니다.</p>
+
+<ul>
+  <li>Integer 타입은 1970년 1월 1일 부터 초를 단위로 계산한 값입니다.</li>
+  <li>Long 타입은 1970년 1월 1일부터 밀리초를 단위로 계산한 값입니다.</li>
+</ul>
+
+<h2 id="-object">☕ Object</h2>
+
+<p>JSON 의 데이터 형식은 Object 라고 보시면 됩니다.
+계층적으로 내부 Object 를 다시 포함하게 되죠.</p>
+
+<p>ElasticSearch 에서는 사실 Object 라는 타입이 애매모호합니다.</p>
+
+<p>예를 들어</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "region": "US",
+    "manager": {
+        "age":     30,
+        "name": {
+        "first": "John",
+        "last":  "Smith"
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>이런 데이터가 있다면 ElasticSearch 는 내부적으로</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "region":             "US",
+    "manager.age":        30,
+    "manager.name.first": "John",
+    "manager.name.last":  "Smith"
+}
+</code></pre></div></div>
+
+<p>점을 통해 저장합니다. 따라서 내부적으로 본다면, “Object 라는 타입은 없다.” 라고도 할 수 있겠네요.</p>
+
+<h2 id="-nested">🥧 Nested</h2>
+
+<p>Nested 타입은 배열과 관련이 있습니다.
+더 자세하게 말하면 Object 의 배열을 색인 하기 위한 특수 타입이라고 보시면 되겠네요.</p>
+
+<p>이전에 말했던 것 처럼ElasticSearch 내부적으로는 Object 라는 타입이 없다. 라고 말씀드렸는데요.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "group" : "fans",
+        "user" : [
+            {
+            "first" : "John",
+            "last" :  "Smith"
+            },
+            {
+            "first" : "Alice",
+            "last" :  "White"
+            }
+        ]
+}
+</code></pre></div></div>
+
+<p>이와 같은 타입은 어떻게 저장되어야 할까요? user.first 는 여러개 있으니 배열로 저장해야 할 것입니다.
+다음과 같이요.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "group" :        "fans",
+    "user.first" : [ "alice", "john" ],
+    "user.last" :  [ "smith", "white" ]
+}
+</code></pre></div></div>
+
+<p>이렇게 저장되면 alice white 라는 이름과 john smith 이름의 연관성은 사라지게 됩니다.</p>
+
+<p>순수히 user.first 에 “alice”, “john” 이 저장되었고
+마찬기자로 user.last 에 “smith”, “white” 이 저장되었기 때문이죠.</p>
+
+<p>다시말해 smith 라고 검색한다면 alice 가 튀어나올 수도 있는 상황이라는 겁니다.</p>
+
+<p>이를 해결하기 위해 Nested 라는 타입을 지정할 수 있습니다.
+Nested 를 사용하게 되면 ElasticSearch 는 배열을 내부적으로 숨겨진 문서에 해당 내용을 따로 저장하게 됩니다.</p>
+
+<p>만약 user 가 11명이라면, 11개의 숨겨진 user 문서와 1개의 본 문서가 저장되겠네요.</p>
+
+<p>문서가 늘어난다는 것은 검색 비용이 늘어난다는 말입니다.
+유의해서 써라… 이 말이죠.</p>
+
+<h2 id="-끝-입니다">😂 끝 입니다!!</h2>
+
+<p>끝이라 적고 한가지만 더 말씀드리자면..
+이 Mapping 을 통해 데이터 타입을 정하고 인덱스를 만들었습니다.
+그리고 엄청난 양의 데이터를 만들고 나니 데이터의 타입을 변경해야할 상황이 오게 되면…</p>
+
+<p>인덱스를 삭제하고 다시 만드는 Reindex 과정이 필요합니다… 그러니 반드시.. 심사숙고해서.. 만드세요..</p>
+
+<hr />
+
+<p>짞짞짞 고생 많으셨습니다.!! 잠시 눈 운동하고 쉬고 계세요!!</p>
+
+<p>다음에는 또 어려운 내용으로 찾아뵐게요.. 흑흐구 ㅜㅜ 공부할 수록 알아야할 내용이 많습니다.</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -600,131 +855,6 @@ for (int i = 0; i &lt; len; i++) {
 <p>취업관련 코딩테스트 준비를 하다가 찾은 문제집 !! 괜찮은 것 같다!!</p>
 
 <p>하루에 3시간씩 알고리즘 관련 문제를 푸는데, 시간이 남으면 Hard 문제도 도전해야겠다!</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/nestjs/nestjs-1-prerequisite/"> NestJS 시리즈 - 이거는 알고 시작하자. </a>
-    </h1>
-
-    <span class="post-date">15 Jan 2021</span>
-
-    <h1 id="1-nestjs-블로그-만들기--이거는-알고-시작하자">1. NestJS 블로그 만들기 -이거는 알고 시작하자.</h1>
-
-<p>NestJS를 시작하기전 이거만큼은 알고 시작하자!!</p>
-
-<p>🚨🚨🚨 본 포스트와 이후 nestjs 시리즈에서는 Javascript, Typescript 를 배우기 위한 내용은 다루지 않습니다. 🚨🚨🚨</p>
-
-<hr />
-
-<h2 id="prerequisites">📣Prerequisites</h2>
-
-<h3 id="1-javascript--typescript">1. Javascript &amp; Typescript</h3>
-
-<p>Javascript 는 FrontEnd 를 공부중이시거나 NodeJS 를 다루어 보신분이라면 알고 계실거라고 생각합니다!
-다만 Typescript 까지 해야하느냐?? 라고 물으신다면</p>
-
-<ul>
-  <li><strong>예</strong></li>
-</ul>
-
-<p>NestJS 의 주요 핵심중 하나는 <strong>의존성주입</strong>(Defendency Injection) 입니다.</p>
-
-<p>의존성주입이 무엇인지 먼저 알아보죠.</p>
-
-<h3 id="2-의존성주입-dependency-injection">2. 의존성주입 (Dependency Injection)</h3>
-
-<p>의존성 주입은 제어의역전(Inversion of Control) 의 기술중 하나입니다.</p>
-
-<p>🙄🙄🙄</p>
-
-<p>의존성 주입이란 말을 처음 들은 여러분의 표정이 상상이 갑니다.</p>
-
-<p>저도 그랬거든요 ^^..</p>
-
-<p>간단하게 먼저 말하자면</p>
-
-<ul>
-  <li>제어의역전 : <strong>“내가 대신 제어해줄게”</strong></li>
-  <li>의존성주입 : <strong>“니가 정의한 코드(클래스, 변수 등등)를”</strong></li>
-</ul>
-
-<p>예를 들어보겠습니다.</p>
-
-<p>NestJS 에서는 생성자를 통해 의존성을 주입할 수 있습니다.</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Controller</span><span class="p">,</span> <span class="nx">Get</span><span class="p">,</span> <span class="nx">Post</span><span class="p">,</span> <span class="nx">Body</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@nestjs/common</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">CreateCatDto</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./dto/create-cat.dto</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">CatsService</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./cats.service</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">Cat</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./interfaces/cat.interface</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="p">@</span><span class="nd">Controller</span><span class="p">(</span><span class="dl">"</span><span class="s2">cats</span><span class="dl">"</span><span class="p">)</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nx">CatsController</span> <span class="p">{</span>
-  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">catsService</span><span class="p">:</span> <span class="nx">CatsService</span><span class="p">)</span> <span class="p">{}</span>
-
-  <span class="p">@</span><span class="nd">Post</span><span class="p">()</span>
-  <span class="k">async</span> <span class="nx">create</span><span class="p">(@</span><span class="nd">Body</span><span class="p">()</span> <span class="nx">createCatDto</span><span class="p">:</span> <span class="nx">CreateCatDto</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">catsService</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">createCatDto</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="p">@</span><span class="nd">Get</span><span class="p">()</span>
-  <span class="k">async</span> <span class="nx">findAll</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Cat</span><span class="p">[]</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">catsService</span><span class="p">.</span><span class="nx">findAll</span><span class="p">();</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>위의 코드에서</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">catsService</span><span class="p">:</span> <span class="nx">CatsService</span><span class="p">)</span> <span class="p">{}</span>
-</code></pre></div></div>
-
-<p>여기에 해당하는 코드를 보시면 생성자에서 catService 의 타입만 지정했습니다. 그럼에도 불구하고</p>
-
-<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">@</span><span class="nd">Post</span><span class="p">()</span>
-  <span class="k">async</span> <span class="nx">create</span><span class="p">(@</span><span class="nd">Body</span><span class="p">()</span> <span class="nx">createCatDto</span><span class="p">:</span> <span class="nx">CreateCatDto</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">catsService</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">createCatDto</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>여기서 catService 의 create 메소드를 호출하고 있습니다.</p>
-
-<p>이는 NestJS 가 “오 catsService 는 CatsService 타입이네? 내가 직접 찾아서 할당해줘야겠다!!”
-라는 행동을 하게 됩니다. 이후 이 클래스의 생성, 소멸 주기를 몰라도 그냥 미친듯이 사용 가능합니다.
-NestJS 가 해당 객체를 관리해줄거거든요. 이미 내 손을 떠난 문제에요!!</p>
-
-<p><strong>“무슨 말인지 모르겠어.. 그냥 의존성주입이고 나발이고 내가 다 만들어서 개발할래!!”</strong>
-라고 생각하신다면… 프레임워크를 사용 안하고 모든 것을 직접 개발하셔도 됩니다.
-다만 프레임워크의 장점을 버리는 것이 더 큰 고통을 안겨줄지도 몰라요 😭😭😭</p>
-
-<p>자 위에서 보신것과 같이 NestJS가 의존성주입을 사용하기 위해서 우리는 <strong>타입</strong>을 지정해주었습니다.
-Nodejs 환경에서 Javascript 는 타입을 명시할 수 없습니다. 따라서 Typescript 를 사용하게됩니다.</p>
-
-<p>이제 Typescript 를 꼭 해야합니까?? 의 답변을 이해 하시겠죠??</p>
-
-<h3 id="3-http">3. HTTP</h3>
-
-<p>HTTP에 대해서 완전 자세하게 전문가까지의 지식이 필요한 것은 아닙니다. (저도 전문가는 아닙니다.)
-HTTP 메소드가 무엇인지. URL이 무엇인지. HTTP 포트가 무엇인지 !!
-간략하게나마 아신다면 RESTful API 를 작성하시는데 큰 도움이 되겠습니다.</p>
-
-<h3 id="4-database">4. Database</h3>
-
-<p>데이터 제공을 할거잖아요?? 간단한 SQL 문법 정도는 집고 넘어갑시다. !!
-NoSQL 이 떠오른다고는 하지만 SQL 의 모든 것을 대체할거라고 생각하시면 안됩니다. !!
-MYSQL !! Postgresql !!!! 원하는 데이터베이스를 선택해서 해봅시다!!</p>
-
-<hr />
-
-<p>위의 내용을 <strong>간략하게</strong> 라도 아신다면 이후 NestJS 를 배우시는데 큰 도움이 될 거에요!!</p>
-
-<p>Javascript 를 모르신다면</p>
-
-<p>노마드코더님, 드림코딩 엘리님, 또 영어를 잘하시면 Academind 님의 영상 등,
-유튜브, Udemy 에 수많은 강의들이 있으니 꼭 들어보시길 바랍니다.</p>
-
-<p>다음에는 CRUD 기능 실습을 통해 NestJS 가 이런거구나 라는 것을 알아보겠습니다.!!</p>
 
     <hr />
   </div>

@@ -131,9 +131,15 @@
             >DevTip (1)</a
           >
         </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/nodejs"
+            >nodejs (1)</a
+          >
+        </li>
         
       </ul>
-                                                               
+                                                                   
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -159,6 +165,88 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/devtip/develop-knowledge-uuid/"> DevTip - UUID vs Auto Increment </a>
+    </h1>
+
+    <span class="post-date">25 Jan 2021</span>
+
+    <p>#[DevTip] UUID vs Auto Increment</p>
+
+<h2 id="-uuid-가-뭐죠">👓 UUID 가 뭐죠</h2>
+
+<p>UUID 는 간단하게 범용 고유 식별자라고 생각하면 편할것 같습니다.</p>
+
+<p>예를 들어 내가 뭔가 만들 때마다 식별할 수 있는 고유값을 만들고 싶다면 사용하면 됩니다.</p>
+
+<p>문서를 만들고 문서의 고유 식별자를 만들 때도,
+회원가입을 하고 유저의 고유 식별자를 만들 때도</p>
+
+<p>UUID 를 만드는 함수 하나 가져와서 그냥 쓰면 만사 ok.</p>
+
+<p>물론 UUID 는 <strong>유일을 보장</strong> 한다는 것은 아닙니다.. UUID 는 <strong>실질적으로 유일함</strong> 을 목적으로 하고 있고 실제로 대부분의 상황에서 그러합니다.</p>
+
+<p>이게 가능한 이유가 UUID 는 16 바이트의 문자로 이루어집니다. 비교해보자면 c 언어에서 integer 타입은 대략 -21억 ~ 21억 사이로 표현이 가능합니다.
+반면 UUID 는 10의 38승까지, 정확히 <strong>340,282,366,920,938,463,463,374,607,431,768,211,456</strong> 개가 생성 가능합니다.</p>
+
+<p>감이오시쥬~??</p>
+
+<h2 id="-auto-increment-primary-keys-">👓 Auto increment primary keys ??</h2>
+
+<p>Auto increment primary key 는 프로그램적으로 문제가 없는 한, <strong>유일을 보장</strong> 합니다.</p>
+
+<blockquote>
+  <p>다만 너무 많은 id가 생성되면 아닐 보장하지 않을 수도 있습니다. 하지만 우리는 40억개 이상 생성하지 않을꺼야!! 라고 생각하고… 또한 키를 Integer 가 아니라 더 큰 타입으로도 생성할 수 있기 때문에…</p>
+</blockquote>
+
+<p>단순히 1부터 시작해서 숫자를 늘려가거나, 원하는 숫자의 식별자를 만들어내는 방식입니다.</p>
+
+<h2 id="-uuid-vs-auto-increment">🍗 UUID vs Auto Increment</h2>
+
+<h3 id="단점-먼저">단점 먼저!</h3>
+
+<h4 id="uuid">UUID</h4>
+
+<ul>
+  <li>가장 치명적인 단점은 <strong>성능</strong>에 저하를 일으킨다는 겁니다. 예들들어 각각 primary key 가 3,2,4,1,5 인 데이터를 삽입하고 검색의 효율을 위해 id를 정렬 한다고 칩시다. 그럼 1,2,3,4,5 순서로 저장이 되겠습니다. 자 이제 저 숫자가 16바이트의 엄청 큰 문자열이라고 생각해봅시다. 정렬하는 비용이 생각보다 많이 들 것입니다.</li>
+  <li>사람이 보기 힘듭니다.</li>
+  <li>필요 이상으로 공간을 많이 차지 합니다.</li>
+</ul>
+
+<h4 id="auto-increment">Auto Increment</h4>
+
+<ul>
+  <li>Auto Increment 방식은 분산 시스템에서 적합하지 않습니다. 게임서버를 예로 들어봅시다. 서버 A와 서버 B 를 통합하려 합니다. 그런데 서버 A와 서버 B를 별개로 두었기 때문에 서버 A 에 있는 Id가 서버 B 에도 존재할 수 있습니다. 통합하려면 상당히 고생해야할지도 모릅니다 ^^;;</li>
+</ul>
+
+<h3 id="장점은">장점은?</h3>
+
+<h4 id="uuid-1">UUID</h4>
+
+<ul>
+  <li>Auto Increment 와는 반대로 분산 시스템에서 괜찮습니다.</li>
+  <li>개발 환경에 독립적입니다. 어떤 디비를 쓰던 상관 없이 그냥 uuid 생성 함수 가져와서 쓰면 됩니다. 즉 DB를 바꿀 때 그냥 Id 갖다 박으셔도 됩니다.</li>
+</ul>
+
+<h4 id="auto-increment-1">Auto Increment</h4>
+
+<ul>
+  <li>빠릅니다.</li>
+  <li>눈에 보기 쉽습니다. 로그를 분석하는데 “509ca884-67cc-…’” 어쩌고 나오면 갑자기 머리 아파집니다.</li>
+</ul>
+
+<p>사실 id 숫자가 40억개 이상 쓸 일이 없을거야!! 하면 그냥 Auto Increment 쓰셔도 무방합니다.</p>
+
+<p>필요에 따라 UUID 를 쓰세요!! 꼭 UUID 일 필요는 없습니다. 상황에 맞게 쓰시면 될거 같네요!</p>
+
+<hr />
+
+<p>피드백은 항상 환영입니다!!</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -768,255 +856,6 @@ findOne 을 보시면 함수 인자 값에 @Param(‘id’) 이라는 데코레�
 <p>다음에는 Postgresql 데이터베이스를 이용해 진짜 user 정보를 저장해보자구요!</p>
 
 <p>피드백은 항상 환영입니다!!</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-type/"> Elasticsearch 타입에 대해서 알아보자! </a>
-    </h1>
-
-    <span class="post-date">20 Jan 2021</span>
-
-    <p>#[🌎elasticsearch] Elasticsearch 타입에 대해서 알아보자!</p>
-
-<hr />
-
-<ul>
-  <li>
-    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
-  </li>
-</ul>
-
-<hr />
-
-<p>ElasticSearch 의 다양한 기능들을 둘러보기 전 꼭 알아야 할 타입들에 대해서 알아보겠습니다.!!
-진짜 진짜 진짜 중요하니 꼭 커피 스윽 마시고 읽어주세요!!</p>
-
-<h2 id="-mapping">🍔 Mapping</h2>
-
-<p>Mapping 어떻게 ElasticSearch 의 문서들이 저장되고 색인 되었는지에 대한 정의입니다.
-이 Mapping 의 정의를 통해 불필요한 프로세스 들과 공간 낭비를 줄이고 필요한 기능을 사용할 수 있습니다.
-예를 들면,</p>
-
-<ul>
-  <li>어떤 필드들이 Full-Text-Search 의 대상이 되어야 하는가?</li>
-  <li>어떤 필드들이 숫자, 날짜, 위치 정보를 포함하는가?</li>
-</ul>
-
-<p>또한 이후 포스트에서 Dynamic Mapping 을 다룰 때에도 Mapping 과 타입에 대한 기본 개념이 필요합니다.</p>
-
-<h2 id="-field-data-type">🍟 Field Data Type</h2>
-
-<p>먼저 이번 포스트에서는 Metadata Fields 가 아닌 Properties 에 대한 Field Type 다룹니다.</p>
-
-<blockquote>
-  <p>Metadata Fields 는 “_index”, “_id”, “_source” 와 같이 metadata 와 관련된 녀석들입니다!</p>
-</blockquote>
-
-<p>먼저 중요한 녀석들을 뽑자면,</p>
-
-<ul>
-  <li>Text</li>
-  <li>Keyword</li>
-  <li>Numbers</li>
-  <li>Date</li>
-  <li>Object</li>
-</ul>
-
-<p>그 외에</p>
-
-<ul>
-  <li>Nested</li>
-</ul>
-
-<p>등이 있습니다.</p>
-
-<blockquote>
-  <p>더 자세한 내용은 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html#structured-data-types">👆엘라스틱 홈페이지 참고하기!!</a></p>
-</blockquote>
-
-<h2 id="keyword--text">🍕Keyword &amp; Text</h2>
-
-<p>요 두 녀석은 정말 중요합니다.</p>
-
-<ul>
-  <li><strong>keyword</strong> 는 exact search, sorting, aggregations 등을 위한 녀석입니다. 예를 들면 Id, Email, Tag 등을 검색할 때 유용합니다.</li>
-  <li><strong>text</strong> 는 Full-Text-Search 기능을 위한 녀석입니다. 우리가 검색하려는 단어와 최대한 관련된 검색을 위해 사용하는 놈 입니다!</li>
-</ul>
-
-<p>기본적으로 우리가 어떤 필드 타입을 지정해주지 않고 문자열 데이터를 넣게 되면 (지정 안해도 가능합니다.)
-ElasticSearch 는 이 필드가 어떤 용도로 사용될 지 알 방법이 없기 때문에 keyword 와 text 타입을 같이 지정해주어 색인과정을 진행하게 됩니다.</p>
-
-<p>keyword 와 text 의 두 기능이 모두 필요하다면 keyword 와 text 타입을 같이 지정해주는 것이 정말 유용합니다.</p>
-
-<p>하지만 예를 들어봅시다.
-문서의 작성자를 검색을 하고 싶습니다. 작성자를 Email 이라고 합시다.
-우리가 검색할 단어와 Email 이 비슷한지는 상관관계를 따질 필요가 없습니다.
-오직 keyword 타입의 필드만 있으면 되겠죠.</p>
-
-<p>그럼 Email 필드에 text 타입은 불필요한 타입이고, 이는 disk 공간을 낭비하게 됩니다.
-만약 문서가 수백만 수천만개가 넘어간다면 이는 무시할 수 없는 공간일 것 입니다.</p>
-
-<p>이는 반대도 마찬가지 입니다.</p>
-
-<p>필드에 필요한 Type 만 지정하는 것은 결국 disk 비용을 줄이는 결과를 가져오겠죠??
-비용은 매우 중요하니까 꼭 필요한 만큼만 씁시다!!</p>
-
-<h2 id="-numbers">🥞 Numbers</h2>
-
-<p>숫자 또한 중요하지만 알아야 할 개념은 많지 않습니다.
-만약 JSON 형식의 데이터가 날라와 저장하는데 정수 형식이다 그러면 Long 타입으로,
-실수 형식이다 그러면 Double 타입으로 자동으로 매핑됩니다.</p>
-
-<p>자 여기서 질문. 왜 Long 이고, Double 일까?</p>
-
-<p>ElasticSearch 는 지정되지 않은 타입에 대해서 정보가 없습니다.</p>
-
-<p>다시말해 정수가 저장되면 이 정수의 범위가 어떻게 될지에 대해서 알 수 없습니다.
-그렇기 때문에 Interger 가 아니라 더 큰 수를 담을 수 있는 Long 타입에 매핑하는 것 입니다.
-Double 또한 마찬가지 입니다.</p>
-
-<p>하지만 무조건 Long, Double 타입을 사용하는건 좋지 않습니다.
-이전에 이미 말했지만 비용은 매우 중요합니다. Integer 의 범위면 충분한데 Long 을 사용하는 것은 disk 공간을 낭비하는 행동이겠죠?</p>
-
-<p>만약 정확하게 특정 필드가 다룰 숫자의 범위를 안다면 그에 맞게 사용하시는 것이 좋습니다.</p>
-
-<h2 id="-date">🍗 Date</h2>
-
-<p>JSON 형식의 데이터에는 이 필드는 date 타입이다!! 라고 알려주는 지표가 없습니다.
-우리가 JSON 형식으로 데이터를 주고 받을텐데.. ElasticSearch 는 이걸 어떻게 알까요?</p>
-
-<p>ElasticSearch 는 매우 유용한 기능을 가지고 있습니다.</p>
-
-<p>이 필드가 Date 타입인지 아닌지 <strong>유추</strong>하는 것이죠</p>
-
-<p>문자열 필드이며, Date 정보를 포함하고 있다면 예들들어 다음과 같은 형식이라면</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ "date": "2015-01-01" }
-{ "date": "2015-01-01T12:10:30Z" }
-</code></pre></div></div>
-
-<p>ElasticSearch 는 아!! 이 필드는 Date 타입이구나! 라고 추론하게 됩니다.</p>
-
-<p>물론 이 형식은 아래와 같이 형식을 정할 수 있습니다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"mappings": {
-    "properties": {
-        "date": {
-            "type":   "date",
-            "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
-        }
-    }
-}
-</code></pre></div></div>
-
-<p>아직 mapping 하는 법을 배우진 않았지만 format 형식을 보면서 아 이런 식으로 지정 가능하구나 라고 아시면 될 것 같습니다.</p>
-
-<p>또한 미리 지정한다면 Interger, Long 타입을 Date 필드로 표현이 가능도 합니다.</p>
-
-<ul>
-  <li>Integer 타입은 1970년 1월 1일 부터 초를 단위로 계산한 값입니다.</li>
-  <li>Long 타입은 1970년 1월 1일부터 밀리초를 단위로 계산한 값입니다.</li>
-</ul>
-
-<h2 id="-object">☕ Object</h2>
-
-<p>JSON 의 데이터 형식은 Object 라고 보시면 됩니다.
-계층적으로 내부 Object 를 다시 포함하게 되죠.</p>
-
-<p>ElasticSearch 에서는 사실 Object 라는 타입이 애매모호합니다.</p>
-
-<p>예를 들어</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "region": "US",
-    "manager": {
-        "age":     30,
-        "name": {
-        "first": "John",
-        "last":  "Smith"
-        }
-    }
-}
-</code></pre></div></div>
-
-<p>이런 데이터가 있다면 ElasticSearch 는 내부적으로</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "region":             "US",
-    "manager.age":        30,
-    "manager.name.first": "John",
-    "manager.name.last":  "Smith"
-}
-</code></pre></div></div>
-
-<p>점을 통해 저장합니다. 따라서 내부적으로 본다면, “Object 라는 타입은 없다.” 라고도 할 수 있겠네요.</p>
-
-<h2 id="-nested">🥧 Nested</h2>
-
-<p>Nested 타입은 배열과 관련이 있습니다.
-더 자세하게 말하면 Object 의 배열을 색인 하기 위한 특수 타입이라고 보시면 되겠네요.</p>
-
-<p>이전에 말했던 것 처럼ElasticSearch 내부적으로는 Object 라는 타입이 없다. 라고 말씀드렸는데요.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "group" : "fans",
-        "user" : [
-            {
-            "first" : "John",
-            "last" :  "Smith"
-            },
-            {
-            "first" : "Alice",
-            "last" :  "White"
-            }
-        ]
-}
-</code></pre></div></div>
-
-<p>이와 같은 타입은 어떻게 저장되어야 할까요? user.first 는 여러개 있으니 배열로 저장해야 할 것입니다.
-다음과 같이요.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "group" :        "fans",
-    "user.first" : [ "alice", "john" ],
-    "user.last" :  [ "smith", "white" ]
-}
-</code></pre></div></div>
-
-<p>이렇게 저장되면 alice white 라는 이름과 john smith 이름의 연관성은 사라지게 됩니다.</p>
-
-<p>순수히 user.first 에 “alice”, “john” 이 저장되었고
-마찬기자로 user.last 에 “smith”, “white” 이 저장되었기 때문이죠.</p>
-
-<p>다시말해 smith 라고 검색한다면 alice 가 튀어나올 수도 있는 상황이라는 겁니다.</p>
-
-<p>이를 해결하기 위해 Nested 라는 타입을 지정할 수 있습니다.
-Nested 를 사용하게 되면 ElasticSearch 는 배열을 내부적으로 숨겨진 문서에 해당 내용을 따로 저장하게 됩니다.</p>
-
-<p>만약 user 가 11명이라면, 11개의 숨겨진 user 문서와 1개의 본 문서가 저장되겠네요.</p>
-
-<p>문서가 늘어난다는 것은 검색 비용이 늘어난다는 말입니다.
-유의해서 써라… 이 말이죠.</p>
-
-<h2 id="-끝-입니다">😂 끝 입니다!!</h2>
-
-<p>끝이라 적고 한가지만 더 말씀드리자면..
-이 Mapping 을 통해 데이터 타입을 정하고 인덱스를 만들었습니다.
-그리고 엄청난 양의 데이터를 만들고 나니 데이터의 타입을 변경해야할 상황이 오게 되면…</p>
-
-<p>인덱스를 삭제하고 다시 만드는 Reindex 과정이 필요합니다… 그러니 반드시.. 심사숙고해서.. 만드세요..</p>
-
-<hr />
-
-<p>짞짞짞 고생 많으셨습니다.!! 잠시 눈 운동하고 쉬고 계세요!!</p>
-
-<p>다음에는 또 어려운 내용으로 찾아뵐게요.. 흑흐구 ㅜㅜ 공부할 수록 알아야할 내용이 많습니다.</p>
 
     <hr />
   </div>
