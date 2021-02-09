@@ -122,7 +122,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/NestJS"
-            >NestJS (3)</a
+            >NestJS (4)</a
           >
         </li>
          
@@ -165,6 +165,287 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/nestjs/nestjs-4-testing/"> NestJS 블로그 만들기 - 리팩토링과 e2e 테스트!! </a>
+    </h1>
+
+    <span class="post-date">09 Feb 2021</span>
+
+    <h1 id="2-nestjs-블로그-만들기---리팩토링과-e2e-테스트">2. NestJS 블로그 만들기 - 리팩토링과 e2e 테스트!!</h1>
+
+<p>이번에는 이전 포스트에서 다뤘던 내용에 대해서 Refactoring 을 하고 테스트도 해보겠습니다.</p>
+
+<h2 id="-refactoring-">🔨 Refactoring !!</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└─modules
+    └─user
+        │  user.controller.ts
+        │  user.module.ts
+        │  user.repository.ts
+        │  user.service.ts
+        │  user.spec.ts
+        │
+        ├─dto
+        │      create-user.dto.ts
+        │      index.ts
+        │      update-user.dto.ts
+        │
+        ├─entities
+        │      user.entity.ts
+        │
+        ├─exceptions
+            email-already-exist-exception.ts
+            user-not-found.exception.ts
+            username-already-exist-exception.ts
+</code></pre></div></div>
+
+<p>계속 리팩토링 하다보니 위와 같은 구조가 만들어졌습니다.
+파일 이름이 바뀐 것도 있고, 내부 구현사항이 바뀐 것도 있습니다.
+리팩토링 하면서 설계의 중요성을 다시 느낍니다.</p>
+
+<h3 id="userexceptions">user.exceptions</h3>
+
+<p>Custom Exception 을 만들기 위해 user 폴더 안에 exceptions 폴더를 만듭시다!</p>
+
+<p>이메일과 유저네임이 중복 되었을 때 그리고 유저를 찾지 못했을 때 발생 시킬 exception 을 각각 만들어 줍시다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">username-already-exist-exception.ts</code></li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">BadRequestException</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@nestjs/common</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">UsernameAlreadyExistException</span> <span class="kd">extends</span> <span class="nx">BadRequestException</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">error</span><span class="p">?:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="dl">"</span><span class="s2">username already exist</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">email-already-exist-exception.ts</code></li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">BadRequestException</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@nestjs/common</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">EmailAlreadyExistException</span> <span class="kd">extends</span> <span class="nx">BadRequestException</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">error</span><span class="p">?:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="dl">"</span><span class="s2">email already exist</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">user-not-found.exception.ts</code></li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">BadRequestException</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@nestjs/common</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">UserNotFoundException</span> <span class="kd">extends</span> <span class="nx">BadRequestException</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">error</span><span class="p">?:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="dl">"</span><span class="s2">user not found</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>각각의 클래스는 BadRequestException 을 상속받고 있습니다.
+해당 Exception 을 발생시키면 Status Code 는 400(BadRequest) 이 발생됩니다.</p>
+
+<p>매우 간단하게 Custom Exception 을 만들었습니다!!</p>
+
+<h3 id="userservice">user.service</h3>
+
+<p>create 메소드 안에서 이전에 만들었던 QueryBuilder 부분을 삭제하고 바로 위에서 만들었던 Custom Exceptions 들을 사용하여 간단하게 만들어줍니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">UserService.create</code></li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">thisUser</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">userRepository</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span> <span class="na">username</span><span class="p">:</span> <span class="nx">username</span> <span class="p">});</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">thisUser</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">error</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">UserName is already exist</span><span class="dl">"</span><span class="p">;</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nx">UsernameAlreadyExistException</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">const</span> <span class="nx">thisEmail</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">userRepository</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span> <span class="na">email</span><span class="p">:</span> <span class="nx">email</span> <span class="p">});</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">thisEmail</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">error</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Email is already exist</span><span class="dl">"</span><span class="p">;</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nx">EmailAlreadyExistException</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>그리고 유저를 저장하여 반환할 때 단순 number 값이 아니라 Object 를 반환해줍시다.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">userId</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">userRepository</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">newUser</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">v</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">v</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="k">return</span> <span class="p">{</span> <span class="na">userId</span><span class="p">:</span> <span class="nx">userId</span> <span class="p">};</span>
+</code></pre></div></div>
+
+<p>테스트를 위해 remove 메소드 안의 내용을 다음과 같이 만들어 줍시다.</p>
+
+<blockquote>
+  <p>이후 Auth 관련 기능을 만들면서 remove 기능은 사라질겁니다…</p>
+</blockquote>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">UserService.remove</code></li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="nx">remove</span><span class="p">(</span><span class="nx">email</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">DeleteResult</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">userRepository</span><span class="p">.</span><span class="k">delete</span><span class="p">({</span> <span class="na">email</span><span class="p">:</span> <span class="nx">email</span> <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="usercontroller">user.controller</h3>
+
+<p>remove 와 관련된 controller 부분을 다음으로 변경해주세요!</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">UsersController.remove</code></li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">@</span><span class="nd">Delete</span><span class="p">(</span><span class="dl">''</span><span class="p">)</span>
+  <span class="nx">remove</span><span class="p">(@</span><span class="nd">Body</span><span class="p">(</span><span class="dl">'</span><span class="s1">email</span><span class="dl">'</span><span class="p">)</span> <span class="nx">email</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">usersService</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">email</span><span class="p">);</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">@Body</code> annotation 은 response body 안에서 해당하는 필드를 가져와 변수에 입력해주는 기능을 합니다!!</p>
+
+<h2 id="새해-첫-테스트-두근두근">🧡🧡새해 첫 테스트 두근두근</h2>
+
+<p>먼저 유닛테스트가 아닌, e2e 테스트를 진행하기 위한 코드임을 알려드립니다.
+테스트 관련 기술이 많이 부족해서 계속 공부중입니다. ㅜㅜ 더 알아가면서 포스트를 업데이트 하도록 하겠습니다!!</p>
+
+<p>테스트는 해당 url 로 요청 수행시 적절한 응답이 오는 확인합니다.</p>
+
+<p>e2e 테스트 방법에 정석이 있겠지만 진행 도중 많은 오류가 발생하여.. 일단 야매로 진행하겠습니다.</p>
+
+<p><strong>서버실행 -&gt; url로 요청</strong></p>
+
+<p>요청을 수행하기 위해서 supertest 라이브러리를 먼저 설치합시댜!!</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">--save-dev</span> supertest
+</code></pre></div></div>
+
+<blockquote>
+  <p>supertest 관한 내용은 다음링크에서 더 확인 가능합니다!!
+<a href="https://www.npmjs.com/package/supertest">npm supertest</a></p>
+</blockquote>
+
+<p>그리고 테스트 하기 위한 nest 라이브러리도 설치합시다 !!</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm i <span class="nt">--save-dev</span> @nestjs/testing
+</code></pre></div></div>
+
+<p>이제 user.spec.ts 라는 파일을 user 폴더 안에 생성하여 다음과 같은 코드를 작성합시다!</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">request</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">supertest</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">http://localhost:3000</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">describe</span><span class="p">(</span><span class="dl">"</span><span class="s2">User create 테스트</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">request</span><span class="p">(</span><span class="nx">app</span><span class="p">).</span><span class="k">delete</span><span class="p">(</span><span class="dl">"</span><span class="s2">/users</span><span class="dl">"</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span> <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test1@example.com</span><span class="dl">"</span> <span class="p">});</span>
+    <span class="k">await</span> <span class="nx">request</span><span class="p">(</span><span class="nx">app</span><span class="p">).</span><span class="k">delete</span><span class="p">(</span><span class="dl">"</span><span class="s2">/users</span><span class="dl">"</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span> <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test2@example.com</span><span class="dl">"</span> <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">email 중복 확인</span><span class="dl">"</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">request</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">/users</span><span class="dl">"</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+        <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test1@example.com</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">testuser</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">password</span><span class="p">:</span> <span class="dl">"</span><span class="s2">12345</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">})</span>
+      <span class="p">.</span><span class="nx">expect</span><span class="p">(</span><span class="mi">201</span><span class="p">);</span>
+
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">request</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">/users</span><span class="dl">"</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+        <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test1@example.com</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">abcd</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">password</span><span class="p">:</span> <span class="dl">"</span><span class="s2">12345</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">})</span>
+      <span class="p">.</span><span class="nx">expect</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">error</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">"</span><span class="s2">Email is already exist</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">username 중복 확인</span><span class="dl">"</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">request</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">/users</span><span class="dl">"</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+        <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test2@example.com</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">testuser</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">password</span><span class="p">:</span> <span class="dl">"</span><span class="s2">12345</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">})</span>
+      <span class="p">.</span><span class="nx">expect</span><span class="p">(</span><span class="mi">201</span><span class="p">);</span>
+
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">request</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">/users</span><span class="dl">"</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+        <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test1@example.com</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">username</span><span class="p">:</span> <span class="dl">"</span><span class="s2">testuser</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">password</span><span class="p">:</span> <span class="dl">"</span><span class="s2">12345</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">})</span>
+      <span class="p">.</span><span class="nx">expect</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">error</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">"</span><span class="s2">UserName is already exist</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">describe</code> 메소드로 테스트 할 놈들을 그룹화 해줍니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">beforeEach</code> 메소드를 통해 각 테스트를 수행하기 전 테스트 유저를 삭제해줍니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">it</code> 메소드를 통해 각각 테스트를 수행합니다. <code class="language-plaintext highlighter-rouge">it</code> 은 <code class="language-plaintext highlighter-rouge">test</code> 메소드와 같은 기능을 하며 별칭입니다.</li>
+</ul>
+
+<p>자 이제 테스트를 시작해봅시다!!</p>
+
+<p>먼저 서버실행!!</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm run start
+</code></pre></div></div>
+
+<p>그리고 테스트도 실행 !!</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm run <span class="nb">test</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; nestjs-practice@0.0.1 test C:\Users\jiyoung\nestjs-practice
+&gt; jest
+
+PASS  src/modules/user/user.spec.ts
+User create 테스트
+    √ email 중복 확인 (173 ms)
+    √ username 중복 확인 (24 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        1.392 s, estimated 5 s
+Ran all test suites.
+</code></pre></div></div>
+
+<p>다음과 같이 통과하면 성공입니다!!</p>
+
+<blockquote>
+  <p>package.json 에서 jest 관련 설정을 spec 또는 test 가 붙은 ts 파일로 설정했기 때문에 해당하는 파일은 모두 테스트하게 됩니다!!</p>
+</blockquote>
+
+<hr />
+
+<p>테스트 관련해서는 아직 공부하고 있습니다 !!
+e2e 테스트를 먼저 해보기 위해 시도는 많이 했으나 그만큼 오류가 많이 나더군요 ㅜㅜ
+위와 같은 야매 방법을 통해 테스트를 했으나, 이후에 해결방법을 알아와서 포스트를 업데이트 하겠습니다!!</p>
+
+<p>또한 이후에는 Unit Test 관련 기능도 알아보겠습니다!</p>
+
+<p>다음에는 post 모듈을 만들어봅시다!!
+감사합니다.</p>
+
+<p>피드백은 항상 환영입니다.</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -925,190 +1206,6 @@ UserCreate save 하는 부분을</p>
 <p>처음에 패턴이 0 인 경우 문자열이 0 인 경우 다 나누고 있다가 이게 뭔 짓이람 하고 인덱스를 하나 늘려서 그냥 저장했더니 더 간결해졌다.</p>
 
 <p>항상 알고리즘이 동일하다면 더 간결하게 쓰기 위해 노력해야겠다!!</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-search-query/"> Elasticsearch search query 집중탐구 - 1 </a>
-    </h1>
-
-    <span class="post-date">26 Jan 2021</span>
-
-    <p>#[🌎elasticsearch] search query 집중탐구 - 1 전처리 과정</p>
-
-<hr />
-
-<ul>
-  <li>
-    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
-  </li>
-</ul>
-
-<hr />
-
-<h2 id="-elasitcsearch-full-text-search-의-원리">🧡 ElasitcSearch Full-Text-Search 의 원리</h2>
-
-<h3 id="inverted-index">🙂Inverted Index</h3>
-
-<p>Elasticsearch 는 “text” 로 매핑된 필드의 경우 그 안에 데이터를 Inverted Index 라는 구조로 저장합니다.</p>
-
-<p>직역하자면 역 색인, 반대 색인 이런 뜻인데 대충 감이 오시나요??</p>
-
-<p>예들 들어보겠습니다.
-아래와 같은 데이터가 있다고 합시다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>“Cat is Cute”</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>“Dog is Cute Too”</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>“Cat is lazy”</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>“Dog is super athletic”</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>일반적인 DBMS 에서는 <strong>“athletic”</strong> 을 검색하고 싶다하면 1번 ,2번, 3번, 4번 순서로 검색해서
-<strong>“athleti”</strong> 이 있구나 Id 4를 보여줘야지. 라고 할 겁니다.</p>
-
-<p>Inverted Index 는 조금 다릅니다.
-토큰마다 값을 가지는데, 이 값은 “이 문서에 이 토큰 값이 포함되어 있어.”를 저장합니다.
-위의 테이블을 아래와 같은 식으로 저장합니다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>“cat”</td>
-      <td>1, 3</td>
-    </tr>
-    <tr>
-      <td>“dog”</td>
-      <td>2, 4</td>
-    </tr>
-    <tr>
-      <td>“cute”</td>
-      <td>1, 2</td>
-    </tr>
-    <tr>
-      <td>“lazy”</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>“athletic”</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>“super”</td>
-      <td>4</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>이 같은 경우 “athletic” 토큰이 포함된 4번 문서만 보면 됩니다. 다만 토큰을 빨리 찾기 위해 저장하는 자료구조는 좀 복잡해질겁니다.
-괜찮습니다. <strong>Elasticsearch 가 대신해줄거거든요!!</strong></p>
-
-<p>🛑🛑 단 이렇게 저장되는 건 오직 필드가 <strong>text</strong> 타입일 때만 적용됩니다.
-다른말로 하자면 text 필드가 아니면 전문검색 기능을 쓸 수 없습니다!!</p>
-
-<h3 id="analizer">🙂Analizer</h3>
-
-<p>위의 예시에서 눈치채신 분도 계시겠지만, 처음 테이블의 내용을 Inverted Index 방법으로 저장할 때 전부 소문자로 바뀌어서 저장이 되었습니다.
-그리고 저장되지 않은 단어들도 있군요. 이 과정을 <strong>Text Analysis</strong> 라고 합니다.
-이 과정을 거치지 않고 진행하게 되면 검색에 필요 없는단어 가령 “is”, “too” 까지 저장해야합니다.</p>
-
-<p>우리가 “dOG” 라고 검색해도 “Dog” 가 포함된 문서를 보고 싶다면 토큰화하는 과정에 전처리 과정을 수행해야합니다.</p>
-
-<h4 id="1-character-filter">1. Character Filter</h4>
-
-<p><strong>Character Filter</strong> 는 전처리과정에서 가장 먼저 수행되는 과정입니다.
-<strong>Character Filter</strong> 에는 <strong>HTML Strip, Mapping, Pattern Replace</strong> 세 가지가 존재합니다.</p>
-
-<ul>
-  <li><strong>HTML Strip</strong> : 문장에 HTML 태그들을 없애주는 Filter 입니다. 예를들면,
-<code class="language-plaintext highlighter-rouge">&lt;p&gt;I&amp;apos;m so &lt;b&gt;happy&lt;/b&gt;!&lt;/p&gt;</code> 라는 문장을 <code class="language-plaintext highlighter-rouge">I'm so happy!</code> 로 바꿔줍니다.</li>
-  <li><strong>Mapping</strong> : 특정 문자열을 내가 원하는 값으로 대체할 수 있습니다.</li>
-  <li><strong>Pattern Replace</strong> : 특정 정규식 패턴을 내가 원하는 값으로 대체할 수 있습니다.</li>
-</ul>
-
-<h4 id="2-tokenizer-filter">2. Tokenizer Filter</h4>
-
-<p><strong>Tokenizer Filter</strong> 는 문자열을 받아 단어들을 토큰화하는 과정입니다.
-Tokenizer Filter 는 많은 종류가 있는데 대표적인 3가지를 먼저 알아보겠습니다.</p>
-
-<ul>
-  <li><strong>Standard</strong> : 토큰화 할 때 <strong>공백과 hyphen(-)을</strong> 기준으로 토큰화를 수행하며, 일부 특수문자를 제거합니다.</li>
-  <li><strong>Letter</strong> : 토큰화 할 때 <strong>문자열 이외</strong>를 기준으로 토큰화를 수행합니다.
-예들 들어 <code class="language-plaintext highlighter-rouge">Brown-Foxes dog's</code> 같은 문자열은 [Brown, Foxes, dog, s] 로 토큰화를 수행합니다.</li>
-  <li><strong>Whitespace</strong> : <strong>공백</strong> 을 기준으로 토큰화를 수행합니다. 공백, 줄바꿈, 탭 모든 공백을 포함합니다.</li>
-</ul>
-
-<blockquote>
-  <p>Email, URL, Path 와 특수 목적용 Tokenizer 들이 많으니 자세한 정보는 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-tokenizers.html">Tokenizer Document</a> 를 참조해주시와요.!!</p>
-</blockquote>
-
-<h4 id="3-token-filter">3. Token Filter</h4>
-
-<p><strong>Token Filter</strong> 는 각 Tokenizer Filter 에 의해 만들어진 Token 들에 대한 후처리 작업을 수행합니다.
-가장 대표적인 Lowercase Token Filterr 로 Stop Token Filterr 가 있습니다.</p>
-
-<ul>
-  <li><strong>Lowercase</strong> : 말 그대로 토큰들을 소문자로 <strong>바꾸는</strong> Token filter 입니다.</li>
-  <li><strong>Stop</strong> : Search 기능에 필요 없는 단어들 예를 들면 is, be, to, a, as 등을 없애는 필터입니다.</li>
-</ul>
-
-<blockquote>
-  <p>더 많은 Token filter 를 보고 싶으면 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/analysis-tokenfilters.html">Token Filters</a> 를 참조해주세요!! 오른쪽 메뉴바에 다양한 Token filters 가 있습니다.</p>
-</blockquote>
-
-<h4 id="4-stemming">4. Stemming</h4>
-
-<p>또한 각 토큰들은 그 원형을 유지할 필요가 있습니다. 예를 들면 <code class="language-plaintext highlighter-rouge">working</code> 에서 <code class="language-plaintext highlighter-rouge">ing</code> 는 필요 없는 부분이며 우리는 work 만 검색하면 됩니다.
-이러한 과정을 Stemming 이라고 합니다.</p>
-
-<h4 id="etc">ETC</h4>
-
-<p>우리가 문서에 영어만 쓰는 것은 아닙니다. 대부분 그 나라에서는 그 나라 언어를 많이 쓸 것입니다.
-ElasticSearch 에 내장된 언어분석기가 없다면, Full-Text-Search 에 난항을 겪을지도 모릅니다.
-다행이도 한글의 경우는 Nori 한글 형태소 분석기를 이용하여 이 과정을 수행합니다.</p>
-
-<blockquote>
-  <p>자세한 내용은 Elasticsearch Document 를 참고해주세요!! <a href="https://www.elastic.co/guide/en/elasticsearch/plugins/7.10/analysis-nori.html">Nori Analysis Plugin 구경하기</a></p>
-</blockquote>
-
-<hr />
-
-<p>위 과정을 통해 저장된 토큰들을 통해 Search API 기능들을 수행합니다.</p>
-
-<p>다음에는 query 를 통해 실제 예제로 찾아뵙겠습니다.</p>
-
-<p>피드백은 항상 환영입니다.</p>
 
     <hr />
   </div>
