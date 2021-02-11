@@ -4,7 +4,7 @@
  <title>영원</title>
  <link href="https://tocktock.github.io/atom.xml" rel="self"/>
  <link href="https://tocktock.github.io/"/>
- <updated>2021-02-11T16:44:31+09:00</updated>
+ <updated>2021-02-11T16:46:25+09:00</updated>
  <id>https://tocktock.github.io</id>
  <author>
    <name>Park Ji Young</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Redux 기본서!! (feat. react context hook)</title>
-   <link href="https://tocktock.github.io/nestjs/redux-1/"/>
+   <link href="https://tocktock.github.io/redux/redux-1/"/>
    <updated>2021-02-11T00:00:00+09:00</updated>
-   <id>https://tocktock.github.io/nestjs/redux-1</id>
+   <id>https://tocktock.github.io/redux/redux-1</id>
    <content type="html">&lt;h2 id=&quot;-redux-는-이렇게-작동합니다&quot;&gt;🔨 Redux 는 이렇게 작동합니다.&lt;/h2&gt;
 
 &lt;p&gt;기본 Redux 는 간단하게 작용합니다. 중앙화 된 상태저장소가 있고 각각의 컴포넌트들이 그 상태저장소에 접근해서 원하는 것을 가져올 수 있습니다. 자식들에게 상태(state)와 자산(props)을 물려줄 필요는 없습니다.&lt;/p&gt;
