@@ -122,7 +122,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/NestJS"
-            >NestJS (4)</a
+            >NestJS (5)</a
           >
         </li>
          
@@ -165,6 +165,50 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2019Winter-badUser/"> 프로그래머스 2019 kakao 겨울 인턴십 </a>
+    </h1>
+
+    <span class="post-date">30 Sep 2020</span>
+
+    <p>#[프로그래머스✈][2019 kakao 겨울 인턴십] 인턴십 호텔 방 배정 문제 해설</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/64063">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/64063">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<blockquote>
+  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
+</blockquote>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>설계를 얼마나 잘 할 수 있는지 물어보는 문제인 것 같다.
+얼마나 큰 호텔일까 10^12 개의 방을 보유하고 있다면</p>
+
+<p>방 하나를 2 평 이라고 생각만 해도
+2000000000000평 이고 대한민국 영토의 약 60배..
+그만하자.</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -731,164 +775,6 @@ TRIE 자료구조는 단어의 각 글자를 Node 로 보고 자료를 저장하
 <p>카카오는 구현능력을 많이 물어보는 것 같다.
 하지만 많이 풀어본다면 너도 할 수 있다구!.
 우리 사랑스러운 튜브 그림을 보는데 너무 귀엽다.</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2019-primarykey/"> 프로그래머스 2019 kakao 후보키 문제 해설 </a>
-    </h1>
-
-    <span class="post-date">29 Sep 2020</span>
-
-    <p>#[프로그래머스][2019 kakao] 후보키 문제 해설</p>
-
-<hr />
-
-<ul>
-  <li>정답률 : 16.09%</li>
-  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/42890">문제풀러가기</a></li>
-</ul>
-
-<hr />
-
-<h2 id="문제-요약">문제 요약</h2>
-
-<ul>
-  <li>input 으로 들어오는 릴레이션의 정보를 토대로 <strong>후보키</strong> 를 생성할 수 있는가에 대한 문제</li>
-  <li><strong>최소성</strong>과 <strong>유일성</strong>을 만족해야한다</li>
-  <li><strong>유일성</strong> : 해당하는 릴레이션에 대해 유일하게 식별 가능해야한다.</li>
-  <li><strong>최소성</strong> : 키를 구성하는 속성 중 하나라도 제외 하는 경우 유일성이 사라지는 것을 의미한다. 즉 필요하지 않은 속성은 후보키에 포함되지 않아야 한다는 것.
-    <blockquote>
-      <p>자세한 설명과 제한사항은 프로그래머스에서 확인바랍니다.</p>
-    </blockquote>
-  </li>
-</ul>
-
-<h2 id="문제-풀이">문제 풀이</h2>
-
-<p>가능한 모든 속성들의 조합을 만들고, 최소성과 유일성을 만족하는 조합만 추려내야한다.
-DFS, BFS, bit 등을 이용한 방법을 통해 <strong>유일성을 만족하는</strong> 부분집합을 만들고 각 조합들의 최소성과 검사하면 풀어나갈 수 있다.</p>
-
-<blockquote>
-  <p>예를 들면 속성(1 ,3)과 속성 (1, 2, 3) 후보키 집합이 존재한다면 후자는 최소성을 만족하지 못한다.</p>
-</blockquote>
-
-<h2 id="소스코드-및-소스해석">소스코드 및 소스해석</h2>
-
-<blockquote>
-  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
-</blockquote>
-
-<ul>
-  <li>DFS 방법으로 먼저 유일성을 만족하는 모든 조합을 추려냅니다.</li>
-  <li>각 속성의 상태를 저장한 <strong>ansVec</strong> 을 검사해 최소성을 만족하는 조합만 카운트 합니다.
-    <blockquote>
-      <p><strong>추가설명</strong> : ansVec은 flag 용도로 쓰입니다. 0번 인덱스에 몇개의 속성을 가지고 있는지를 저장하고 각 1번 ~ 15번 인덱스에는 조합에서 사용하는 속성에 1의 값을 넣어 다른 조합들과 비교합니다. ansVec은 속성 수를 기준으로 한번 정렬을 했기 때문에 순서대로 비교하면 최소성을 만족하는 조합들만 카운트 할 수 있습니다.</p>
-    </blockquote>
-  </li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-</span>
-<span class="c1">//https://programmers.co.kr/learn/courses/30/lessons/42890</span>
-
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-<span class="kt">void</span> <span class="nf">DFS</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;&amp;</span> <span class="n">relation</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">col</span><span class="p">);</span>
-<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;&amp;</span> <span class="n">relation</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">col</span><span class="p">);</span>
-<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">relation</span><span class="p">);</span>
-<span class="kt">bool</span> <span class="nf">comp</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">}</span>
-<span class="kt">bool</span> <span class="n">colChecked</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">ansVec</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">//각각 2, 1, 2, 1 ,5 가 나와야함</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">relation</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="s">"100"</span><span class="p">,</span><span class="s">"ryan"</span><span class="p">,</span><span class="s">"music"</span><span class="p">,</span><span class="s">"2"</span><span class="p">},{</span><span class="s">"200"</span><span class="p">,</span><span class="s">"apeach"</span><span class="p">,</span><span class="s">"math"</span><span class="p">,</span><span class="s">"2"</span><span class="p">},{</span><span class="s">"300"</span><span class="p">,</span><span class="s">"tube"</span><span class="p">,</span><span class="s">"computer"</span><span class="p">,</span><span class="s">"3"</span><span class="p">},{</span><span class="s">"400"</span><span class="p">,</span><span class="s">"con"</span><span class="p">,</span><span class="s">"computer"</span><span class="p">,</span><span class="s">"4"</span><span class="p">},{</span><span class="s">"500"</span><span class="p">,</span><span class="s">"muzi"</span><span class="p">,</span><span class="s">"music"</span><span class="p">,</span><span class="s">"3"</span><span class="p">},{</span><span class="s">"600"</span><span class="p">,</span><span class="s">"apeach"</span><span class="p">,</span><span class="s">"music"</span><span class="p">,</span><span class="s">"2"</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">relation2</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">,</span><span class="s">"c"</span><span class="p">},</span> <span class="p">{</span><span class="s">"1"</span><span class="p">,</span><span class="s">"b"</span><span class="p">,</span><span class="s">"c"</span><span class="p">},</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">,</span><span class="s">"4"</span><span class="p">},</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span><span class="s">"5"</span><span class="p">,</span><span class="s">"c"</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">relation3</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span><span class="s">"1"</span><span class="p">,</span><span class="s">"4"</span><span class="p">},</span> <span class="p">{</span><span class="s">"2"</span><span class="p">,</span><span class="s">"1"</span><span class="p">,</span><span class="s">"5"</span><span class="p">},</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span><span class="s">"2"</span><span class="p">,</span><span class="s">"4"</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">relation4</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span><span class="s">"aa"</span><span class="p">},</span> <span class="p">{</span><span class="s">"aa"</span><span class="p">,</span><span class="s">"a"</span><span class="p">},</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span><span class="s">"a"</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">relation5</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="s">"b"</span><span class="p">,</span><span class="s">"2"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">},</span>
-<span class="p">{</span><span class="s">"b"</span><span class="p">,</span><span class="s">"2"</span><span class="p">,</span><span class="s">"7"</span><span class="p">,</span><span class="s">"1"</span><span class="p">,</span><span class="s">"b"</span><span class="p">},</span>
-<span class="p">{</span><span class="s">"1"</span><span class="p">,</span><span class="s">"0"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"8"</span><span class="p">},</span>
-<span class="p">{</span><span class="s">"7"</span><span class="p">,</span><span class="s">"5"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"9"</span><span class="p">},</span>
-<span class="p">{</span><span class="s">"3"</span><span class="p">,</span><span class="s">"0"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"f"</span><span class="p">,</span><span class="s">"9"</span><span class="p">}</span> <span class="p">};</span>
-    <span class="n">solution</span><span class="p">(</span><span class="n">relation4</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">relation</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">relation</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">colChecked</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-        <span class="n">DFS</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">));</span>
-        <span class="n">colChecked</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="c1">//check overlapping element</span>
-    <span class="n">sort</span><span class="p">(</span><span class="n">ansVec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">ansVec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">comp</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ansVec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">ansVec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">ansVec</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">ansVec</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">ansVec</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="n">ansVec</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ansVec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">ansVec</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">answer</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kt">void</span> <span class="nf">DFS</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">relation</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">col</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">//col check implement</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">col</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">relation</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">())</span>
-        <span class="k">return</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
-        <span class="k">return</span><span class="p">;</span>
-
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">relation</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">colChecked</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-        <span class="n">colChecked</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-        <span class="n">col</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-        <span class="c1">//checked out and add new col</span>
-        <span class="n">DFS</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">col</span><span class="p">);</span>
-        <span class="n">colChecked</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="n">col</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">relation</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="n">col</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">//check if relation with selected col could be primary key</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">myVec</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">relation</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">string</span> <span class="n">strtemp</span> <span class="o">=</span><span class="s">""</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">col</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">strtemp</span> <span class="o">+=</span> <span class="n">relation</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">col</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">+</span> <span class="s">" "</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">auto</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">myVec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">myVec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">strtemp</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">iter</span> <span class="o">==</span> <span class="n">myVec</span><span class="p">.</span><span class="n">end</span><span class="p">())</span>
-            <span class="n">myVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">strtemp</span><span class="p">);</span>
-        <span class="k">else</span>
-            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">temp</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">col</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-        <span class="n">temp</span><span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">ansVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
-
-    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="문제-후기">문제 후기</h2>
-
-<p>최소성에 대한 부분을 여러번 고쳤다. 다른 사람들의 풀이를 보면 대부분의 실패 원인은 최소성에 관한 코드에서 발생한다.
-카카오는 전반적으로 문제 설명이 깔끔하고 예제를 잘 보여주며, 구현능력을 상당히 중요하게 생각한다는 느낌을 받았다.</p>
 
     <hr />
   </div>

@@ -122,7 +122,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/NestJS"
-            >NestJS (4)</a
+            >NestJS (5)</a
           >
         </li>
          
@@ -165,6 +165,108 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-44/"> leetcode Wildcard Matching 문제풀기 </a>
+    </h1>
+
+    <span class="post-date">30 Jan 2021</span>
+
+    <p>#[leetcode][44] Wildcard Matching 문제풀기!</p>
+
+<hr />
+
+<ul>
+  <li><a href="https://leetcode.com/problems/wildcard-matching">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>간단한 정규식 패턴을 줄게.</p>
+
+<ul>
+  <li><strong>’?’</strong> 이건 하나의 문자를 대체할 수 있는 놈이야.</li>
+  <li><strong>’*‘</strong> 임마 이거는 빈 문자를 포함해서 문자열을 대체할 수 있는 놈이야.</li>
+</ul>
+
+<p>자 이제 내가 문자열을 줄테니까 이전에 준 패턴으로 만들 수 있는 놈인지 판단해줘!</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/wildcard-matching">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>문제에서 문자열의 길이와 패턴의 길이가 최대 2,000 이기 때문에 <strong>O(n^2)</strong> 으로도 가능한 문제입니다!!</p>
+
+<p>저는 DP 기법으로 풀었습니다.</p>
+
+<p><strong>dp[i][j]</strong> 는 0 ~ i - 1 까지의 패턴으로, 0 ~ j - 1 까지의 문자열을 만족할 수 있는지에 대한 정보를 나타냅니다.</p>
+
+<p>이 문제의 경우 패턴의 인덱스가 0 이거나 문자열의 인덱스가 0 인 경우에 대한 처리가 복잡해질거 같아서</p>
+
+<p>인덱스를 하나씩 더 써서 사용 했습니다.
+즉 dp[0][0] 은 패턴 0개, 문자열 0개를 사용했을 때를 나타냅니다.</p>
+
+<p>검사하려는 i - 1 의 패턴이 <strong>’*‘</strong> 인 경우와 <strong>’?’</strong> 또는 <strong>알파벳문자</strong> 인 경우로 나누었습니다.</p>
+
+<ul>
+  <li><strong>’*‘</strong> 인 경우 : 이 경우는 즉 현재 패턴을 뺀 경우 또는 현재 검사하려는 문자열에서 마지막 문자를 뺀 경우가 만족하면 true 입니다. -&gt; dp[i - 1][j] 또는 dp[i][j - 1] 가 true 이면 dp[i][j] 는 true</li>
+  <li><strong>’?’</strong> 또는 <strong>알파벳문자</strong> 인 경우 : 이 경우는 현재 패턴과 검사하려는 문자열의 마지막 문자를 뺀 경우 만족하면 true 입니다. -&gt; dp[i - 1][j - 1] 가 true 이면 dp[i][j] 는 true</li>
+</ul>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">isMatch</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//remove consecutive star e.g) **</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">patternTemp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">*</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">*</span><span class="dl">"</span><span class="p">)</span> <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="nx">patternTemp</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+
+  <span class="nx">p</span> <span class="o">=</span> <span class="nx">patternTemp</span><span class="p">;</span>
+  <span class="c1">// dp[i][j] measn from p[0] ~ p[i]</span>
+  <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">fill</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">//dp[pattern][string]</span>
+
+  <span class="nx">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nx">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">*</span><span class="dl">"</span> <span class="p">?</span> <span class="kc">true</span> <span class="p">:</span> <span class="kc">false</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">patternIdx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">patternIdx</span> <span class="o">&lt;=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">patternIdx</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">stringIdx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">stringIdx</span> <span class="o">&lt;=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">stringIdx</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="nx">patternIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">*</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">patternIdx</span><span class="p">][</span><span class="nx">stringIdx</span><span class="p">]</span> <span class="o">=</span>
+          <span class="nx">dp</span><span class="p">[</span><span class="nx">patternIdx</span><span class="p">][</span><span class="nx">stringIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">patternIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="nx">stringIdx</span><span class="p">];</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span>
+        <span class="nx">p</span><span class="p">[</span><span class="nx">patternIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">?</span><span class="dl">"</span> <span class="o">||</span>
+        <span class="nx">p</span><span class="p">[</span><span class="nx">patternIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="nx">s</span><span class="p">[</span><span class="nx">stringIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+      <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dp</span><span class="p">[</span><span class="nx">patternIdx</span><span class="p">][</span><span class="nx">stringIdx</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">patternIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="nx">stringIdx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">length</span><span class="p">][</span><span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">];</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>처음에 패턴이 0 인 경우 문자열이 0 인 경우 다 나누고 있다가 이게 뭔 짓이람 하고 인덱스를 하나 늘려서 그냥 저장했더니 더 간결해졌다.</p>
+
+<p>항상 알고리즘이 동일하다면 더 간결하게 쓰기 위해 노력해야겠다!!</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -631,96 +733,6 @@ ElasticSearch 에 내장된 언어분석기가 없다면, Full-Text-Search 에 �
 <p><strong>코드가 간결해 질수록 버그도 적어진다!!</strong></p>
 
 <p>앞으로 간결하게 코드를 작성하도록 노력해야할 듯 합니다 !!</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-40/"> leetcode  Combination Sum II 문제풀기 </a>
-    </h1>
-
-    <span class="post-date">22 Jan 2021</span>
-
-    <p>#[leetcode][40] Combination Sum II 문제풀기!</p>
-
-<hr />
-
-<ul>
-  <li><a href="https://leetcode.com/problems/combination-sum-ii/">문제풀러가기✈</a></li>
-</ul>
-
-<hr />
-
-<h2 id="-문제-요약">👓 문제 요약</h2>
-
-<p>숫자들을 줄게. 그 숫자들을 조합해서 내가 원하는 숫자가 나오는 조합을 찾아줘!</p>
-
-<p>단, 그 찾은 조합끼리 중복이 있으면 안돼!! 그리고 특정 숫자를 내가 준 개수보다 더 많이 쓰면 안돼!!!!</p>
-
-<blockquote>
-  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/combination-sum-ii/">문제풀러가기</a></p>
-</blockquote>
-
-<h2 id="-문제-풀이">🔑 문제 풀이</h2>
-
-<p>모든 경우를 다 체크해서 만들어진다? 그 결과가 중복되지 않는다? 그럼 push 한다.</p>
-
-<p>라는 방법이 있지만, 이 방법으로는 이미 풀어봤기 때문에 다른 방법을 찾아봤다!</p>
-
-<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
-
-<p>정답에 중복이 되는 이유는 같은 숫자들끼리 아무런 구별 없이 길을 만들어 지나왔기 때문!!</p>
-
-<p>같은 숫자를 쓰는 길은 한 번만 지나가게 하면 된다.!!!! 뚜둔</p>
-
-<p>예를 들어</p>
-
-<p>[1, 2, 2 ,2 ,5] , 5 라는 값이 주어졌다 하면,</p>
-
-<p>1, 2, 5 를 지나가는 길은 오직 한 번만 체크하면 된다.
-두 번째 2도 체크하고, 세 번째 2도 체크 할 필요가 없다.</p>
-
-<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">combinationSum2</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">candidates</span><span class="p">,</span> <span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">candidates</span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">-</span> <span class="nx">b</span><span class="p">);</span> <span class="c1">// 오름차순</span>
-  <span class="kd">let</span> <span class="nx">answer</span> <span class="o">=</span> <span class="p">[];</span>
-  <span class="cm">/**
-   * @param {number[]} candidates
-   * @param {number[]} path
-   * @param {number} start
-   * @param {number} target
-   */</span>
-  <span class="kd">const</span> <span class="nx">dfs</span> <span class="o">=</span> <span class="p">(</span><span class="nx">_candidates</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">_target</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="c1">// 다음 값도 체크해야한다!</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">_target</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">answer</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span>
-      <span class="k">return</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">_target</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">_candidates</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-
-    <span class="kd">let</span> <span class="nx">next</span> <span class="o">=</span> <span class="nx">start</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nx">_candidates</span><span class="p">[</span><span class="nx">start</span><span class="p">]</span> <span class="o">===</span> <span class="nx">_candidates</span><span class="p">[</span><span class="nx">next</span><span class="p">])</span> <span class="nx">next</span><span class="o">++</span><span class="p">;</span>
-
-    <span class="nx">dfs</span><span class="p">(</span><span class="nx">_candidates</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">next</span><span class="p">,</span> <span class="nx">_target</span><span class="p">);</span>
-
-    <span class="nx">path</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">_candidates</span><span class="p">[</span><span class="nx">start</span><span class="p">]);</span>
-    <span class="nx">dfs</span><span class="p">(</span><span class="nx">_candidates</span><span class="p">,</span> <span class="p">[...</span><span class="nx">path</span><span class="p">],</span> <span class="nx">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">_target</span> <span class="o">-</span> <span class="nx">_candidates</span><span class="p">[</span><span class="nx">start</span><span class="p">]);</span>
-    <span class="nx">path</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-  <span class="p">};</span>
-  <span class="nx">dfs</span><span class="p">(</span><span class="nx">candidates</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">target</span><span class="p">);</span>
-
-  <span class="k">return</span> <span class="nx">answer</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div></div>
-
-<h2 id="-문제-후기">🔨 문제 후기</h2>
-
-<p>재미있다.</p>
-
-<p>다른 사람의 풀이 보는 것도 재미있다.
-세상에는 천재는 넘치고 내 시간은 부족하다.</p>
 
     <hr />
   </div>

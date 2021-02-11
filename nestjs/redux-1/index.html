@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     Redux 기본서!! (feat. react context hook) &middot; 영원 
+  </title>
+
+  
+  <link rel="canonical" href="https://tocktock.github.io/nestjs/redux-1/" />
+  
+
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/poole.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/syntax.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="https://tocktock.github.io/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="https://tocktock.github.io/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="https://tocktock.github.io/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="https://tocktock.github.io/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/about/"
+        >About me</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Algorithms"
+            >Algorithms (28)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Jekyll"
+            >Jekyll (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/elasticsearch"
+            >elasticsearch (9)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/NestJS"
+            >NestJS (5)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/DevTip"
+            >DevTip (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/nodejs"
+            >nodejs (1)</a
+          >
+        </li>
+        
+      </ul>
+                                                                   
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2021. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">영원</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">Redux 기본서!! (feat. react context hook)</h1>
+  <span class="post-date">11 Feb 2021</span>
+  <h2 id="-redux-는-이렇게-작동합니다">🔨 Redux 는 이렇게 작동합니다.</h2>
+
+<p>기본 Redux 는 간단하게 작용합니다. 중앙화 된 상태저장소가 있고 각각의 컴포넌트들이 그 상태저장소에 접근해서 원하는 것을 가져올 수 있습니다. 자식들에게 상태(state)와 자산(props)을 물려줄 필요는 없습니다.</p>
+
+<p>Redux 를 구성하는 3가지 요소가 있습니다.</p>
+
+<ul>
+  <li><strong>Actions</strong></li>
+  <li><strong>Store</strong></li>
+  <li><strong>Reducers</strong></li>
+</ul>
+
+<h2 id="-actions">🙂 Actions</h2>
+
+<p>간단하게 Actions 는 이벤트 데이터 입니다.
+데이터는 심플한 Javascript Object 입니다. 다음처럼요.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="nx">REQUEST_ROBOTS_SUCCESS</span><span class="p">,</span>
+  <span class="nx">isPending</span> <span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nx">payload</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nl">robots</span> <span class="p">:</span> <span class="p">[</span><span class="nx">some</span> <span class="nx">api</span> <span class="nx">call</span> <span class="nx">results</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>이 Actions 를 dispatch 라는 함수를 통해 Redux Store 로 보내게 됩니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">dispatch</span><span class="p">({</span>
+  <span class="na">type</span><span class="p">:</span> <span class="nx">REQUEST_ROBOTS_SUCCESS</span><span class="p">,</span>
+  <span class="na">isPending</span> <span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="na">payload</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">robots</span> <span class="p">:</span> <span class="p">[</span><span class="nx">some</span> <span class="nx">api</span> <span class="nx">call</span> <span class="nx">results</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="-reducers">🙂 Reducers</h2>
+
+<p>Reducers 는 순수함수입니다. 이전 상태 값을 받아 새로운 상태 값을 리턴하는 함수입니다.</p>
+
+<blockquote>
+  <p>순수함수란 값을 받아서 어떤 값을 다시 리턴 해주는 함수이며, 이때 동일한 값을 받으면 그 값에 대해서 항상 같은 값을 리턴해준다면 이를 순수함수라고 합니다..</p>
+</blockquote>
+
+<p>dispatch 를 통해 action 을 받은 Reducer 는 action 의 타입에 따라 다른 행동을 합니다.</p>
+
+<p>reqeustBots 라는 Reducer 를 예를 들면,</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">requestRobots</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span><span class="o">=</span><span class="nx">initialStateRobots</span><span class="p">,</span> <span class="nx">action</span><span class="o">=</span><span class="p">{})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">REQUEST_ROBOTS_PENDING</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">state</span><span class="p">,</span> <span class="p">{</span><span class="na">isPending</span><span class="p">:</span> <span class="kc">true</span><span class="p">})</span>
+    <span class="k">case</span> <span class="na">REQUEST_ROBOTS_SUCCESS</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">state</span><span class="p">,</span> <span class="p">{</span><span class="na">robots</span><span class="p">:</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span><span class="p">,</span> <span class="na">isPending</span><span class="p">:</span> <span class="kc">false</span><span class="p">})</span>
+    <span class="k">case</span> <span class="na">REQUEST_ROBOTS_FAILED</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">state</span><span class="p">,</span> <span class="p">{</span><span class="na">error</span><span class="p">:</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span><span class="p">})</span>
+    <span class="na">default</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nx">state</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>이처럼 생겼으며 순수함수 이므로 state 를 변화시킨다기 보다는 새로운 state 를 만들어 리턴하게 됩니다.</p>
+
+<h2 id="-store">🙂 Store</h2>
+
+<p>store 는 앱의 state 를 가지고 있는 저장소입니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span><span class="nx">Reducers</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>이 store 를 Redux 의 Provider 를 통해 앱으로 전달하게 됩니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Provider</span> <span class="nx">store</span><span class="o">=</span><span class="p">{</span><span class="nx">store</span><span class="p">}</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="sr">/Provider&gt;</span><span class="err">,
+</span>  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">root</span><span class="dl">"</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>App 컴포넌트에서는 이 store 에 접근하기 위해 react-redux 라이브러리의 connect 함수를 통해 연결하게 됩니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">mapStateToProps</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">searchField</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">searchRobots</span><span class="p">.</span><span class="nx">searchField</span><span class="p">,</span>
+    <span class="na">robots</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">requestRobots</span><span class="p">.</span><span class="nx">robots</span><span class="p">,</span>
+    <span class="na">isPending</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">requestRobots</span><span class="p">.</span><span class="nx">isPending</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// dispatch the DOM changes to call an action. note mapStateToProps returns object, mapDispatchToProps returns function</span>
+<span class="c1">// the function returns an object then uses connect to change the data from redecers.</span>
+<span class="kd">const</span> <span class="nx">mapDispatchToProps</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">onSearchChange</span><span class="p">:</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">setSearchField</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)),</span>
+    <span class="na">onRequestRobots</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">requestRobots</span><span class="p">()),</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">mapStateToProps</span><span class="p">,</span> <span class="nx">mapDispatchToProps</span><span class="p">)(</span><span class="nx">App</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>mapStateToProps : 우리가 이 컴포넌트에서 사용할 state.</li>
+  <li>mapDispatchToProps : 우리가 이 컴포넌트에서 사용할 actions 들을 dispatch 할 정보를 담은 함수.</li>
+</ul>
+
+<hr />
+
+<h2 id="-redux-middleware">🙂 Redux Middleware</h2>
+
+<p>Redux 에서는 Action 이 dispatch 되기 전 이를 가로채 가공할 수 있는 middleware 기능이 있습니다.</p>
+
+<p>다음과 같이 사용 가능합니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">thunkMiddleware</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">redux-thunk</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createLogger</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">redux-logger</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span>
+  <span class="nx">rootReducers</span><span class="p">,</span>
+  <span class="nx">applyMiddleware</span><span class="p">(</span><span class="nx">thunkMiddleware</span><span class="p">,</span> <span class="nx">logger</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>redux-thunk 는 비동기 수행에, redux-logger 는 로그를 남기기 위해 사용하는 middleware 입니다.</p>
+
+<h2 id="-react-context-hook">🙄 React Context hook</h2>
+
+<p>React 의 Context hook 또한 상태 관리를 위한 목적을 가지고 있습니다. Redux 에서와 비슷하게
+Provider / Consumer 패턴으로 state 를 제공/ 소비를 할 수 있습니다.</p>
+
+<p>Redux 와 비슷하게 state 를 관리할 수 있습니다. 그럼 왜 Redux 를 아직 사용할까요??</p>
+
+<p>Redux 의 <strong>장점</strong></p>
+
+<ul>
+  <li>Debugging 과 Testing 하는데 편리합니다. Redux DevTools 또는 logger 등을 이용한다면 우리 앱에서 컴포넌트의 전환과정 사이에 어떤 일이 일어나는지 알 수 있습니다.</li>
+  <li>Redux 는 어떻게 코드가 작성되어야 하는지 강요하는 구조입니다. 큰 규모의 앱에서 관리하기 수월합니다.</li>
+  <li>Redux 내부적으로 최적화가 되어있고, 필요한 컴포넌트만 Rerender 할 수 있기 때문에 성능상에서 약간의 이득을 볼 수 있습니다.</li>
+  <li>로컬 스토리지에 상태를 영속적으로 저장하고 불러오는데 뛰어납니다.</li>
+  <li>초기 상태를 서버에 전송하여 필요한 컴포넌트를 render 할 수 있습니다. 따라서 SSR 에 강점이 있습니다.</li>
+</ul>
+
+<p>위의 장점이 필요 없다면 React hooks 만 써도 됩니다.
+필요 이상의 일을 할 필요가 없어지는 것 입니다.</p>
+
+<p>그래서 모든 개발자가 React hooks 가 Redux 를 대체할 수 있나요? 라는 질문에
+“아니요” 라고 대답하는 것 같습니다.</p>
+
+<p>다만 React hooks 또는 React 관련 기능이 더 성장한다면 Redux 를 대체할 수도 있지 않을까 생각합니다.</p>
+
+<hr />
+
+<p>참고 :</p>
+
+<ul>
+  <li><a href="https://blog.logrocket.com/why-use-redux-reasons-with-clear-examples-d21bffd5835/">https://blog.logrocket.com/why-use-redux-reasons-with-clear-examples-d21bffd5835/</a></li>
+  <li><a href="https://www.ibrahima-ndaw.com/blog/7-steps-to-understand-react-redux/#2-what-is-redux-and-why-we-need-it">https://www.ibrahima-ndaw.com/blog/7-steps-to-understand-react-redux/#2-what-is-redux-and-why-we-need-it</a></li>
+  <li>https://blog.asayer.io/do-you-really-need-redux-pros-and-cons-of-this-state-management-library</li>
+  <li>Udemy 강의 - The Complete Junior to Senior Web Developer Roadmap (2021)</li>
+</ul>
+
+<p>참고 예제 :</p>
+
+<ul>
+  <li><a href="https://github.com/gothinkster/react-redux-realworld-example-app">https://github.com/gothinkster/react-redux-realworld-example-app</a></li>
+  <li><a href="https://github.com/aneagoie/robofriends-redux">https://github.com/aneagoie/robofriends-redux</a></li>
+</ul>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/nestjs/nestjs-4-testing/">
+          NestJS 블로그 만들기 - 리팩토링과 e2e 테스트!!
+          <small>09 Feb 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/nodejs/nodejs-1-what-is-nodejs/">
+          Node.js 의 특징과 한계
+          <small>01 Feb 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/nestjs/nestjs-3-database/">
+          NestJS 블로그 만들기 - 데이터베이스 연결
+          <small>01 Feb 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+  
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>
