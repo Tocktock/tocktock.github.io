@@ -134,7 +134,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/nodejs"
-            >nodejs (1)</a
+            >nodejs (2)</a
           >
         </li>
          
@@ -145,7 +145,7 @@
         </li>
         
       </ul>
-                                                                       
+                                                                           
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -171,6 +171,129 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2020-keyAndLock/"> 프로그래머스 2020 kakao 자물쇠와 열쇠 문제 풀이 </a>
+    </h1>
+
+    <span class="post-date">29 Sep 2020</span>
+
+    <p>#[프로그래머스✈][2020 kakao] 자물쇠와 열쇠 문제 풀이</p>
+
+<hr />
+
+<ul>
+  <li>정답률: 7.4%</li>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/60059">문제풀러가기✈</a></li>
+</ul>
+
+<hr />
+
+<h2 id="-문제-요약">👓 문제 요약</h2>
+
+<p>고고학자로 위장한 도굴꾼 <strong>튜브</strong>는 고대 유적지에서 자물쇠를 발견했습니다.
+가지고 있는 열쇠가 이 자물쇠에 맞는지 사방으로 끼워보고 돌려서도 끼워보고 해서 자물쇠를 열어 발굴할 수 있는지 확인하려고 합니다. 문제를 푸시오.</p>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/42892">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="-문제-풀이">🔑 문제 풀이</h2>
+
+<p>20x20의 크기의 board에 열쇠가 맞는지 모든 케이스를 맞춰보는 겁니다. 여러분 이건 어려운게 아니라 <strong>귀찮은</strong> 문제 입니다.</p>
+
+<p>이 녀석을 혼쭐 내줍시다.</p>
+
+<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
+
+<blockquote>
+  <p>해당소스는 프로그래머스에서 풀고 바로 가져온 코드 입니다.</p>
+</blockquote>
+
+<p>키를 만들고 사방으로 끼우고 돌려서도 끼우고 다 해봅니다.
+<strong>노동은 컴퓨터가 하잖아요?</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">makeMyKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">key</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">makeMyTempKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dir</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">keysize</span><span class="p">,</span> <span class="kt">int</span> <span class="n">locksize</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">lock</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">mykey</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">32</span><span class="p">][</span><span class="mi">32</span><span class="p">];</span>
+<span class="kt">bool</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">key</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">lock</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">makeMyKey</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">tempKey</span><span class="p">(</span><span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">0</span><span class="p">));</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">makeMyTempKey</span><span class="p">(</span><span class="n">tempKey</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">tempKey</span><span class="p">,</span><span class="n">lock</span><span class="p">))</span> <span class="p">{</span>
+					<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">makeMyKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">key</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">key</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">++</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">--</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="n">_j</span><span class="p">][</span><span class="n">_i</span><span class="p">];</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">--</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">mykey</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">_j</span><span class="p">][</span><span class="n">_i</span><span class="p">];</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">--</span><span class="p">)</span>
+			<span class="n">mykey</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">mykey</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">_j</span><span class="p">][</span><span class="n">_i</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">makeMyTempKey</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dir</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">keysize</span><span class="p">,</span> <span class="kt">int</span> <span class="n">locksize</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">keyX</span> <span class="o">=</span> <span class="n">keysize</span> <span class="o">-</span> <span class="n">x</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">keyY</span> <span class="o">=</span> <span class="n">keysize</span> <span class="o">-</span> <span class="n">y</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">_i</span> <span class="o">=</span> <span class="n">keyY</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">locksize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">_i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_j</span> <span class="o">=</span> <span class="n">keyX</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">locksize</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">_j</span><span class="o">++</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">_j</span> <span class="o">&gt;=</span> <span class="n">keysize</span> <span class="o">||</span> <span class="n">_j</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">_i</span> <span class="o">&gt;=</span> <span class="n">keysize</span> <span class="o">||</span> <span class="n">_i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span> <span class="p">{</span>
+				<span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">mykey</span><span class="p">[</span><span class="n">dir</span><span class="p">][</span><span class="n">_i</span><span class="p">][</span><span class="n">_j</span><span class="p">];</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">tempKey</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">lock</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">lock</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">lock</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">lock</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">tempKey</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+				<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="-문제-후기">🔨 문제 후기</h2>
+
+<p>Depth가 깊은거 같다구요? 네 맞습니다. 여러분이 짜실 때는 가능한 많이 줄여서 써주세요.</p>
+
+<p>카카오는 구현능력을 많이 물어보는 것 같다.
+하지만 많이 풀어본다면 너도 할 수 있다구!.
+우리 사랑스러운 튜브 그림을 보는데 너무 귀엽다.</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -744,131 +867,15 @@ x, y, left, right, 들어올 때 index 를 저장하는 Node 구조체를 생성
     <hr />
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-30/"> leetcode Substring with Concatenation of All Wordsb 문제풀기 </a>
-    </h1>
-
-    <span class="post-date">19 Jan 2020</span>
-
-    <p>#[leetcode][30] Substring with Concatenation of All Words 문제풀기!</p>
-
-<hr />
-
-<ul>
-  <li><a href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/">문제풀러가기✈</a></li>
-</ul>
-
-<hr />
-
-<h2 id="-문제-요약">👓 문제 요약</h2>
-
-<p>문자열과 단어집을 줄테니 단어집의 모오오오든 단어를 포함하는 문자열의 부분 집합을 찾아줘!!</p>
-
-<blockquote>
-  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/">문제풀러가기</a></p>
-</blockquote>
-
-<h2 id="-문제-풀이">🔑 문제 풀이</h2>
-
-<p>단순히 Brute force 기법을 쓴다면 시간제한에 걸리게 된다.
-자료구조 Map을 통해 특정 문자를 logN 시간만에 접근하는 방법을 통해 풀자!</p>
-
-<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
-
-<p>단어집의 모든 단어를 map 자료구조에 할당하고</p>
-
-<p>단어집의 모든 단어를 합친 길이 만큼 문자열에서 떼와서 검사를 했다.</p>
-
-<p>당연히 통과할 줄 알았는데, 단순히 map 자료형으로는 시간적 제한을 통과하지 못했다.</p>
-
-<p>그래서 찾아본 결과 !!</p>
-
-<p>뚜둔</p>
-
-<h4 id="map과-hashmap의-차이를-아시나요">Map과 HashMap의 차이를 아시나요?</h4>
-
-<ul>
-  <li>
-    <p><strong>Map</strong> 자료형은 레드블랙트리 기반으로 되어 있습니다.
-모든 데이터는 정렬되어 저장이 됩니다.
-레드블랙트리는 Binary Search Tree 에 Self-Balancing 기능이 추가된 자료구조 입니다.
-Search 에 Time complexity 가 O(logN) 을 보장하긴 하지만 키 삽입, 제거 할 때마다 트리를 보정하는 비용이 들어가기 때문에 성능이 저하될 수 있습니다. 물론 O(logN) 을 크게 벗어나진 않습니다.</p>
-  </li>
-  <li>
-    <p>HashMap 은 hash table 을 통해 자료에 접근하게 따라서 데이터를 정렬하지 않습니다.
-충분한 크기의 hash table 이 주어진다면, 데이터의 삽입, 제거, 검색시에 성능저하가 거의 일어나지 않습니다.</p>
-  </li>
-</ul>
-
-<p>저는 기본적인 Map 자료구조를 이용했을 때 문제의 시간제한을 통과하지 못했습니다.
-다른거는 전부 그대로 두고 hash table 을 사용하니 바로 통과하더군요!!</p>
-
-<p>만약 데이터의 양이 매우 많아진다면 Hash Table 을 사용하는 것도 좋은 선택인 것 같습니다.</p>
-
-<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;vector&gt;
-#include&lt;string&gt;
-#include&lt;algorithm&gt;
-#include&lt;unordered_map&gt;
-</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">findSubstring</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">words</span><span class="p">);</span>
-<span class="kt">bool</span> <span class="nf">testSubstringMatch</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">end</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordLength</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordsSize</span><span class="p">);</span>
-<span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">mapWord</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="n">findSubstring</span><span class="p">(</span><span class="n">in2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inp</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">findSubstring</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">words</span><span class="p">)</span> <span class="p">{</span>
-	<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ans</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">*</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
-		<span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-		<span class="n">mapWord</span><span class="p">[</span><span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">testSubstringMatch</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">*</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">(),</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">()))</span> <span class="p">{</span>
-			<span class="n">ans</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">bool</span> <span class="nf">testSubstringMatch</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">end</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordLength</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordsSize</span><span class="p">)</span> <span class="p">{</span>
-
-	<span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">mapTemp</span><span class="p">;</span>
-	<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">wordLength</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">string</span> <span class="n">compareStr</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">wordLength</span><span class="p">);</span>
-		<span class="n">mapTemp</span><span class="p">[</span><span class="n">compareStr</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">mapTemp</span><span class="p">[</span><span class="n">compareStr</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">mapWord</span><span class="p">[</span><span class="n">compareStr</span><span class="p">])</span>
-			<span class="n">count</span><span class="o">++</span><span class="p">;</span>
-		<span class="k">else</span>
-			<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">wordsSize</span><span class="p">)</span>
-		<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<span class="p">}</span>
-
-
-</code></pre></div></div>
-
-<h2 id="-문제-후기">🔨 문제 후기</h2>
-
-<p>자료구조에 대해 더 신경써야할 시간이 온 것 같다. !!!!
-Hard 문제는 확실히 일반 문제랑 조금 다르다.!!</p>
-
-    <hr />
-  </div>
-  
 </div>
 
 <div class="pagination">
   
-  <span class="pagination-item older">Older</span>
+  <a
+    class="pagination-item older"
+    href="https://tocktock.github.io/page10"
+    >Older</a
+  >
     
   <a
     class="pagination-item newer"

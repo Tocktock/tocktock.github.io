@@ -134,7 +134,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/nodejs"
-            >nodejs (1)</a
+            >nodejs (2)</a
           >
         </li>
          
@@ -145,7 +145,7 @@
         </li>
         
       </ul>
-                                                                       
+                                                                           
     </div>
 
     <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
@@ -171,6 +171,105 @@
       </div>
 
       <div class="container content"><div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-explore-folder/"> Elasticsearch 폴더에는 뭐가 있을까?? </a>
+    </h1>
+
+    <span class="post-date">14 Jan 2021</span>
+
+    <p>#[🌎elasticsearch] Elasticsearch 폴더에는 뭐가 있을까??</p>
+
+<hr />
+
+<ul>
+  <li>
+    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="-elasitcsearch-폴더-구조">🧡 ElasitcSearch 폴더 구조</h2>
+
+<p>쉬어가는 느낌으로 ElasticSearch 의 directory 구조를 한번 살펴보도록 하겠습니다.</p>
+
+<p>ElasticSearch의 폴더로 한번 가보죠!</p>
+
+<p><img class="post-image-center" src="/assets/img/elasticSearch-folder/전체화면.png" width="60%" alt="folder구조" /></p>
+
+<blockquote>
+  <p>저는 elk라는 폴더에 elasticsearch 와 관련된 폴더들을 모아두었습니다.</p>
+</blockquote>
+
+<h2 id="bin-폴더">📒Bin 폴더</h2>
+
+<p>bin 폴더 안에는 elasticsearch-cli, elasticsearch-sql-cli, elasicsearch-plugin 등등</p>
+
+<p>elasticsearch 기능의 핵심적인 스크립트 들이 있습니다.</p>
+
+<blockquote>
+  <p>건들지마세용 …..</p>
+</blockquote>
+
+<p>x-pack 부분은 elasticsearch 의 플러그인(보안, 알림, 모니터링, 보고, 그래프 등)들을 버전에 맞게 묶은 패키지라고 생각하시면 됩니다.!! elasticsearch를 알리게 만든 기능들의 집합체라고 생각합시다.!!</p>
+
+<h2 id="config-폴더">📒Config 폴더</h2>
+
+<h4 id="elasticsearchyml">elasticsearch.yml</h4>
+
+<p>이 파일에서 elasticsearch 의 전반적인 환경을 설정할 수 있습니다. 메모장이나 에디터로 켜시면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ---------------------------------- Cluster -----------------------------------
+#
+# Use a descriptive name for your cluster:
+#
+#cluster.name: my-application
+#
+</code></pre></div></div>
+
+<p>cluster.name 옆에 #을 지우시고 cluster.name : <원하는 이름=""> 을 쓰시면 클러스터 이름을 설정할 수 있습니다.</원하는></p>
+
+<blockquote>
+  <p>클러스터와 노드에 대한 내용은 이후 포스트에서 자세하게 다루겠습니다.</p>
+</blockquote>
+
+<p>그 밑에 node, paths, memory, network, Discovery 가 있습니다.</p>
+
+<ul>
+  <li>paths 에서는 데이터, 로그가 저장되는 위치를 지정할 수 있습니다.</li>
+  <li>memory 에서는 다른 자바프로그램이 엘라스틱 서치의 힙 영역의 메모리를 사용하지 못하도록 lock 을 걸 수 있습니다.
+    <blockquote>
+      <p>memory 사용량 제한은 jvm.option 파일에서 힙사이즈를 조정함으로서 디테일하게 설정가능합니다.</p>
+    </blockquote>
+  </li>
+  <li>network 에서는 어떤 ip의 어떤 port 번호로 elasticsearch에 접근 할 지 설정가능합니다.</li>
+  <li>discovery 에서는 elasticsearch 에 얼마나 많은 인스턴스들이 연결 되는지 설정가능합니다.</li>
+</ul>
+
+<h4 id="jvmoptions">jvm.options</h4>
+
+<p>이 파일에서는 elasticsearch 에 허용해줄 메모리 크기를 설정해줄 수 있습니다. 기본은 1기가바이트 입니다. 메모리 외의 내용에 대해서는 전문가가 아니면 건들지 맙시다 …</p>
+
+<h4 id="log4j2properties">log4j2.properties</h4>
+
+<p>여기는 elasticsearch 의 로그 관련 파일로, log4j2는 java 의 가장 강력한 logging 프레임워크중 하나입니다.</p>
+
+<h2 id="modules-폴더">📒modules 폴더</h2>
+
+<p>여기는 완전히 elasticsearch 의 기능에 도움을 주는 built-in module 들이 모여있는 곳입니다.
+많은 x-pack 폴더들이 보이시죠~ ?</p>
+
+<h2 id="plugins-폴더">📒plugins 폴더</h2>
+
+<p>이 폴더는 우리가 elasticsearch 에 custom 플러그인을 추가할 때 사용하는 폴더입니다.</p>
+
+    <hr />
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -632,247 +731,6 @@ bulk 는 기본적인 CRUD 명령 수행이 가능합니다.</p>
 <p>너무 많은 명령 데이터를 사용하게 되면 클러스터의 메모리에 과부하를 주게되니 명심하세요!</p>
 
 <p>정말 공부할 수록 훌륭한 검색엔진입니다. 웹 공부를 하시는 분은 ElasticSearch를 무조건 강추!! 하는바입니다 ^^</p>
-
-    <hr />
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="https://tocktock.github.io/elasticsearch/elasticsearch-CRUD/"> elasticsearch 기본사용법 (CRUD !!) </a>
-    </h1>
-
-    <span class="post-date">13 Dec 2020</span>
-
-    <p>#[🌎elasticsearch] Elasticsearch CRUD 기본사용법 (feat. Kibana)</p>
-
-<hr />
-
-<ul>
-  <li>
-    <p><a href="https://esbook.kimjmin.net/">Elasticsearch 가이드북 ✈</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.elastic.co/kr/what-is/elasticsearch">Elasticsearch 홈페이지 가기 ✈</a></p>
-  </li>
-</ul>
-
-<hr />
-
-<h3 id="elasticsearch-의-기본-기능-crud-기능을-한번-살펴보겠습니다">ElasticSearch 의 기본 기능 CRUD 기능을 한번 살펴보겠습니다!.</h3>
-
-<blockquote>
-  <p>ElasticSearch 의 search 와 Bulk 기능은 이후 포스트에서 다루겠습니다.</p>
-</blockquote>
-
-<h2 id="-crud-는-">👓 CRUD 는 ??</h2>
-
-<ul>
-  <li>Create</li>
-  <li>Read</li>
-  <li>Update</li>
-  <li>Delete</li>
-</ul>
-
-<p>ElasticSearch 에서는 REST APIs 안의 Document APIs 에서 해당 내용을 다루고 있습니다.</p>
-
-<h2 id="-들어가기-전에">🔎 들어가기 전에!!</h2>
-
-<ul>
-  <li>
-    <p>Index</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ElasticSearch 의 Index 는 흔히 아는 배열의 인덱스와는 다르게 데이터베이스의 테이블과 유사한 개념을 가지고 있습니다.
-
-  같은 NoSQL MongoDB 의 Collector 와 비슷하다고 생각하시면 편합니다.
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>HTTP 프로토콜</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ElasticSearch 는 http 프로토콜로 접근제어가 가능합니다.
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>RESTFul</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  PUT, POST, GET, DELETE 메소드를 통해 자원을 제어할 수 있습니다.
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h2 id="-kibana-dev-tool">😎 Kibana Dev Tool</h2>
-
-<p>기본적으로 리눅스의 Curl 기능 또는 vscode 의 rest client 등의 기능과 같이 URL을 이용해 자원에 접근제어를 할 수도 있지만 우리가 저번시간에 설치한 Kibana 의 Dev Tool 기능을 통해 Elastic 환경을 실습해보도록 하겠습니다.</p>
-
-<p>정상적으로 Kibana 가 설치되고 실행이 되고 있다면 <a href="http://localhost:5601">http://localhost:5601</a> 에 접속하면 Kibana 어플리케이션 메인화면이 기다리고 있어요!!</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/kibana_main.png" width="70%" alt="테마선택" /></p>
-
-<p>좌측 상단의 메뉴 버튼을 누른후 아래쪽의 Dev Tools 로 들어가줍니다.</p>
-
-<p><br />
-<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택" /></p>
-
-<p><br /><br /></p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/devTools_main.png" width="70%" alt="테마선택" /></p>
-
-<p>Dev Tools 콘솔에서 좌측에서 Curl 과 비슷한 기능을 수행하고 우측에서 그 결과를 볼 수 있습니다.</p>
-
-<h2 id="-create">🔨 Create</h2>
-
-<p>일단 데이터베이스에서도 자원을 저장하고 사용하기 위해서 테이블을 만들듯이 ElasticSearch 에서도 이에 해당하는 Index 를 생성해줘야 합니다.</p>
-
-<p>Index 생성에는 <strong>PUT</strong> 메소드를 사용하여 요청을 해야합니다.</p>
-
-<blockquote>
-  <p>일반적으로 생성에는 POST 갱신에는 PUT 메소드를 사용하지만 ElasticSearch 에서는 둘을 모호하게 사용합니다.</p>
-</blockquote>
-
-<p>mydoc 이라는 Index 를 생성해봅시다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     PUT mydoc
-</code></pre></div></div>
-
-<p>위의 텍스트를 Dev Tools 콘솔 좌측에 입력후 해당 줄에 생기는 ▶ 이렇게 생긴 삼각형 버튼을 누르면 해당하는 요청이 전송됩니다.</p>
-
-<blockquote>
-  <p>Dev Tools 에서는 http://<호스트>:<포트>/ 가 생략되어 있습니다.
-즉 위의 요청은 원래대로라면 PUT http://localhost:5601/mydoc 입니다. Dev tools 에서는 이 사항이 동일시 적용됩니다.</포트></호스트></p>
-</blockquote>
-
-<p>바로 아래 이어서 첫 데이터를 생성해봅시다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    POST mydoc/_doc
-    {
-    "title" : "first Title",
-    "contents" : "first contents"
-    }
-</code></pre></div></div>
-
-<p>우측에 바로</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/fourth_result.png" width="30%" alt="테마선택" /></p>
-
-<p>위와 같은 형식의 결과 데이터가 보인다면 성공입니다. 우측상단에 201 status 코드와 해당 요청을 수행하는데 걸린 시간 또한 표시가 됩니다.</p>
-
-<p>저는 second, third 가 들어가는 데이터를 두개 더 만들었습니다.</p>
-
-<blockquote>
-  <p>POST <인덱스>/\_doc/<아이디> 처럼 아이디를 명시하지 않으면 임의로 아이디를 생성하게 됩니다.
-해당하는 아이디가 존재할 경우 **생성**이 아니라 **갱신**을하게 되므로 조심해야 합니다.
-또한 PUT 메소드를 통해 PUT <인덱스>/\_create/<아이디> 처럼 생성만 가능하게도 할 수 있씁니다.</아이디></인덱스></아이디></인덱스></p>
-</blockquote>
-
-<p>이제 확인을 해봅시다. 😎😎</p>
-
-<p>좌측 상단의 메뉴 - 하단의 Stack Management 를 클릭합니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/stack_management.png" width="30%" alt="테마선택" /></p>
-
-<p>좌측 중간즈음 Kibana 카테고리 아래 Index Patterns 를 클릭합니다.
-우리가 보려는 Index 를 명시하기 위해 Create Index pattern 을 클릭합니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/index_pattern_mydoc.png" width="70%" alt="테마선택" /></p>
-
-<p>Index pattern name 칸에 mydoc 을 입력하고 Next Step 을 클릭합니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/index_pattern_step2.png" width="70%" alt="테마선택" /></p>
-
-<p>우리가 만든 데이터에는 시간 데이터가 없기 때문에 아무것도 선택하지 않아도 생성됩니다.
-시간 데이터가 한 개 이상이라면 시간별로 데이터를 추적할 수 있습니다.
-Create Index Pattern 을 클릭합시다.</p>
-
-<p>이제 좌측 메뉴를 클릭 메뉴 상단의 Kibana - Discover 탭을 선택합니다.</p>
-
-<p>여기서 우리가 위에서 입력했던 Index 의 데이터들이 나타나게 됩니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/three_hits.png" width="70%" alt="테마선택" /></p>
-
-<p>데이터를 생성하는 것은 이제 끝났습니다.</p>
-
-<h2 id="-read">🔨 Read</h2>
-
-<p>Read 는 매우 단순합니다!</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    GET mydoc/_doc/cdRVaXYBNC5Keng2JJce
-</code></pre></div></div>
-
-<p>위와 같이 GET <인덱스>/\_doc/<아이디> 형식으로 요청을 하게 되면 해당하는 데이터가
-결과값으로 나오게 됩니다.!!</아이디></인덱스></p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/get_firstdoc.png" width="30%" alt="테마선택" /></p>
-
-<p>우하우하!우하!
-자료가 없으면 not found가 뜨게 됩니다!! 여기까지 하느라 고생많으셨습니다.
-이제 얼마 안남았으니 영차영차! 😁😁😁😁</p>
-
-<blockquote>
-  <p>full-text-search 기능인 키워드를 통해 자료를 찾는 search 기능은 다음포스트에서 다루겠습니다.!!</p>
-</blockquote>
-
-<h2 id="-update">🔨 Update</h2>
-
-<p>이번에는 Update 기능을 수행해보겠습니다.</p>
-
-<p>Update 는 PUT 메소드를 사용하여 수행할 수 있습니다.
-second Title 자료의 id를 복사하여 다음과 같은 형태의 요청을 만들어줍니다.
-해당하는 Id 가 존재할 경우 데이터 전체를 업데이트하게 됩니다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    PUT mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
-    {
-    "title" : "updated second title",
-    "contents" : "updated second contents"
-    }
-</code></pre></div></div>
-
-<p>성공하면 아래과 같이 result 에 updated 라는 결과값이 표시됩니다.</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/updateDoc_result.png" width="30%" alt="테마선택" /></p>
-
-<p>Kibana 의 Discover 탭을 보게 되면</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/updated_second_discover.png" width="70%" alt="테마선택" /></p>
-
-<p>우하! 행복하군요 Update 가 성공된 것을 확인할 수 있습니다.!!</p>
-
-<h2 id="-delete">🔨 Delete</h2>
-
-<p>마지막입니다.!! 이것만 알면 CRUD 기능은 끝 입니다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    DELETE mydoc/_doc/ctRWaXYBNC5Keng2Dpfm
-</code></pre></div></div>
-
-<p>바로 실행!!</p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/remove_fourthDoc_result.png" width="30%" alt="자료 삭제" /></p>
-
-<blockquote>
-  <p>삭제 결과 연산을 캡처 하는 것을 깜빡해서 데이터를 하나 더 만들고 다시 삭제해서 이전과 아이디가 다릅니다. ㅜㅜ</p>
-</blockquote>
-
-<p>위와 같이 result 의 값으로 deleted가 뜨면 성공!!!!</p>
-
-<p>여러분 만남이 있으면 끝도 있는법.</p>
-
-<p>마지막으로 Index 님을 삭제 해드립시다. 잘가 … 😭😭😭😭</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    DELETE mydoc
-</code></pre></div></div>
-
-<p>삭제… 요청…
-<img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc.png" width="50%" alt="자료 삭제" /></p>
-
-<p><img class="post-image-center" src="/assets/img/elasticSearch-CRUD/deleteDoc_result.png" width="30%" alt="자료 삭제" /></p>
-
-<p>성공…</p>
-
-<p>이후 Discover 탭에 어떠한 자료도 추적하지 못하게되었습니다.. 흐극</p>
-
-<p>와우 커피 한잔 하면서 같이 따라해보셨나요. 생각보다 간단합니다.
-다음에는 <strong>Search</strong> 님과 함께 통해 다시 찾아오겠습니다.!!</p>
-
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html">더 많은 자료 보러 공식홈페이지 가기!!</a></p>
 
     <hr />
   </div>
