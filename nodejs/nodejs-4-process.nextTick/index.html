@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <title>
+     Node.js process.Tick() 이란 &middot; 영원 
+  </title>
+
+  
+  <link rel="canonical" href="https://tocktock.github.io/nodejs/nodejs-4-process.nextTick/" />
+  
+
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/poole.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/syntax.css" />
+  <link rel="stylesheet" href="https://tocktock.github.io/public/css/lanyon.css" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"
+  />
+
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="https://tocktock.github.io/public/apple-touch-icon-precomposed.png"
+  />
+  <link rel="shortcut icon" href="https://tocktock.github.io/public/favicon.ico" />
+
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="https://tocktock.github.io/atom.xml"
+  />
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-178749172-1", "auto");
+    ga("send", "pageview");
+  </script> -->
+</head>
+
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item description">
+    <p>Developer with Cat</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="sidebar-nav-item"
+      href="https://tocktock.github.io/"
+      >Home</a
+    >
+                
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/about/"
+        >About me</a
+      >
+               
+    <div>
+      <a
+        class="sidebar-nav-item"
+        href="https://tocktock.github.io/categories/"
+        >Categories</a
+      >
+      
+      <ul class="sidebar-categories">
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Algorithms"
+            >Algorithms (28)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/Jekyll"
+            >Jekyll (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/elasticsearch"
+            >elasticsearch (9)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/NestJS"
+            >NestJS (4)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/DevTip"
+            >DevTip (1)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/nodejs"
+            >nodejs (4)</a
+          >
+        </li>
+         
+        <li class="sidebar-categories-item">
+          <a href="https://tocktock.github.io/categories/redux"
+            >redux (1)</a
+          >
+        </li>
+        
+      </ul>
+                                                                           
+    </div>
+
+    <a class="sidebar-nav-item" href="https://github.com/Tocktock/tocktock.github.io">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.1.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2021. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">영원</a>
+            <small>웹 개발과 일상</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content"><div class="post">
+  <h1 class="post-title">Node.js process.Tick() 이란</h1>
+  <span class="post-date">15 Feb 2021</span>
+  <h2 id="-nexttickqueue-와-microtaskqueue">☕ nextTickQueue 와 microTaskQueue</h2>
+
+<p>nextTickQueue는 process.nextTick() API의 콜백들을 가지고 있으며, microTaskQueue는 Resolve된 프로미스의 콜백을 가지고 있습니다.</p>
+
+<p>이 두 개의 큐는 이벤트루프에 포함되어있지 않으며 이벤트루프에 앞서 실행하기 위한 것을 목적으로한다.</p>
+
+<p>따라서 libUV 라이브러리에 포함되어 있지 않고 Node.js 에 포함되어있다.</p>
+
+<h2 id="-processnexttick">👓 process.nextTick()</h2>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">tick</code> 은 반영구적인 event loop 에서 하나의 loop 를 의미합니다.</p>
+</blockquote>
+
+<p>process.nextTick() 은 비동기 API 이지만 위 다이어그램의 어떠한 이벤트루프에도 속해있지 않습니다.</p>
+
+<p>process.nextTick() 의 목적은 <strong>사용자의 동기코드 이후, 이벤트루프가 진행되기 이전</strong> 의 시간을 목적으로 합니다.</p>
+
+<p>다음과 같은 상황을 보면</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">bar</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">someAsyncApiCall</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">someAsyncApiCall</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">bar</span><span class="dl">"</span><span class="p">,</span> <span class="nx">bar</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="p">});</span>
+
+<span class="nx">bar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>사용자의 동기코드인 <code class="language-plaintext highlighter-rouge">bar = 1;</code> 이 수행된 이후에 <code class="language-plaintext highlighter-rouge">someAsycnApiCall</code> 에 전달된 callback 이 수행됩니다. 만약 <code class="language-plaintext highlighter-rouge">process.nextTick(callback)</code> 을 <code class="language-plaintext highlighter-rouge">callback()</code> 으로 바꾸게 된다면 bar = 1; 이 실행되기 이전에 <code class="language-plaintext highlighter-rouge">callback</code> 이 수행될 수 있습니다.</p>
+
+<blockquote>
+  <p>process.nextTick() 은 이벤트루프 이전에 수행되기 때문에 반복적으로 호출하게 되면 poll 단계가 수행되지 않을 수 있으며 이는 I/O 단계를 Starving 상태로 만들 수 있습니다.</p>
+</blockquote>
+
+<h2 id="-processnexttick-그리고-setimmediate">😃 process.nextTick() 그리고 setImmediate()</h2>
+
+<p>사실 두 함수의 이름은 바뀌어야 합니다.
+process.nextTick()이 setImmediate()보다 더 즉시 실행되지만 이미 수많은 코드들이 작성되어 있기 때문에 두 이름을 바꾼다면 npm 패키지에 잠재적으로 많은 문제가 발생할 수 있기 때문에 이름을 바꾸지 않는다고 합니다.</p>
+
+<h2 id="-그런데-왜-쓰는가">🙄 그런데 왜 쓰는가?</h2>
+
+<p>process.nextTick() 을 쓰는 이유는 단순합니다.</p>
+
+<p>사용자가 <strong>이벤트루프를 진행하기 전에 수행할 작업</strong>이 필요하기 때문입니다.</p>
+
+<p>다음 예를 봅시다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">createServer</span><span class="p">();</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">connection</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">conn</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">listening</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{});</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">server.listen(8080)</code> 은 이벤트루프 시작 부분에서 수행될 것 입니다.
+<code class="language-plaintext highlighter-rouge">server.on</code> 으로 등록한 <code class="language-plaintext highlighter-rouge">listening</code> 콜백은 <code class="language-plaintext highlighter-rouge">setImmedate()</code> 로 수행이 됩니다. 따라서 <code class="language-plaintext highlighter-rouge">server.listen(8080)</code> 보다 먼저 적용될 수 있습니다.</p>
+
+<hr />
+
+<p>피드백은 항상 환영입니다</p>
+
+<hr />
+
+<p>출처</p>
+
+<ul>
+  <li><a href="https://nodejs.org/ko/docs/guides/event-loop-timers-and-nexttick/">https://nodejs.org/ko/docs/guides/event-loop-timers-and-nexttick/</a></li>
+  <li><a href="https://evan-moon.github.io/2019/08/01/nodejs-event-loop-workflow/">https://evan-moon.github.io/2019/08/01/nodejs-event-loop-workflow/</a></li>
+</ul>
+
+  <hr />
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/nodejs/nodejs-3-eventloop-outside-in/">
+          Node.js Event loop 파헤치기
+          <small>15 Feb 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/nodejs/nodejs-2-eventloop-insideout/">
+          Node.js Event loop 저수준에서 파헤치기
+          <small>13 Feb 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/redux/redux-1/">
+          Redux 기본서!! (feat. react context hook)
+          <small>11 Feb 2021</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+</div>
+  
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/public/js/script.js"></script>
+  </body>
+</html>

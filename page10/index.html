@@ -134,7 +134,7 @@
          
         <li class="sidebar-categories-item">
           <a href="https://tocktock.github.io/categories/nodejs"
-            >nodejs (2)</a
+            >nodejs (4)</a
           >
         </li>
          
@@ -174,120 +174,414 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="https://tocktock.github.io/algorithms/algorithms-leetcode-30/"> leetcode Substring with Concatenation of All Wordsb 문제풀기 </a>
+      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2019-mukbang/"> 프로그래머스 2019 kakao 무지의 먹방 라이브 문제 해설 </a>
     </h1>
 
-    <span class="post-date">19 Jan 2020</span>
+    <span class="post-date">29 Sep 2020</span>
 
-    <p>#[leetcode][30] Substring with Concatenation of All Words 문제풀기!</p>
+    <p>#[프로그래머스][2019 kakao] 무지의 먹방 라이브 문제 해설</p>
 
 <hr />
 
 <ul>
-  <li><a href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/">문제풀러가기✈</a></li>
+  <li>정답률: 정확성 42.08% / 효율성 5.52%</li>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/42891">문제풀러가기</a></li>
 </ul>
 
 <hr />
 
-<h2 id="-문제-요약">👓 문제 요약</h2>
+<h2 id="문제-요약">문제 요약</h2>
 
-<p>문자열과 단어집을 줄테니 단어집의 모오오오든 단어를 포함하는 문자열의 부분 집합을 찾아줘!!</p>
+<p>특별한 먹방을 하려는 무지. 회전테이블에 각각의 음식을 놓아두고 자신 앞의 음식을 1초 동안 섭취 한 다음 회전판에 의해 다음 음식을 1초동안 섭취하는 특이한…</p>
+
+<ul>
+  <li>회전하는데 걸리는 시간은 없다고 본다.</li>
+  <li>빈 그릇이 아닐 때 까지 회전한다.</li>
+  <li>k초 후에 어떤 음식이 앞에 놓여있는지 도출해내는 문제</li>
+  <li>무지는 엄청난 대식가이기 때문에 최대 20만개의 그릇에 한 그릇당 최대 1억 초 동안 먹을 수 있는 괴물이다. (효율성을 체크 해야한다는 뜻)</li>
+  <li>또한 무지는 매우 지루한 나날을 보내고 있기 때문에 최대 2 x 10^13 초에 해당 하는 시간동안 음식을 섭취할 수 있는 초능력을 가지고 있다.(효율성을 체크 하라는 뜻)
+    <blockquote>
+      <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고.
+<a href="https://programmers.co.kr/learn/courses/30/lessons/42891">문제풀러가기</a></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="문제-풀이">문제 풀이</h2>
+
+<p><strong>정확성</strong>만 생각한다면 1초 지날 때마다 검사하는 시뮬레이션을 통해 답을 도출해 내면 된다.
+<strong>효율성</strong>을 생각한다면 남아있는 음식의 접시와 회전수를 조사하여 O(nlgn) 시간에 도출해야한다.</p>
+
+<h2 id="소스코드-및-소스해석">소스코드 및 소스해석</h2>
 
 <blockquote>
-  <p>자세한 문제 설명과 릿코드 홈페이지 참고. <a href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/">문제풀러가기</a></p>
+  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
 </blockquote>
 
-<h2 id="-문제-풀이">🔑 문제 풀이</h2>
-
-<p>단순히 Brute force 기법을 쓴다면 시간제한에 걸리게 된다.
-자료구조 Map을 통해 특정 문자를 logN 시간만에 접근하는 방법을 통해 풀자!</p>
-
-<h4 id="그래서-제가-어떻게-풀었냐면-">그래서 제가 어떻게 풀었냐면 !!</h4>
-
-<p>단어집의 모든 단어를 map 자료구조에 할당하고</p>
-
-<p>단어집의 모든 단어를 합친 길이 만큼 문자열에서 떼와서 검사를 했다.</p>
-
-<p>당연히 통과할 줄 알았는데, 단순히 map 자료형으로는 시간적 제한을 통과하지 못했다.</p>
-
-<p>그래서 찾아본 결과 !!</p>
-
-<p>뚜둔</p>
-
-<h4 id="map과-hashmap의-차이를-아시나요">Map과 HashMap의 차이를 아시나요?</h4>
-
 <ul>
-  <li>
-    <p><strong>Map</strong> 자료형은 레드블랙트리 기반으로 되어 있습니다.
-모든 데이터는 정렬되어 저장이 됩니다.
-레드블랙트리는 Binary Search Tree 에 Self-Balancing 기능이 추가된 자료구조 입니다.
-Search 에 Time complexity 가 O(logN) 을 보장하긴 하지만 키 삽입, 제거 할 때마다 트리를 보정하는 비용이 들어가기 때문에 성능이 저하될 수 있습니다. 물론 O(logN) 을 크게 벗어나진 않습니다.</p>
-  </li>
-  <li>
-    <p>HashMap 은 hash table 을 통해 자료에 접근하게 따라서 데이터를 정렬하지 않습니다.
-충분한 크기의 hash table 이 주어진다면, 데이터의 삽입, 제거, 검색시에 성능저하가 거의 일어나지 않습니다.</p>
-  </li>
+  <li>정렬을 통해 남은 음식의 시간이 가장 작은 수에 해당하는 회전을 진행한다고 가정합니다.</li>
+  <li>남은 접시의 수와 남은 지나간 k 초의 상관관계를 계산하며 k 가 0이하가 되기 바로 전 회전까지 계산합니다. (0번째 인덱스에 해당하는 접시로 다시 돌아오기 까지의 회전)</li>
+  <li>이제 정렬된 숫자와 상관없이 1초마다 계산해서 답을 도출 해내시면 됩니다.</li>
+  <li>회전 할 때 공식 : k = k - (음식이 남아 있는 접시 수) * (“체크하지 않은 접시 중 가장 낮은 남은 시간을 가진 접시의 남은 시간” - “이때 까지 회전한 수를 뺀 값”)</li>
 </ul>
 
-<p>저는 기본적인 Map 자료구조를 이용했을 때 문제의 시간제한을 통과하지 못했습니다.
-다른거는 전부 그대로 두고 hash table 을 사용하니 바로 통과하더군요!!</p>
-
-<p>만약 데이터의 양이 매우 많아진다면 Hash Table 을 사용하는 것도 좋은 선택인 것 같습니다.</p>
-
-<h2 id="-소스코드-및-소스해석">🥽 소스코드 및 소스해석</h2>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;vector&gt;
-#include&lt;string&gt;
-#include&lt;algorithm&gt;
-#include&lt;unordered_map&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">findSubstring</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">words</span><span class="p">);</span>
-<span class="kt">bool</span> <span class="nf">testSubstringMatch</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">end</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordLength</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordsSize</span><span class="p">);</span>
-<span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">mapWord</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">food_times</span><span class="p">,</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">k</span><span class="p">);</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="n">findSubstring</span><span class="p">(</span><span class="n">in2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inp</span><span class="p">);</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">input</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">};</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">input2</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span> <span class="p">};</span>
+    <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// answer 1</span>
+    <span class="kt">int</span> <span class="n">k2</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span> <span class="c1">// answer 3</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">solution</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">findSubstring</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">words</span><span class="p">)</span> <span class="p">{</span>
-	<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ans</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">*</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
-		<span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-		<span class="n">mapWord</span><span class="p">[</span><span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">testSubstringMatch</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">*</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">(),</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">()))</span> <span class="p">{</span>
-			<span class="n">ans</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">food_times</span><span class="p">,</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">sortedTime</span> <span class="o">=</span> <span class="n">food_times</span><span class="p">;</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">sortedTime</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">sortedTime</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="n">sortedTime</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 
-<span class="kt">bool</span> <span class="nf">testSubstringMatch</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">end</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordLength</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wordsSize</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">long</span> <span class="kt">long</span> <span class="n">foodNum</span> <span class="o">=</span> <span class="n">food_times</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">long</span> <span class="kt">long</span> <span class="n">rotateNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-	<span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">mapTemp</span><span class="p">;</span>
-	<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">wordLength</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">string</span> <span class="n">compareStr</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">wordLength</span><span class="p">);</span>
-		<span class="n">mapTemp</span><span class="p">[</span><span class="n">compareStr</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">mapTemp</span><span class="p">[</span><span class="n">compareStr</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">mapWord</span><span class="p">[</span><span class="n">compareStr</span><span class="p">])</span>
-			<span class="n">count</span><span class="o">++</span><span class="p">;</span>
-		<span class="k">else</span>
-			<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">wordsSize</span><span class="p">)</span>
-		<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sortedTime</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ateFoodNum</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">sortedTime</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">sortedTime</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">ateFoodNum</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="p">(</span><span class="n">foodNum</span> <span class="o">*</span> <span class="p">(</span><span class="n">sortedTime</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">rotateNum</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="p">(</span><span class="n">foodNum</span> <span class="o">*</span> <span class="p">(</span><span class="n">sortedTime</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">rotateNum</span><span class="p">));</span>
+        <span class="n">foodNum</span> <span class="o">-=</span> <span class="n">ateFoodNum</span><span class="p">;</span>
+        <span class="n">rotateNum</span> <span class="o">=</span> <span class="n">sortedTime</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">foodNum</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">foodNum</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="n">foodNum</span><span class="p">;</span>
+        <span class="n">rotateNum</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">food_times</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">food_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">rotateNum</span><span class="p">)</span>
+            <span class="n">k</span><span class="o">--</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">food_times</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span> <span class="o">%</span> <span class="n">food_times</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">rotateNum</span><span class="o">++</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">food_times</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span> <span class="o">%</span> <span class="n">food_times</span><span class="p">.</span><span class="n">size</span><span class="p">()]</span> <span class="o">&gt;</span> <span class="n">rotateNum</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span> <span class="o">%</span> <span class="n">food_times</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
 
 </code></pre></div></div>
 
-<h2 id="-문제-후기">🔨 문제 후기</h2>
+<h2 id="문제-후기">문제 후기</h2>
 
-<p>자료구조에 대해 더 신경써야할 시간이 온 것 같다. !!!!
-Hard 문제는 확실히 일반 문제랑 조금 다르다.!!</p>
+<p>문제 자체는 어렵지 않으나 구현 할 때 숫자 하나 차이로 풀리지 않을 수도 있기 때문에 주의를 요한다.</p>
+
+<p>무지는 정말 대식가이다 지구에 있는 모든 음식을 다 먹을 수 있겠다.</p>
+
+    <hr />
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2019-findRoad/"> 프로그래머스 2019 kakao 길 찾기 게임 문제 해설 </a>
+    </h1>
+
+    <span class="post-date">29 Sep 2020</span>
+
+    <p>#[프로그래머스][2019 kakao] 길 찾기 게임 문제 해설</p>
+
+<hr />
+
+<ul>
+  <li>정답률 : 7.40%</li>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/42892">문제풀러가기</a></li>
+</ul>
+
+<hr />
+
+<h2 id="문제-요약">문제 요약</h2>
+
+<p>“전무”로 승진한 라이언이 왕따인 이유를 알려주는 문제.
+“전무” 라이언이 x, y 좌표값을 주면 우리 친구들이 x, y 를 전부 순회를 마친 팀이 이기는 “라이언만” 재미있는 게임이다.</p>
+
+<ul>
+  <li>x, y 좌표는 사실상 트리의 구성요소라고 생각하면 된다.</li>
+  <li>이진트리의 모양을 가졌으며 x 값이 node 의 data, y가 node 의 레벨 이라 생각한다.</li>
+</ul>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/42892">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="문제-풀이">문제 풀이</h2>
+
+<p>x, y 좌표를 가지고 트리를 만들어 순회시키면 끝나는 문제.
+모든 요소들은 이진트리를 만족하기 위한 조건을 가지고 있으므로 맘 놓고 트리를 만들면 된다.</p>
+
+<h2 id="소스코드-및-소스해석">소스코드 및 소스해석</h2>
+
+<p>리스트로 짜도 되지만 귀찮기 때문에 vector를 이용하여 트리의 정보를 저장한다.
+x, y, left, right, 들어올 때 index 를 저장하는 Node 구조체를 생성하고, 트리를 <strong>잘</strong> 만들어 주면 된다. 트리를 만들기 힘들다고 느껴지면 노트장 펴고 펜으로 먼저 순서를 적어가며 하는 것을 추천함.</p>
+
+<blockquote>
+  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
+</blockquote>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">Node</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">myindex</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">nodeinfo</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">myInsert</span><span class="p">(</span><span class="kt">int</span> <span class="n">nodeIndex</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">insertNode</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">vec</span><span class="p">,</span> <span class="n">Node</span> <span class="n">node</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">postorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">vec</span><span class="p">,</span> <span class="n">Node</span> <span class="n">node</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">comp</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">tree</span><span class="p">;</span> <span class="c1">// x,y,left,right 를 저장하는 노드를 가진 트리</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">levelInfo</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">treeIndex</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">nodeinfo</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span> <span class="p">{</span><span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span> <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> <span class="p">};</span>
+    <span class="n">solution</span><span class="p">(</span><span class="n">nodeinfo</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">nodeinfo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">answer</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nodeinfo</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">nodeinfo</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">nodeinfo</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">nodeinfo</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">comp</span><span class="p">);</span>
+    <span class="n">tree</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Node</span><span class="p">{</span><span class="n">nodeinfo</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">nodeinfo</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nodeinfo</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]});</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nodeinfo</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">myInsert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nodeinfo</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+
+    <span class="c1">//순회</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">preVec</span><span class="p">,</span><span class="n">postVec</span><span class="p">;</span>
+    <span class="n">preorder</span><span class="p">(</span><span class="n">preVec</span><span class="p">,</span> <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">postorder</span><span class="p">(</span><span class="n">postVec</span><span class="p">,</span> <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">answer</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">preVec</span><span class="p">);</span>
+    <span class="n">answer</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">postVec</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">myInsert</span><span class="p">(</span><span class="kt">int</span> <span class="n">nodeIndex</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">insertNode</span><span class="p">){</span>
+
+    <span class="c1">//x 값을 기준으로 왼쪽 오른쪽 체크한다</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">nodeIndex</span><span class="p">].</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">insertNode</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">nodeIndex</span><span class="p">].</span><span class="n">left</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">tree</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Node</span><span class="p">{</span><span class="n">insertNode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">insertNode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">insertNode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">});</span>
+            <span class="n">tree</span><span class="p">[</span><span class="n">nodeIndex</span><span class="p">].</span><span class="n">left</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">myInsert</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">nodeIndex</span><span class="p">].</span><span class="n">left</span><span class="p">,</span> <span class="n">insertNode</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">nodeIndex</span><span class="p">].</span><span class="n">right</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">tree</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Node</span><span class="p">{</span><span class="n">insertNode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">insertNode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">insertNode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">});</span>
+            <span class="n">tree</span><span class="p">[</span><span class="n">nodeIndex</span><span class="p">].</span><span class="n">right</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">myInsert</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">nodeIndex</span><span class="p">].</span><span class="n">right</span><span class="p">,</span> <span class="n">insertNode</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">vec</span><span class="p">,</span> <span class="n">Node</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">myindex</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">left</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">preorder</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span><span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">.</span><span class="n">left</span><span class="p">]);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">right</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">preorder</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">.</span><span class="n">right</span><span class="p">]);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">postorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">vec</span><span class="p">,</span> <span class="n">Node</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">left</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">postorder</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">.</span><span class="n">left</span><span class="p">]);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">right</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">postorder</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">tree</span><span class="p">[</span><span class="n">node</span><span class="p">.</span><span class="n">right</span><span class="p">]);</span>
+    <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">myindex</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="문제-후기">문제 후기</h2>
+
+<p>문제의 난이도에 비해 정답률이 낮은 것이 좀 의아하다.</p>
+
+<p>내 친구가 라이언 같은 놈이라면 절교한다.</p>
+
+    <hr />
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="https://tocktock.github.io/algorithms/algorithms-kakao2019-blockGame/"> 프로그래머스 2019 kakao 블록게임 해설 </a>
+    </h1>
+
+    <span class="post-date">29 Sep 2020</span>
+
+    <h2 id="프로그래머스2019-kakao-블록게임-해설">#[프로그래머스][2019 kakao] 블록게임 해설</h2>
+
+<ul>
+  <li>정답률 : 5.85%</li>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/42894">문제풀러가기</a></li>
+</ul>
+
+<hr />
+
+<h2 id="문제-요약">문제 요약</h2>
+
+<p>피지컬을 극복하려는 프로도의 피빠진 노력</p>
+
+<p>게임의 규칙은 간단하다.</p>
+
+<ul>
+  <li>위에서 검은색 블록을 떨어뜨린다.</li>
+  <li>검은블록을 포함하여 특정 블록이 직사각형의 형태가 되면 그 블록을 지울 수 있다.</li>
+  <li>특정 블록은 무조건 한 개체여야하며 다른 개체와 섞여서는 안된다.</li>
+</ul>
+
+<blockquote>
+  <p>자세한 문제 설명과 제한 사항은 프로그래머스 홈페이지 참고. <a href="https://programmers.co.kr/learn/courses/30/lessons/42894">문제풀러가기</a></p>
+</blockquote>
+
+<h2 id="문제-풀이">문제 풀이</h2>
+
+<p>테스트 케이스가 많지는 않기 때문에 검은블록을 0, 0 에서부터 n, n까지 다 떨어뜨려 본다.</p>
+
+<h2 id="소스코드-및-소스해석">소스코드 및 소스해석</h2>
+
+<blockquote>
+  <p>프로그래머스 사이트가 아닌, visual studio 에서 코드를 작성해서 그대로 가져온 것 입니다. 일부 테스트 코드가 존재합니다.</p>
+</blockquote>
+
+<ul>
+  <li>풀이방법은 12가지의 블록 유형중 삭제될 수 있는지 판단하는 것과 일단 떨어뜨려 보는 것이 있다. (그 외에도 있을 듯) 나는 후자를 택했다.</li>
+  <li>블록을 감싼 직사각형의 Left Top 좌표와 Right Bottom 좌표를 획득하여 해당 하는 좌표 내에서 검은블록이 떨어지면 삭제될 수 있는지 판단한다.</li>
+  <li>위에서부터 차곡차곡 검사한다.</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">Point</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="k">struct</span> <span class="nc">BlockInfo</span> <span class="p">{</span>
+    <span class="n">Point</span> <span class="n">lt</span><span class="p">,</span> <span class="n">rb</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">pt</span><span class="p">;</span> <span class="c1">// x,y 반복체?</span>
+<span class="p">};</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getLTRB</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">board</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">board</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">myRemove</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">board</span><span class="p">);</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">BlockInfo</span><span class="o">&gt;</span> <span class="n">myblock</span><span class="p">(</span><span class="mi">250</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">board</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">}</span> <span class="p">,{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">solution</span><span class="p">(</span><span class="n">board</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">board</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+            <span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">pt</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Point</span><span class="p">{</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="p">});</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">pt</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">LTRB</span> <span class="o">=</span> <span class="n">getLTRB</span><span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]]);</span>
+                <span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">lt</span> <span class="o">=</span> <span class="p">{</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">};</span>
+                <span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]].</span><span class="n">rb</span> <span class="o">=</span> <span class="p">{</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="p">};</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">board</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">bool</span> <span class="n">isPossible</span> <span class="o">=</span> <span class="n">check</span><span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]],</span> <span class="n">board</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">isPossible</span> <span class="o">==</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">answer</span><span class="o">++</span><span class="p">;</span>
+                    <span class="n">myRemove</span><span class="p">(</span><span class="n">myblock</span><span class="p">[</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]],</span> <span class="n">board</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getLTRB</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">LTRB</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">2147483647</span><span class="p">,</span> <span class="mi">2147483647</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span> <span class="p">};</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="n">LTRB</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">LTRB</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">board</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">i</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">board</span><span class="p">[</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">y</span><span class="p">][</span><span class="n">block</span><span class="p">.</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x</span><span class="p">])</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">myRemove</span><span class="p">(</span><span class="n">BlockInfo</span> <span class="n">block</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">board</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="p">.</span><span class="n">rb</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="문제-후기">문제 후기</h2>
+
+<p>직사각형이라고 하길래</p>
+
+<p>0 0 0 2<br />
+0 1 2 2
+1 1 1 2</p>
+
+<p>이런식으로 나오면 두개 다 삭제해야하는 줄 알고 처음에 코드를 짯다가 낭패 맞았다. 문제가 애매하면 답이나 질문들을 먼저 참고하자.</p>
 
     <hr />
   </div>
